@@ -1,2 +1,4 @@
 configuration.cnf
 .idea
+libs/smarty-3.1.33/
+libs/_smarty/templates_c/
