@@ -496,11 +496,16 @@ div#completeness-field-table table tr td.number-of-instances {
 
 .nav-link1.active {
   /* background-color: #eeeeee; */
-  color: #37ba00;
-  border-bottom: 5px solid #37ba00;
+  color: #d5073c;
+  border-bottom: 5px solid #d5073c;
   border-top-color: #999999;
   border-left-color: #999999;
   border-right-color: #999999;
+}
+
+p.datasets span {
+  color: #d5073c;
+  border-bottom: 2px solid #d5073c;
 }
 
 .header-info {

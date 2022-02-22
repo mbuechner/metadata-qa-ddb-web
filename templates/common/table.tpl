@@ -1,4 +1,4 @@
-<h3>{$frequency['file'][0]->value}: {$frequency['file'][0]->frequency} records</h3>
+<h3>{$filename}: {$count} records</h3>
 <table>
   <thead>
   <tr>
@@ -20,7 +20,7 @@
                     <td class="value">{if $record->value == "1"}passed{elseif $record->value == "0"}failed{else}{$record->value}{/if}</td>
                     <td class="frequency">{$record->frequency}</td>
                     <td class="bar {if $record->value == "0"}red{elseif $record->value == "1"}green{else}grey{/if}">
-                      <div style="width: {200 * $record->frequency / $frequency['file'][0]->frequency}px">&nbsp;</div>
+                      <div style="width: {200 * $record->frequency / $count}px">&nbsp;</div>
                     </td>
                   </tr>
                 {/foreach}
