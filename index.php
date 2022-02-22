@@ -12,7 +12,7 @@ if ($tab == 'records') {
   include_once 'classes/IssuesDB.php';
 
   $field = getOrDefault('field', '1.1');
-  $value = getOrDefault('value', '0', ['0', '1', 'NA']);
+  $value = getOrDefault('value', '1', ['0', '1', 'NA']);
   $page = getOrDefault('page', 0);
   $limit = getOrDefault('limit', 100);
   $db = new IssuesDB(sprintf('%s/%s', $dir, $subdir));
