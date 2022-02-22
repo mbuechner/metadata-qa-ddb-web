@@ -647,14 +647,18 @@ ul.list-856 {
 
 tr.criteria-group, tr.criteria-group td {
   /* background-color: #37ba00; */
-  border-bottom: 1px solid #37ba00;
-  /* color: #eeeeee; */
+  /* border-bottom: 1px solid #37ba00; */
+  color: #37ba00;
   font-weight: bold;
 }
 
 tr.criterium > td {
   padding-bottom: 20px;
   margin-bottom: 20px;
+}
+
+tr.criteria-group td {
+  padding-bottom: 20px;
 }
 
 table.values td.value {
