@@ -7,9 +7,11 @@
       <div id="about-tab">
 
         <p>
-          This dasboard was made in collaboration of Deutchse Digitale Bibliothek (DDB) and Gesellschaft für
-          wissenschaftliche Datenverarbeitung mbH Göttingen (GWDG). Participants: Francesca Schulze (DDB),
-          Cosmina Berta (DDB), Stefanie Rühle (DDB), Julianne Stiller (Grenzenlos Digital e.V.), Péter Király (GWDG).
+          This dasboard is made in collaboration of
+          <a href="https://www.deutsche-digitale-bibliothek.de/" about="_blank">Deutchse Digitale Bibliothek</a> (DDB) and
+          <a href="https://gwdg.de" about="_blank">Gesellschaft für wissenschaftliche Datenverarbeitung mbH Göttingen</a>
+          (GWDG). Participants: Francesca Schulze (DDB), Cosmina Berta (DDB), Stefanie Rühle (DDB),
+          Julianne Stiller (Grenzenlos Digital e.V.), Péter Király (GWDG).
         </p>
 
         <p>This is an open source project. You can find the code at:</p>
