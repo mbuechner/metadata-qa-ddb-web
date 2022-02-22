@@ -690,3 +690,7 @@ table.values td.bar.grey div {
 nav {
   margin-bottom: 20px;
 }
+
+div#record td.passed {color: #37ba00}
+div#record td.failed {color: #9B410E}
+div#record td.NA {color: #999999}
