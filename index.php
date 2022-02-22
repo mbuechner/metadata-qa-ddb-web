@@ -15,7 +15,7 @@ $smarty = createSmarty('templates');
 $smarty->assign('factors', $factors);
 $smarty->assign('frequency', $frequency);
 $smarty->assign('variability', $variability);
-$smarty->assign('lastUpdate', '2021-12-30');
+$smarty->assign('lastUpdate', '2021-07-30');
 $smarty->assign('count', '3000');
 $smarty->assign('tab', $tab);
 

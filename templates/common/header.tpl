@@ -3,14 +3,13 @@
                                        class="hidden-xs hidden-sm"></a>
 </p>
 <h1 style="text-align: right">
-  <i class="fa fa-cogs" aria-hidden="true"></i> <span>metadata quality assessment</span></h1>
+  <i class="fa fa-cogs" aria-hidden="true"></i> <span>metadata quality assessment dashboard</span></h1>
 <p>
   <i class="fa fa-book" aria-hidden="true"></i>
   <span class="header-info">
     {if $lastUpdate != ''}
      last data update: <strong>{$lastUpdate}</strong>
     {/if}
-    &nbsp; &nbsp; number of records: <strong>{$count|number_format}</strong>
   </span>
 </p>
 
