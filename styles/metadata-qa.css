@@ -691,6 +691,9 @@ nav {
   margin-bottom: 20px;
 }
 
+div#record table td {padding: 5px}
+div#record h2 span {color: #d5073c; }
+div#record td.result {text-align: center}
 div#record td.passed {color: #37ba00}
-div#record td.failed {color: #9B410E}
+div#record td.failed {color: #d5073c}
 div#record td.NA {color: #999999}
