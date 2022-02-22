@@ -11,6 +11,11 @@
          id="records-tab" aria-controls="records"
          href="?tab=records">Records</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link1{if $tab == 'record'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
+         id="record-tab" aria-controls="record"
+         href="?tab=record">Record</a>
+    </li>
 <!--
     <li class="nav-item">
       <a class="nav-link1{if $tab == 'images'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"

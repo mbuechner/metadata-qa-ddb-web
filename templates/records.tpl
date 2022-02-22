@@ -6,11 +6,11 @@
     <div class="tab-pane active" id="factors" role="tabpanel" aria-labelledby="factors-tab">
       <h2>Record IDs</h2>
 
-      <p>criteria: {$factors[$field]->description} = {if $value == "1"}passed{elseif $value == "0"}failed{else}{$value}{/if};
-          {$recordCount} records</p>
+      <p>criteria: {$factors[$field]->description} = {if $value == "1"}passed{elseif $value == "0"}failed{else}{$value}{/if}<br/>
+         {$recordCount} records</p>
       <ul>
         {foreach $recordIds as $recodId}
-          <li>{$recodId}</li>
+          <li><a href="?subdir={$subdir}&tab=record&id={$recodId}">{$recodId}</a></li>
         {/foreach}
       </ul>
 
