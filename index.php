@@ -4,7 +4,7 @@ include_once 'common-functions.php';
 $configuration = parse_ini_file("configuration.cnf", false, INI_SCANNER_TYPED);
 $dir = $configuration['dir'];
 
-$tab = getOrDefault('tab', 'images', ['images', 'texts']);
+$tab = getOrDefault('tab', 'images', ['images', 'texts', 'about']);
 
 $factors = readCsv('factors.csv', 'id');
 
