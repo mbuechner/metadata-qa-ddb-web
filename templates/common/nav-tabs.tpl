@@ -6,6 +6,11 @@
          id="factors-tab" aria-controls="factors"
          href="?tab=factors">Quality factors</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link1{if $tab == 'records'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
+         id="records-tab" aria-controls="records"
+         href="?tab=records">Records</a>
+    </li>
 <!--
     <li class="nav-item">
       <a class="nav-link1{if $tab == 'images'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"

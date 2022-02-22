@@ -17,7 +17,11 @@
               <table class="values">
                 {foreach $frequency[$id] as $record name="records"}
                   <tr>
-                    <td class="value">{if $record->value == "1"}passed{elseif $record->value == "0"}failed{else}{$record->value}{/if}</td>
+                    <td class="value">
+                      <a href="?subdir={$subdir}&tab=records&field={$id}&value={$record->value}">
+                        {if $record->value == "1"}passed{elseif $record->value == "0"}failed{else}{$record->value}{/if}
+                      </a>
+                    </td>
                     <td class="frequency">{$record->frequency}</td>
                     <td class="bar {if $record->value == "0"}red{elseif $record->value == "1"}green{else}grey{/if}">
                       <div style="width: {200 * $record->frequency / $count}px">&nbsp;</div>
