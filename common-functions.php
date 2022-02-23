@@ -43,6 +43,11 @@ function createSmarty($templateDir) {
   return $smarty;
 }
 
+function createTab($name): Tab {
+  include_once('classes/' . $name . '.php');
+  return new $name();
+}
+
 function readCsv($csvFile, $id = '', $collect = FALSE) {
   $records = [];
   if (file_exists($csvFile)) {

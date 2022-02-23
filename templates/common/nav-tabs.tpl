@@ -3,8 +3,8 @@
   <ul class="nav nav-tabs" id="myTab">
     <li class="nav-item">
       <a class="nav-link1{if $tab == 'factors'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
-         id="factors-tab" aria-controls="factors"
-         href="?tab=factors">Quality factors</a>
+         id="overview-tab" aria-controls="overview"
+         href="?tab=overview">Overview</a>
     </li>
     <li class="nav-item">
       <a class="nav-link1{if $tab == 'records'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"

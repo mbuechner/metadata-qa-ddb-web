@@ -1,4 +1,5 @@
 <h3>{$filename}: {$count} records</h3>
+<p><a href="?tab=downloader&action=downloadFile&subdir={$subdir}">download file</a></p>
 <table>
   <thead>
   <tr>

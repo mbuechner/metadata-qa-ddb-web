@@ -9,6 +9,11 @@
       <p>in {$filename}</p>
 
       <xmp>{$record}</xmp>
+      <p>
+        <a href="?tab=downloader&action=downloadRecord&subdir={$subdir}&id={$id}">download record</a>
+        &mdash;
+        <a href="?tab=downloader&action=downloadFile&subdir={$subdir}">download file</a>
+      </p>
 
       <table>
         {foreach $issues as $id => $value}
