@@ -4,15 +4,13 @@ include_once 'classes/IssuesDB.php';
 
 class Record extends BaseTab {
 
-  private $db;
-
   public function __construct() {
     parent::__construct();
-    $this->db = new IssuesDB($this->getDir());
   }
 
   public function prepareData(Smarty &$smarty) {
     parent::prepareData($smarty);
+    error_log(__FILE__ . ':' . __LINE__);
 
     $this->action = getOrDefault('action', 'display', ['display', 'downloadRecord', 'downloadFile']);
 
@@ -29,7 +27,8 @@ class Record extends BaseTab {
       }
     }
     if ($this->action == 'downloadFile') {
-      $filename = $smarty->getTemplateVars('filename');
+      $filename = $this->db->fetchValue($this->db->getFilenameByRecordId($id), 'file');
+      error_log('filename: ' . $filename);
       $this->outputType = 'none';
       $this->downloadFile($filename, 'application/xml');
 
@@ -49,6 +48,18 @@ class Record extends BaseTab {
   }
 
   private function getIssues($id) {
-    return $this->db->getIssuesById($id)->fetchArray(SQLITE3_ASSOC);
+    $issues = $this->db->getIssuesByRecordId($id)->fetchArray(SQLITE3_ASSOC);
+    foreach ($issues as $key => $value) {
+      if (preg_match('/^(.*):(.*)$/', $key, $matches)) {
+        unset($issues[$key]);
+        $key2 = $matches[1] == 'ruleCatalog' ? 'total' : $matches[1];
+        if (!isset($issues[$key2])) {
+          $issues[$key2] = [];
+        }
+        $issues[$key2][$matches[2]] = $value;
+      }
+    }
+    error_log(json_encode($issues));
+    return $issues;
   }
 }

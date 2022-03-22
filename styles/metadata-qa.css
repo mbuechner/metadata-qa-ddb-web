@@ -650,6 +650,10 @@ ul.list-856 {
   padding-left: 20px;
 }
 
+table#criteria-table td.id {
+  padding-right: 10px;
+}
+
 tr.criteria-group, tr.criteria-group td {
   /* background-color: #37ba00; */
   /* border-bottom: 1px solid #37ba00; */
@@ -666,6 +670,9 @@ tr.criteria-group td {
   padding-bottom: 20px;
 }
 
+table.values {
+  margin: 3px;
+}
 table.values td.value {
   width: 50px;
 }
@@ -673,6 +680,14 @@ table.values td.value {
 table.values td.frequency {
   width: 50px;
   text-align: right;
+}
+
+table.values td.bar  {
+  text-align: center;
+}
+
+table.values td.bar div {
+  float: right;
 }
 
 table.values td.bar.red div {
@@ -687,6 +702,10 @@ table.values td.bar.grey div {
   background-color: #999999;
 }
 
+table.values td.bar div {
+  margin: 2px;
+}
+
 nav {
   margin-bottom: 20px;
 }
@@ -697,3 +716,10 @@ div#record td.result {text-align: center}
 div#record td.passed {color: #37ba00}
 div#record td.failed {color: #d5073c}
 div#record td.NA {color: #999999}
+
+table.values td.width50 {
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  background-color: #eeeeee;
+}

@@ -1,4 +1,4 @@
-<h3>{$filename}: {$count} records</h3>
+<h3>{$count} records</h3>
 <p><a href="?tab=downloader&action=downloadFile&subdir={$subdir}">download file</a></p>
 <table id="criteria-table">
   <thead>
@@ -21,11 +21,11 @@
                 {foreach $frequency[$scoreId] as $record name="records"}
                   <tr>
                     <td class="value">
-                      <a href="?subdir={$subdir}&tab=records&field={$scoreId}&value={$record->value}">
-                        {$record->value}
+                      <a href="?&tab=records&field={$scoreId}&value={$record['value']}&schema={$schema}&provider_id={$provider_id}&set_id={$set_id}">
+                        {$record['value']}
                       </a>
                     </td>
-                    <td class="frequency">{$record->frequency}</td>
+                    <td class="frequency">{$record['frequency']}</td>
                   </tr>
                 {/foreach}
               </table>
@@ -34,18 +34,18 @@
           <td>
             {assign var="statusId" value={$id|cat:':status'}}
             {if isset($frequency[$statusId])}
-                  {assign var="passed" value=0}
-                  {assign var="failed" value=0}
-                  {assign var="NA" value=0}
-                  {foreach $frequency[$statusId] as $record name="records"}
-                      {if $record->value == "1"}
-                          {assign var="passed" value=$record->frequency}
-                      {elseif $record->value == "0"}
-                          {assign var="failed" value=$record->frequency}
-                      {elseif $record->value == "NA"}
-                          {assign var="NA" value=$record->frequency}
-                      {/if}
-                  {/foreach}
+              {assign var="passed" value=0}
+              {assign var="failed" value=0}
+              {assign var="NA" value=0}
+              {foreach $frequency[$statusId] as $record name="records"}
+                {if $record['value'] == "1"}
+                  {assign var="passed" value=$record['frequency']}
+                {elseif $record['value'] == "0"}
+                  {assign var="failed" value=$record['frequency']}
+                {elseif $record['value'] == "NA"}
+                  {assign var="NA" value=$record['frequency']}
+               {/if}
+              {/foreach}
               <table class="values">
                 <tr>
                   <td class="bar width50">{$passed}</td>

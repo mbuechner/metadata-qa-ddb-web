@@ -10,20 +10,25 @@
 
       <xmp>{$record}</xmp>
       <p>
-        <a href="?tab=downloader&action=downloadRecord&subdir={$subdir}&id={$id}">download record</a>
+        <a href="?tab=downloader&action=downloadRecord&id={$id}">download record</a>
         &mdash;
-        <a href="?tab=downloader&action=downloadFile&subdir={$subdir}">download file</a>
+        <a href="?tab=downloader&action=downloadFile&id={$id}">download file</a>
       </p>
 
       <table>
         {foreach $issues as $id => $value}
           {if $id != 'recordId'}
             <tr>
-              <td>Q-{$id}</td>
-              <td>{if isset($factors[$id])}{$factors[$id]->description}{else}{$id}{/if}</td>
-              <td class="result {if $value == "1"}passed{elseif $value == "0"}failed{else}{$value}{/if}">
-                {if $value == "1"}passed{elseif $value == "0"}failed{else}{$value}{/if}
-              </td>
+              <td>{$id}</td>
+              <td>{if isset($factors[$id])}{$factors[$id]->description}{/if}</td>
+              {if isset($value['status'])}
+                <td class="result {if $value['status'] == "1"}passed{elseif $value['status'] == "0"}failed{else}{$value['status']}{/if}">
+                  {if $value['status'] == "1"}passed{elseif $value['status'] == "0"}failed{else}{$value['status']}{/if}
+                </td>
+              {else}
+                <td></td>
+              {/if}
+              <td class="result">{if isset($value['score'])}{$value['score']}{/if}</td>
             </tr>
           {/if}
         {/foreach}

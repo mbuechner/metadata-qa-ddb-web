@@ -13,7 +13,9 @@ class Downloader extends BaseTab {
       $record = new Record();
       $this->downloadContent($record->getXml($id), 'record.xml', 'application/xml');
     } else if ($this->action == 'downloadFile') {
-      $filename = $smarty->getTemplateVars('filename');
+      $filename = $this->db->fetchValue($this->db->getFilenameByRecordId($id), 'file');
+      error_log('filename: ' . $filename);
+
       $this->outputType = 'none';
       $this->downloadFile($filename, 'application/xml');
     }

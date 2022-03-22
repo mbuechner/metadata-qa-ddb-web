@@ -9,12 +9,12 @@
       <p class="datasets">
         datasets:
           {foreach $subdirs as $_subdir name='subdirs'}
-              {if $_subdir != $subdir}<a href="?subdir={$_subdir}&tab={$tab}">{$_subdir}</a>{else}<span>{$subdir}</span>{/if}
+            {if $_subdir != $subdir}<a href="?subdir={$_subdir}&tab={$tab}">{$_subdir}</a>{else}<span>{$subdir}</span>{/if}
           {if !$smarty.foreach.subdirs.last} &mdash; {/if}
         {/foreach}
       </p>
 
-      {include 'common/table.tpl'}
+      {include 'common/overview.tpl'}
     </div>
   </div>
 </div>
