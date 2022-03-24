@@ -60,9 +60,11 @@ abstract class BaseTab implements Tab {
     error_log('/lists2');
 
     $smarty->assign('recordsBySchema', $this->db->fetchAssoc($this->db->countRecordsBySchema($schema, $provider_id, $set_id)));
+    error_log('/countRecordsBySchema');
     $smarty->assign('recordsByProvider', $this->db->fetchAssoc($this->db->countRecordsByProvider($schema, $provider_id, $set_id)));
+    error_log('/countRecordsByProvider');
     $smarty->assign('recordsBySet', $this->db->fetchAssoc($this->db->countRecordsBySet($schema, $provider_id, $set_id)));
-    error_log('/counts');
+    error_log('/countRecordsBySet');
 
     $this->schema = $schema == '' ? 'NA' : $schema;
     $this->set_id = $set_id == '' ? 'NA' : $set_id;
