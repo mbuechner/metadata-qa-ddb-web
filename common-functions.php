@@ -83,3 +83,7 @@ function readCsv($csvFile, $id = '', $collect = FALSE) {
   }
   return $records;
 }
+
+function cleanSql($sql) {
+  return preg_replace('/[\n\s]+/', ' ', $sql);
+}

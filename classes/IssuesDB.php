@@ -8,6 +8,23 @@ class IssuesDB extends SQLite3 {
     $this->open($file);
   }
 
+  public function getIssuesCount($field, $value, $schema = '', $provider_id = '', $set_id = '') {
+    $where = $this->getWhere($schema, $provider_id, $set_id, FALSE);
+    if ($where != '')
+      $where = ' AND ' . $where;
+    $sql = 'SELECT COUNT(i.*) AS count
+       FROM issue AS i
+       LEFT JOIN file_record fr ON (fr.recordId = i.recordId)
+       LEFT JOIN files AS f ON (fr.file = f.file)
+       WHERE `' . $field . '` = :value ' . $where;
+    error_log(cleanSql($sql));
+    $stmt = $this->prepare($sql);
+    $stmt->bindValue(':value', $value, SQLITE3_TEXT);
+    $this->bindValues($schema, $provider_id, $set_id, $stmt);
+
+    return $stmt->execute();
+  }
+
   public function getIssues($field, $value, $schema = '', $provider_id = '', $set_id = '', $offset = 0, $limit = 10) {
     error_log($field . ' -- ' . $value);
     error_log(sprintf('%s %s %s', $schema, $provider_id, $set_id));
@@ -24,13 +41,13 @@ class IssuesDB extends SQLite3 {
        LIMIT :limit
        OFFSET :offset
     ';
-    error_log($sql);
+    error_log(cleanSql($sql));
     $stmt = $this->prepare($sql);
     $stmt->bindValue(':value', $value, SQLITE3_TEXT);
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
     $stmt->bindValue(':offset', $offset, SQLITE3_INTEGER);
     $stmt->bindValue(':limit', $limit, SQLITE3_INTEGER);
-    error_log(preg_replace('/[\n\s]+/', ' ', $stmt->getSQL(TRUE)));
+    error_log(cleanSql($stmt->getSQL(TRUE)));
 
     return $stmt->execute();
   }

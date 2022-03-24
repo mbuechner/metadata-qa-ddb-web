@@ -26,7 +26,8 @@ class Records extends BaseTab {
     $smarty->assign('factor', $factor);
     $smarty->assign('type', $type);
 
-    $recordCount = $this->count;
+    $recordCount = $this->db->fetchValue($this->db->getIssuesCount($field, $value,
+      $this->unsetNa($this->schema), $this->unsetNa($this->provider_id), $this->unsetNa($this->set_id)), 'count');
     $result = $this->db->getIssues($field, $value,
       $this->unsetNa($this->schema), $this->unsetNa($this->provider_id), $this->unsetNa($this->set_id),
       $page * $limit, $limit
