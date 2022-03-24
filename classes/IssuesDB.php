@@ -9,6 +9,8 @@ class IssuesDB extends SQLite3 {
   }
 
   public function getIssuesCount($field, $value, $schema = '', $provider_id = '', $set_id = '') {
+    error_log($field . ' -- ' . $value);
+    error_log(sprintf('%s %s %s', $schema, $provider_id, $set_id));
     $where = $this->getWhere($schema, $provider_id, $set_id, FALSE);
     if ($where != '')
       $where = ' AND ' . $where;
