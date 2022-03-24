@@ -25,7 +25,7 @@ class IssuesDB extends SQLite3 {
     }
     error_log(cleanSql($sql));
     $stmt = $this->prepare($sql);
-    $stmt->bindValue(':value', $value, preg_match('/:score$/', $value) ? SQLITE3_INTEGER : SQLITE3_TEXT);
+    $stmt->bindValue(':value', $value, preg_match('/:score$/', $field) ? SQLITE3_INTEGER : SQLITE3_TEXT);
     if ($where != '')
       $this->bindValues($schema, $provider_id, $set_id, $stmt);
 
@@ -59,7 +59,7 @@ class IssuesDB extends SQLite3 {
     }
     error_log(cleanSql($sql));
     $stmt = $this->prepare($sql);
-    $stmt->bindValue(':value', $value, preg_match('/:score$/', $value) ? SQLITE3_INTEGER : SQLITE3_TEXT);
+    $stmt->bindValue(':value', $value, preg_match('/:score$/', $field) ? SQLITE3_INTEGER : SQLITE3_TEXT);
     if ($where != '')
       $this->bindValues($schema, $provider_id, $set_id, $stmt);
     $stmt->bindValue(':offset', $offset, SQLITE3_INTEGER);
@@ -99,6 +99,8 @@ class IssuesDB extends SQLite3 {
     $where = $this->getWhere($schema, $provider_id, $set_id);
     $stmt = $this->prepare('SELECT field, value, frequency FROM frequency ' . $where);
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
+    error_log(cleanSql($stmt->getSQL(TRUE)));
+
     return $stmt->execute();
   }
 
@@ -106,6 +108,8 @@ class IssuesDB extends SQLite3 {
     $where = $this->getWhere($schema, $provider_id, $set_id);
     $stmt = $this->prepare('SELECT field, number_of_values FROM variability ' . $where);
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
+    error_log(cleanSql($stmt->getSQL(TRUE)));
+
     return $stmt->execute();
   }
 
