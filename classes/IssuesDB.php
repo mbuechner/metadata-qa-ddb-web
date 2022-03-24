@@ -21,7 +21,7 @@ class IssuesDB extends SQLite3 {
         FROM issue AS i
         LEFT JOIN file_record fr ON (fr.recordId = i.recordId)
         LEFT JOIN files AS f ON (fr.file = f.file)
-        WHERE `' . $field . '` = :value  AND ' . $where;
+        WHERE `' . $field . '` = :value AND ' . $where;
     }
     error_log(cleanSql($sql));
     $stmt = $this->prepare($sql);
@@ -47,12 +47,11 @@ class IssuesDB extends SQLite3 {
        LIMIT :limit
        OFFSET :offset';
     } else {
-      $where = ' AND ' . $where;
       $sql = 'SELECT i.*
        FROM issue AS i
        LEFT JOIN file_record fr ON (fr.recordId = i.recordId)
        LEFT JOIN files AS f ON (fr.file = f.file)
-       WHERE `' . $field . '` = :value  AND ' . $where . '
+       WHERE `' . $field . '` = :value AND ' . $where . '
        ORDER BY ' . $default_order . ' 
        LIMIT :limit
        OFFSET :offset';
