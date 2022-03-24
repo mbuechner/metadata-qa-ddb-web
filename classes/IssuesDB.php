@@ -154,6 +154,7 @@ FROM files AS f
 INNER JOIN file_record AS r
 USING (file) ' . $where . ' GROUP BY schema');
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
+    error_log(cleanSql($stmt->getSQL(TRUE)));
     return $stmt->execute();
   }
 
