@@ -41,9 +41,11 @@ abstract class BaseTab implements Tab {
     // $smarty->assign('variability', readCsv($this->getFilePath('variability.csv'), 'field', FALSE));
     $smarty->assign('lastUpdate', '2021-07-30');
 
+    error_log('start');
     $all_schemas = $this->db->fetchAssoc($this->db->listSchemas(), 'schema');
     $all_providers = $this->db->fetchAssoc($this->db->listProviders());
     $all_sets = $this->db->fetchAssoc($this->db->listSets());
+    error_log('/lists');
     $schema = getOrDefault('schema', '', array_keys($all_schemas));
     $provider_id = getOrDefault('provider_id', '', array_keys($all_providers));
     $set_id = getOrDefault('set_id', '', array_keys($all_sets));
@@ -52,18 +54,21 @@ abstract class BaseTab implements Tab {
     $smarty->assign('provider_id', $provider_id);
     $smarty->assign('set_id', $set_id);
 
-
     $smarty->assign('schemas', $this->db->fetchAssoc($this->db->listSchemas($schema, $provider_id, $set_id), 'schema'));
     $smarty->assign('providers', $this->db->fetchAssoc($this->db->listProviders($schema, $provider_id, $set_id)));
     $smarty->assign('sets', $this->db->fetchAssoc($this->db->listSets($schema, $provider_id, $set_id)));
+    error_log('/lists2');
+
     $smarty->assign('recordsBySchema', $this->db->fetchAssoc($this->db->countRecordsBySchema($schema, $provider_id, $set_id)));
     $smarty->assign('recordsByProvider', $this->db->fetchAssoc($this->db->countRecordsByProvider($schema, $provider_id, $set_id)));
     $smarty->assign('recordsBySet', $this->db->fetchAssoc($this->db->countRecordsBySet($schema, $provider_id, $set_id)));
+    error_log('/counts');
 
     $this->schema = $schema == '' ? 'NA' : $schema;
     $this->set_id = $set_id == '' ? 'NA' : $set_id;
     $this->provider_id = $provider_id == '' ? 'NA' : $provider_id;
     $this->count = $this->db->fetchValue($this->db->getCount($this->schema, $this->provider_id, $this->set_id), 'count');
+    error_log('/count');
     $smarty->assign('count', $this->count);
   }
 
