@@ -25,6 +25,7 @@ class IssuesDB extends SQLite3 {
     if ($where != '')
       $this->bindValues($schema, $provider_id, $set_id, $stmt);
 
+    error_log(cleanSql($stmt->getSQL(TRUE)));
     return $stmt->execute();
   }
 
@@ -47,7 +48,8 @@ class IssuesDB extends SQLite3 {
     error_log(cleanSql($sql));
     $stmt = $this->prepare($sql);
     $stmt->bindValue(':value', $value, SQLITE3_TEXT);
-    $this->bindValues($schema, $provider_id, $set_id, $stmt);
+    if ($where != '')
+      $this->bindValues($schema, $provider_id, $set_id, $stmt);
     $stmt->bindValue(':offset', $offset, SQLITE3_INTEGER);
     $stmt->bindValue(':limit', $limit, SQLITE3_INTEGER);
     error_log(cleanSql($stmt->getSQL(TRUE)));
