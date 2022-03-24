@@ -12,16 +12,20 @@ class IssuesDB extends SQLite3 {
     error_log($field . ' -- ' . $value);
     error_log(sprintf('%s %s %s', $schema, $provider_id, $set_id));
     $where = $this->getWhere($schema, $provider_id, $set_id, FALSE);
-    if ($where != '')
-      $where = ' AND ' . $where;
-    $sql = 'SELECT COUNT(*) AS count
+    if ($where == '') {
+      $sql = 'SELECT COUNT(*) AS count
        FROM issue AS i
-       LEFT JOIN file_record fr ON (fr.recordId = i.recordId)
-       LEFT JOIN files AS f ON (fr.file = f.file)
-       WHERE `' . $field . '` = :value ' . $where;
+       WHERE `' . $field . '` = :value';
+    } else {
+      $sql = 'SELECT COUNT(*) AS count
+        FROM issue AS i
+        LEFT JOIN file_record fr ON (fr.recordId = i.recordId)
+        LEFT JOIN files AS f ON (fr.file = f.file)
+        WHERE `' . $field . '` = :value  AND ' . $where;
+    }
     error_log(cleanSql($sql));
     $stmt = $this->prepare($sql);
-    $stmt->bindValue(':value', $value, SQLITE3_TEXT);
+    $stmt->bindValue(':value', $value, preg_match('/:score$/', $value) ? SQLITE3_INTEGER : SQLITE3_TEXT);
     if ($where != '')
       $this->bindValues($schema, $provider_id, $set_id, $stmt);
 
@@ -29,25 +33,33 @@ class IssuesDB extends SQLite3 {
     return $stmt->execute();
   }
 
-  public function getIssues($field, $value, $schema = '', $provider_id = '', $set_id = '', $offset = 0, $limit = 10) {
+  public function getIssues($field, $value, $schema = '', $provider_id = '', $set_id = '', $offset = 0, $limit = 10)
+  {
     error_log($field . ' -- ' . $value);
     error_log(sprintf('%s %s %s', $schema, $provider_id, $set_id));
     $default_order = 'recordid';
     $where = $this->getWhere($schema, $provider_id, $set_id, FALSE);
-    if ($where != '')
+    if ($where == '') {
+      $sql = 'SELECT i.*
+       FROM issue AS i
+       WHERE `' . $field . '` = :value
+       ORDER BY ' . $default_order . '
+       LIMIT :limit
+       OFFSET :offset';
+    } else {
       $where = ' AND ' . $where;
-    $sql = 'SELECT i.*
+      $sql = 'SELECT i.*
        FROM issue AS i
        LEFT JOIN file_record fr ON (fr.recordId = i.recordId)
        LEFT JOIN files AS f ON (fr.file = f.file)
-       WHERE `' . $field . '` = :value ' . $where . '
+       WHERE `' . $field . '` = :value  AND ' . $where . '
        ORDER BY ' . $default_order . ' 
        LIMIT :limit
-       OFFSET :offset
-    ';
+       OFFSET :offset';
+    }
     error_log(cleanSql($sql));
     $stmt = $this->prepare($sql);
-    $stmt->bindValue(':value', $value, SQLITE3_TEXT);
+    $stmt->bindValue(':value', $value, preg_match('/:score$/', $value) ? SQLITE3_INTEGER : SQLITE3_TEXT);
     if ($where != '')
       $this->bindValues($schema, $provider_id, $set_id, $stmt);
     $stmt->bindValue(':offset', $offset, SQLITE3_INTEGER);
