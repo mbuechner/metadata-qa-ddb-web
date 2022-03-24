@@ -14,7 +14,7 @@ class IssuesDB extends SQLite3 {
     $where = $this->getWhere($schema, $provider_id, $set_id, FALSE);
     if ($where != '')
       $where = ' AND ' . $where;
-    $sql = 'SELECT COUNT(i.*) AS count
+    $sql = 'SELECT COUNT(*) AS count
        FROM issue AS i
        LEFT JOIN file_record fr ON (fr.recordId = i.recordId)
        LEFT JOIN files AS f ON (fr.file = f.file)
@@ -22,7 +22,8 @@ class IssuesDB extends SQLite3 {
     error_log(cleanSql($sql));
     $stmt = $this->prepare($sql);
     $stmt->bindValue(':value', $value, SQLITE3_TEXT);
-    $this->bindValues($schema, $provider_id, $set_id, $stmt);
+    if ($where != '')
+      $this->bindValues($schema, $provider_id, $set_id, $stmt);
 
     return $stmt->execute();
   }
