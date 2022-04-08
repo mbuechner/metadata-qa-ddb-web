@@ -3,8 +3,8 @@
 class IssuesDB extends SQLite3 {
   private $db;
 
-  function __construct($dir) {
-    $file = $dir . '/ddb.sqlite';
+  function __construct($dir, $file = 'ddb.sqlite') {
+    $file = $dir . '/' . $file;
     $this->open($file);
   }
 
