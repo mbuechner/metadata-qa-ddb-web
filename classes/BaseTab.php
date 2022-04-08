@@ -1,6 +1,7 @@
 <?php
 
 include_once 'classes/IssuesDB.php';
+include_once 'classes/IssuesDBMySQL.php';
 
 abstract class BaseTab implements Tab {
 
@@ -24,7 +25,11 @@ abstract class BaseTab implements Tab {
     $this->subdirs = array_values(array_diff(scandir($this->dir), ['.', '..']));
     $this->subdir = getOrDefault('subdir', 'DC-DDB-WuerzburgIMG', $this->subdirs);
     $this->lang = getOrDefault('lang', 'en', ['en', 'de']);
-    $this->db = new IssuesDB($this->dir);
+    if (isset($this->configuration['MY_USER'])) {
+      $this->db = new IssuesDBMySQL($this->configuration['MY_USER'], $this->configuration['MY_PASSWORD'], $this->configuration['MY_DB']);
+    } else {
+      $this->db = new IssuesDB($this->dir);
+    }
   }
 
   public function prepareData(Smarty &$smarty) {
@@ -42,7 +47,8 @@ abstract class BaseTab implements Tab {
     $smarty->assign('lastUpdate', '2021-07-30');
 
     error_log('start');
-    $all_schemas = $this->db->fetchAssoc($this->db->listSchemas(), 'schema');
+    $all_schemas = $this->db->fetchAssoc($this->db->listSchemas(), 'metadata_schema', true);
+    error_log('all_schemas: ' . json_encode($all_schemas));
     $all_providers = $this->db->fetchAssoc($this->db->listProviders());
     $all_sets = $this->db->fetchAssoc($this->db->listSets());
     error_log('/lists');
@@ -54,7 +60,7 @@ abstract class BaseTab implements Tab {
     $smarty->assign('provider_id', $provider_id);
     $smarty->assign('set_id', $set_id);
 
-    $smarty->assign('schemas', $this->db->fetchAssoc($this->db->listSchemas($schema, $provider_id, $set_id), 'schema'));
+    $smarty->assign('schemas', $this->db->fetchAssoc($this->db->listSchemas($schema, $provider_id, $set_id), 'metadata_schema'));
     $smarty->assign('providers', $this->db->fetchAssoc($this->db->listProviders($schema, $provider_id, $set_id)));
     $smarty->assign('sets', $this->db->fetchAssoc($this->db->listSets($schema, $provider_id, $set_id)));
     error_log('/lists2');

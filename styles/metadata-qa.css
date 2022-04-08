@@ -654,6 +654,8 @@ table#criteria-table td.id {
   padding-right: 10px;
 }
 
+table#criteria-table tr.criterium td.not-measured {color: #cccccc;}
+
 tr.criteria-group, tr.criteria-group td {
   /* background-color: #37ba00; */
   /* border-bottom: 1px solid #37ba00; */
@@ -673,13 +675,15 @@ tr.criteria-group td {
 table.values {
   margin: 3px;
 }
+
 table.values td.value {
   width: 50px;
+  text-align: center;
 }
 
 table.values td.frequency {
   width: 50px;
-  text-align: right;
+  text-align: center;
 }
 
 table.values td.bar  {
@@ -728,4 +732,13 @@ table.values td.width50 {
   color: #000;
   background-color: #eeeeee;
   border-color: #fff;
+}
+
+.bg-passed {background-color: #e2f0d9;}
+.bg-failed {background-color: #fbe5d6;}
+.bg-NA {background-color: #ededed;}
+
+.status {
+  width: 100px;
+  text-align: center;
 }
