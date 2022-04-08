@@ -723,3 +723,9 @@ table.values td.width50 {
   max-width: 50px;
   background-color: #eeeeee;
 }
+
+.btn-info, .btn-info:hover {
+  color: #000;
+  background-color: #eeeeee;
+  border-color: #fff;
+}
