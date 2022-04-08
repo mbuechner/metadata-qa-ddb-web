@@ -35,8 +35,10 @@
     </li>
   </ul>
 </nav>
-<p>
-  <form method="get" action="?">
+<form method="get" action="?">
+<div class="row">
+
+  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
     <select id="schemas" name="schema" style="width: 300px;">
       <option value="">all</option>
       {foreach $schemas as $id => $_schema}
@@ -44,7 +46,9 @@
           {if isset($recordsBySchema[$id])}{$recordsBySchema[$id]['count']}{else}0{/if} records)</option>
       {/foreach}
     </select>
+  </div>
 
+  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
     <select id="providers" name="provider_id" style="width: 300px;">
       <option value="">all</option>
       {foreach $providers as $id => $provider}
@@ -52,7 +56,9 @@
             {if isset($recordsByProvider[$id])}{$recordsByProvider[$id]['count']}{else}0{/if} records)</option>
       {/foreach}
     </select>
+  </div>
 
+  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
     <select id="sets" name="set_id" style="width: 300px;">
       <option value="">all</option>
       {foreach $sets as $id => $set}
@@ -60,8 +66,24 @@
             {if isset($recordsBySet[$id])}{$recordsBySet[$id]['count']}{else}0{/if} records)</option>
       {/foreach}
     </select>
-    <br/>
-      record ID: <input type="text" name="record_id">
-    <input type="submit">
+  </div>
+  </div>
+  <div class="row">
+  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
+  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+    <p style="margin-top: 0.5rem">
+      record ID:<br/>
+      <input type="text" name="record_id">
+    </p>
+  </div>
+  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+    <p style="margin-top: 2rem" class="text-right">
+      <button type="submit" class="btn btn-primary btn-lg">Select</button>
+      <button type="reset" class="btr btn-info">cancel</button>
+    </p>
+    <p>
+    </p>
+  </div>
+
+  </div>
   </form>
-</p>
