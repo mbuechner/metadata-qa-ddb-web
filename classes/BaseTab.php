@@ -33,6 +33,9 @@ abstract class BaseTab implements Tab {
   }
 
   public function prepareData(Smarty &$smarty) {
+    global $tab;
+    error_log('tab: ' . $tab);
+
     $smarty->assign('lang', $this->lang);
     $smarty->assign('tab', $this->tab);
     $smarty->assign('subdirs', $this->subdirs);
@@ -47,22 +50,28 @@ abstract class BaseTab implements Tab {
     $smarty->assign('lastUpdate', '2021-07-30');
 
     error_log('start');
-    $all_schemas = $this->db->fetchAssoc($this->db->listSchemas(), 'metadata_schema', true);
-    error_log('all_schemas: ' . json_encode($all_schemas));
+    $all_schemas = $this->db->fetchAssoc($this->db->listSchemas(), 'metadata_schema');
     $all_providers = $this->db->fetchAssoc($this->db->listProviders());
     $all_sets = $this->db->fetchAssoc($this->db->listSets());
-    error_log('/lists');
     $schema = getOrDefault('schema', '', array_keys($all_schemas));
     $provider_id = getOrDefault('provider_id', '', array_keys($all_providers));
     $set_id = getOrDefault('set_id', '', array_keys($all_sets));
+    $record_id = getOrDefault('record_id', '');
+    if ($record_id != '') {
+      header('Location: ?tab=record&id=' . $record_id);
+      return;
+    }
+
     $smarty->assign('filtered', ($schema != '' || $provider_id != '' || $set_id != ''));
     $smarty->assign('schema', $schema);
     $smarty->assign('provider_id', $provider_id);
     $smarty->assign('set_id', $set_id);
 
-    $smarty->assign('schemas', $this->db->fetchAssoc($this->db->listSchemas($schema, $provider_id, $set_id), 'metadata_schema'));
-    $smarty->assign('providers', $this->db->fetchAssoc($this->db->listProviders($schema, $provider_id, $set_id)));
-    $smarty->assign('sets', $this->db->fetchAssoc($this->db->listSets($schema, $provider_id, $set_id)));
+    // $a = $this->db->fetchAssoc($this->db->listSchemas($schema, $provider_id, $set_id), 'metadata_schema');
+    $smarty->assign('schemas', $all_schemas);
+    // $b = $this->db->fetchAssoc($this->db->listProviders($schema, $provider_id, $set_id));
+    $smarty->assign('providers', $all_providers);
+    $smarty->assign('sets', $all_sets); // $this->db->fetchAssoc($this->db->listSets($schema, $provider_id, $set_id)));
     error_log('/lists2');
 
     $smarty->assign('recordsBySchema', $this->db->fetchAssoc($this->db->countRecordsBySchema($schema, $provider_id, $set_id)));

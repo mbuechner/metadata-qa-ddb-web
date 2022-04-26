@@ -18,12 +18,12 @@ $map = [
 include_once('classes/Tab.php');
 include_once('classes/BaseTab.php');
 $class = isset($map[$tab]) ? $map[$tab] : 'Completeness';
-$tab = createTab($class);
-$tab->prepareData($smarty);
+$controller = createTab($class);
+$controller->prepareData($smarty);
 
 if ($ajax == 1) {
-  if (!is_null($tab->getAjaxTemplate()))
-    $smarty->display($tab->getAjaxTemplate());
-} elseif ($tab->getOutputType() == 'html')
-  $smarty->display($tab->getTemplate());
+  if (!is_null($controller->getAjaxTemplate()))
+    $smarty->display($controller->getAjaxTemplate());
+} elseif ($controller->getOutputType() == 'html')
+  $smarty->display($controller->getTemplate());
 

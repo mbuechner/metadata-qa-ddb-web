@@ -24,6 +24,7 @@ class Record extends BaseTab {
       } else {
         $smarty->assign('record', $xml);
         $smarty->assign('issues', $this->getIssues($id));
+        $smarty->assign('filename', $this->db->fetchValue($this->db->getFilenameByRecordId($id), 'file'));
       }
     }
     if ($this->action == 'downloadFile') {
@@ -31,7 +32,6 @@ class Record extends BaseTab {
       error_log('filename: ' . $filename);
       $this->outputType = 'none';
       $this->downloadFile($filename, 'application/xml');
-
     }
   }
 
@@ -49,7 +49,7 @@ class Record extends BaseTab {
   }
 
   private function getIssues($id) {
-    $issues = $this->db->getIssuesByRecordId($id)->fetchArray(SQLITE3_ASSOC);
+    $issues = $this->db->getIssuesByRecordId($id)->fetch(PDO::FETCH_ASSOC);
     foreach ($issues as $key => $value) {
       if (preg_match('/^(.*):(.*)$/', $key, $matches)) {
         unset($issues[$key]);
@@ -60,7 +60,6 @@ class Record extends BaseTab {
         $issues[$key2][$matches[2]] = $value;
       }
     }
-    error_log(json_encode($issues));
     return $issues;
   }
 }

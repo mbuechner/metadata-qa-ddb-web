@@ -33,7 +33,7 @@ class Records extends BaseTab {
       $page * $limit, $limit
     );
     $recordIds = [];
-    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
       $recordIds[] = $row['recordId'];
     }
     error_log('recordIds: '. join(', ', $recordIds));
