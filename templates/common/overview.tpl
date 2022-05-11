@@ -24,10 +24,17 @@
           <td class="id">{$id}</td>
           <td style="width: 600px"{if !$measured}class="not-measured"{/if}>
             {$factor->description}
-            {if isset($factor->criterium)}
-              <div style="margin-left: 2em; color: #999999">
-                {str_replace('|', '<br>', $factor->criterium)}
-              </div>
+            {if $measured}
+              {if isset($factor->criterium)}
+                <div style="margin-left: 1em; color: #666; text-indent: -1em">
+                  → <em>criterium</em>: {str_replace('|', '<br>', $factor->criterium)}
+                </div>
+              {/if}
+              {if isset($factor->scoring)}
+                <div style="margin-left: 1em; color: #666; text-indent: -1em">
+                  → <em>scoring</em>: {$factor->scoring}
+                </div>
+              {/if}
             {/if}
           </td>
           {if isset($frequency[$statusId]) && !is_null($frequency[$statusId][0]['value'])}
