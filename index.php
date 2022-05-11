@@ -5,6 +5,7 @@ $smarty = createSmarty('templates');
 
 $tab = getOrDefault('tab', 'overview', ['overview', 'records', 'record', 'about', 'downloader']);
 $ajax = getOrDefault('ajax', 0, [0, 1]);
+$language = getOrDefault('language', 'en', ['en', 'de']);
 
 $map = [
   'overview' => 'Overview',

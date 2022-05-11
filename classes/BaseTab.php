@@ -114,6 +114,27 @@ abstract class BaseTab implements Tab {
   }
 
   private function getFactors($lang) {
+    $entries = parse_ini_file(sprintf("locale.%s.ini", $lang), false, INI_SCANNER_RAW);
+    error_log(json_encode($entries));
+
+    // $factors = readCsv('factors.csv', 'id');
+    $factors = [];
+    foreach ($entries as $key => $value) {
+      preg_match('/^(Q-\d)(\.\d)?.(description|criterium)$/', $key, $matches);
+      $id = $matches[1] . $matches[2];
+      if (!isset($factors[$id]))
+        $factors[$id] = (object)[];
+
+      $factors[$id]->isGroup = ($matches[2] == "");
+      $factors[$id]->{$matches[3]} = $value;
+    }
+    return $factors;
+  }
+
+  private function getFactors2($lang) {
+    $locale = parse_ini_file(sprintf("locale.%s.ini", $lang), false, INI_SCANNER_RAW);
+    error_log(json_encode($locale));
+
     $factors = readCsv('factors.csv', 'id');
     foreach ($factors as $factor) {
       $factor->isGroup = preg_match('/^Q-\d$/', $factor->id);

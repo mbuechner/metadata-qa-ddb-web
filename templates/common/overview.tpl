@@ -22,7 +22,14 @@
           {/if}
 
           <td class="id">{$id}</td>
-          <td style="width: 600px"{if !$measured}class="not-measured"{/if}>{$factor->description}</td>
+          <td style="width: 600px"{if !$measured}class="not-measured"{/if}>
+            {$factor->description}
+            {if isset($factor->criterium)}
+              <div style="margin-left: 2em; color: #999999">
+                {str_replace('|', '<br>', $factor->criterium)}
+              </div>
+            {/if}
+          </td>
           {if isset($frequency[$statusId]) && !is_null($frequency[$statusId][0]['value'])}
             {assign var="passed" value=0}
             {assign var="failed" value=0}
