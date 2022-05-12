@@ -4,8 +4,9 @@
   {include 'common/nav-tabs.tpl'}
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane active" id="factors" role="tabpanel" aria-labelledby="factors-tab">
+      {assign var="max" value=(($page+1) * $limit)}
       <h2>
-        Record IDs ({($page * $limit) + 1}&mdash;{if ((($page+1) * $limit) < $recordCount)}{($page+1) * $limit}{else}{$recordCount}{/if})
+        Record IDs ({($page * $limit) + 1}&mdash;{if ($max < $recordCount)}{$max}{else}{$recordCount}{/if})
       </h2>
 
       <p>criteria:
