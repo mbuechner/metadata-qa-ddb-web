@@ -6,7 +6,7 @@
     <th colspan="2">criterium</th>
     <th class="bg-passed status">passed</th>
     <th class="bg-failed status">failed</th>
-    <th class="bg-NA status">N/A</th>
+    <th class="bg-NA status">NA</th>
     <th></th>
   </tr>
   </thead>
