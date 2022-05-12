@@ -26,9 +26,7 @@
             {$factor->description}
             {if $measured}
               {if isset($factor->criterium)}
-                <div style="margin-left: 1em; color: #666; text-indent: -1em">
-                  → <em>criterium</em>: {str_replace('|', '<br>', $factor->criterium)}
-                </div>
+                <em title='{str_replace('|', "\n", $factor->criterium)}'><i class="fa fa-question"></i></em>
               {/if}
               {if isset($factor->scoring)}
                 <div style="margin-left: 1em; color: #666; text-indent: -1em">
