@@ -6,7 +6,14 @@
     <div class="tab-pane active" id="record" role="tabpanel" aria-labelledby="factors-tab">
       <h2>Record view <span>{$id}</span></h2>
 
-      <p>file: {$filename}</p>
+      <ul>
+        <li>metadata schema: {$filedata['metadata_schema']}</li>
+        <li>provider: {$filedata['provider_name']}</li>
+        <li>dataset name: {$filedata['set_name']}</li>
+        <li>file: {$filedata['file']}</li>
+        <li>datum: {$filedata['datum']}</li>
+        <li>size: {$filedata['size']}</li>
+      </ul>
 
       <xmp>{$record}</xmp>
       <p>

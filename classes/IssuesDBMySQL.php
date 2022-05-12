@@ -172,6 +172,14 @@ class IssuesDBMySQL {
     return $stmt;
   }
 
+  public function getFileDataByRecordId($record_id = '') {
+    $stmt = $this->db->prepare('SELECT f.* FROM file_record AS fr JOIN file AS f ON (f.file = fr.file) WHERE recordId = :record_id');
+    $stmt->bindValue(':record_id', $record_id, SQLITE3_TEXT);
+
+    $stmt->execute();
+    return $stmt;
+  }
+
   public function countRecordsBySchema($schema = '', $provider_id = '', $set_id = '') {
     $where = $this->getWhere($schema, $provider_id, $set_id);
     $stmt = $this->db->prepare('SELECT metadata_schema AS id, COUNT(*) AS count

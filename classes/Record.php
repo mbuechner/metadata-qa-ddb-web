@@ -25,6 +25,7 @@ class Record extends BaseTab {
         $smarty->assign('record', $xml);
         $smarty->assign('issues', $this->getIssues($id));
         $smarty->assign('filename', $this->db->fetchValue($this->db->getFilenameByRecordId($id), 'file'));
+        $smarty->assign('filedata', $this->db->getFileDataByRecordId($id)->fetch(PDO::FETCH_ASSOC));
       }
     }
     if ($this->action == 'downloadFile') {
