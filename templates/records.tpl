@@ -14,11 +14,11 @@
         {/if}
         {$recordCount} records
       </p>
-      <ul>
+      <ol start="{($page * $limit) + 1}">
         {foreach $recordIds as $recodId}
           <li><a href="?&tab=record&id={$recodId}">{$recodId}</a></li>
         {/foreach}
-      </ul>
+      </ol>
 
       {if ceil($recordCount / $limit) > 1}
         <p>
