@@ -4,7 +4,7 @@
   {include 'common/nav-tabs.tpl'}
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane active" id="factors" role="tabpanel" aria-labelledby="factors-tab">
-      <h2>Record IDs</h2>
+      <h2>Record IDs ({($page * $limit) + 1}&mdash;{($page+1 * $limit)})</h2>
 
       <p>criteria:
         {if ($type == 'score')}
@@ -12,8 +12,8 @@
         {else}
           {$factors[$factor]->description} = {if $value == "1"}passed{elseif $value == "0"}failed{else}{$value}{/if}<br/>
         {/if}
-
-        {$recordCount} records</p>
+        {$recordCount} records
+      </p>
       <ul>
         {foreach $recordIds as $recodId}
           <li><a href="?&tab=record&id={$recodId}">{$recodId}</a></li>

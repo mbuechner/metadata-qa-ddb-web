@@ -15,7 +15,7 @@ class Records extends BaseTab {
     $value = getOrDefault('value', '');
     // $value = getOrDefault('value', '1', ['0', '1', 'NA']);
     $page = getOrDefault('page', 0);
-    $limit = getOrDefault('limit', 100);
+    $limit = getOrDefault('limit', 100, [25, 50, 100]);
     if (preg_match('/^(.*?):(score|status)$/', $field, $matches)) {
       $factor = $matches[1];
       $type = $matches[2];
