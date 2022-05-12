@@ -11,8 +11,8 @@
         <li>provider: {$filedata['provider_name']}</li>
         <li>dataset name: {$filedata['set_name']}</li>
         <li>file: {$filedata['file']}</li>
-        <li>datum: {$filedata['datum']}</li>
-        <li>size: {$filedata['size']}</li>
+        <li>last modified: {$filedata['datum']}</li>
+        <li>file size: {$filedata['size']}</li>
       </ul>
 
       <xmp>{$record}</xmp>
