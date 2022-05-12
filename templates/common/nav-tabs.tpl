@@ -78,7 +78,7 @@
       <p style="margin-top: 0.5rem">
         <label class="label label-info col-form-label" for="record_id">record ID</label><br/>
         <input type="text" name="record_id" id="record_id"><br>
-        type in a complete record number
+        <span style="color: #999999">type in a complete record number</span>
       </p>
     </div>
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
