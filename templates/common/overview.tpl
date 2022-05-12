@@ -28,11 +28,6 @@
               {if isset($factor->criterium)}
                 <em title='{str_replace('|', "\n", $factor->criterium)}'><i class="fa fa-question"></i></em>
               {/if}
-              {if isset($factor->scoring)}
-                <div style="margin-left: 1em; color: #666; text-indent: -1em">
-                  → <em>scoring</em>: {$factor->scoring}
-                </div>
-              {/if}
             {/if}
           </td>
           {if isset($frequency[$statusId]) && !is_null($frequency[$statusId][0]['value'])}
@@ -61,7 +56,12 @@
             {if isset($frequency[$scoreId]) && !is_null($frequency[$scoreId][0]['value'])}
               <table class="values">
                 <tr>
-                  <td class="">score</td>
+                  <td class="">
+                    score
+                    {if isset($factor->scoring)}
+                      <em title='{$factor->scoring}'><i class="fa fa-question"></i></em>
+                    {/if}
+                  </td>
                   {foreach $frequency[$scoreId] as $record name="records"}
                     <td class="value">
                       <a href="?&tab=records&field={$scoreId}&value={$record['value']}{if !empty($schema)}&schema={$schema}{/if}{if !empty($provider_id)}&provider_id={$provider_id}{/if}{if !empty($set_id)}&set_id={$set_id}{/if}">
