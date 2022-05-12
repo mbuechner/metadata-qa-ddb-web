@@ -47,9 +47,9 @@
             <td class="bg-failed status">{$failed}</td>
             <td class="bg-NA status">{$NA}</td>
           {else}
-            <td class="bg-passed status"></td>
-            <td class="bg-failed status"></td>
-            <td class="bg-NA status"></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
           {/if}
           <td>
             {assign var="scoreId" value={$id|cat:':score'}}
