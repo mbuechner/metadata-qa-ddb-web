@@ -36,7 +36,7 @@
                 <td>
                   {if isset($factors[$id])}
                     {$factors[$id]->description}
-                    {if isset($factor->criterium)}
+                    {if isset($factors[$id]->criterium)}
                       <em title='{str_replace('|', "\n", $factors[$id]->criterium)}'><i class="fa fa-question"></i></em>
                     {/if}
                   {/if}
