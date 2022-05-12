@@ -33,7 +33,14 @@
             {if $id != 'recordId'}
               <tr>
                 <td>{$id}</td>
-                <td>{if isset($factors[$id])}{$factors[$id]->description}{/if}</td>
+                <td>
+                  {if isset($factors[$id])}
+                    {$factors[$id]->description}
+                    {if isset($factor->criterium)}
+                      <em title='{str_replace('|', "\n", $factors[$id]->criterium)}'><i class="fa fa-question"></i></em>
+                    {/if}
+                  {/if}
+                </td>
                 {if isset($value['status'])}
                   <td class="result {if $value['status'] == "1"}passed{elseif $value['status'] == "0"}failed{else}{$value['status']}{/if}">
                     {if $value['status'] == "1"}passed{elseif $value['status'] == "0"}failed{else}{$value['status']}{/if}
