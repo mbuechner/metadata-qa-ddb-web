@@ -21,8 +21,8 @@
             {assign var="measured" value=false}
           {/if}
 
-          <td class="id">{$id}</td>
-          <td style="width: 600px"{if !$measured}class="not-measured"{/if}>
+          <td class="id"{if !$measured} class="not-measured"{/if}>{$id}</td>
+          <td style="width: 600px"{if !$measured} class="not-measured"{/if}>
             {$factor->description}
             {if $measured}
               {if isset($factor->criterium)}
