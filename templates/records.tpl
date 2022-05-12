@@ -25,7 +25,7 @@
           paging:
           {for $i=0; $i<ceil($recordCount / $limit); $i++}
             {if $i != $page}
-              <a href="?&tab=records&field={$field}&value={$value}&schema={$schema}&provider_id={$provider_id}&set_id={$set_id}&page={$i}">{$i+1}</a>
+              <a title="{($i * $limit) + 1}&mdash;{($i+1) * $limit}" href="?&tab=records&field={$field}&value={$value}&schema={$schema}&provider_id={$provider_id}&set_id={$set_id}&page={$i}">{$i+1}</a>
             {else}
               {$i+1}
             {/if}
