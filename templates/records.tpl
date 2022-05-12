@@ -4,7 +4,9 @@
   {include 'common/nav-tabs.tpl'}
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane active" id="factors" role="tabpanel" aria-labelledby="factors-tab">
-      <h2>Record IDs ({($page * $limit) + 1}&mdash;{($page+1) * $limit})</h2>
+      <h2>
+        Record IDs ({($page * $limit) + 1}&mdash;{if ((($page+1) * $limit) < $recordCount)}{($page+1) * $limit}{else}{$recordCount}{/if})
+      </h2>
 
       <p>criteria:
         {if ($type == 'score')}
