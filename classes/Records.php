@@ -34,7 +34,7 @@ class Records extends BaseTab {
     );
     $recordIds = [];
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-      $recordIds[] = $row['recordId'];
+      $recordIds[] = $row;
     }
     error_log('recordIds: '. join(', ', $recordIds));
     $smarty->assign('recordCount', $recordCount);

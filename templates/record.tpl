@@ -6,7 +6,7 @@
     <div class="tab-pane active" id="record" role="tabpanel" aria-labelledby="factors-tab">
       <h2>Record view <span>{$id}</span></h2>
 
-      <p>in {$filename}</p>
+      <p>file: {$filename}</p>
 
       <xmp>{$record}</xmp>
       <p>

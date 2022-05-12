@@ -42,14 +42,16 @@ class IssuesDBMySQL {
     $default_order = 'recordid';
     $where = $this->getWhere($schema, $provider_id, $set_id, FALSE);
     if ($where == '') {
-      $sql = 'SELECT i.*
+      $sql = 'SELECT i.*, f.metadata_schema, f.provider_name
        FROM issue AS i
+       LEFT JOIN file_record fr ON (fr.recordId = i.recordId)
+       LEFT JOIN file AS f ON (fr.file = f.file)
        WHERE `' . $field . '` = :value
        ORDER BY ' . $default_order . '
        LIMIT :limit
        OFFSET :offset';
     } else {
-      $sql = 'SELECT i.*
+      $sql = 'SELECT i.*, f.metadata_schema, f.provider_name
        FROM issue AS i
        LEFT JOIN file_record fr ON (fr.recordId = i.recordId)
        LEFT JOIN file AS f ON (fr.file = f.file)

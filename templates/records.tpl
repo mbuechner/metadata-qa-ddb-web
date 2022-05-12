@@ -18,8 +18,8 @@
         {$recordCount} records
       </p>
       <ol start="{($page * $limit) + 1}">
-        {foreach $recordIds as $recodId}
-          <li><a href="?&tab=record&id={$recodId}">{$recodId}</a></li>
+        {foreach $recordIds as $row}
+          <li><a href="?&tab=record&id={$row['recordId']}">{$row['recordId']}</a> ({$row['metadata_schema']}, from {$row['provider_name']})</li>
         {/foreach}
       </ol>
 
