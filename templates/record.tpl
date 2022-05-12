@@ -41,7 +41,14 @@
                 {else}
                   <td></td>
                 {/if}
-                <td class="result">{if isset($value['score'])}{$value['score']}{/if}</td>
+                <td class="result">
+                  {if isset($value['score'])}
+                    {$value['score']}
+                    {if isset($factors[$id]->scoring)}
+                      <em title='{$factors[$id]->scoring}'><i class="fa fa-question"></i></em>
+                    {/if}
+                  {/if}
+                </td>
               </tr>
             {/if}
           {/foreach}
