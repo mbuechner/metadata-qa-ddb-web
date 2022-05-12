@@ -7,7 +7,9 @@
       <h2>Record view {if (isset($id) && !empty($id))}<span>{$id}</span>{/if}</h2>
 
       {if (!isset($id) || empty($id))}
-        <p>No record identifier has been given</p>
+        <p>No record identifier has been given.</p>
+      {elseif (!isset($record) || empty($record))}
+        <p>This record does not exist. Type in a complete record number!</p>
       {else}
 
         <ul>
