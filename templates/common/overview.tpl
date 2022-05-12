@@ -84,3 +84,5 @@
     {/foreach}
   </tbody>
 </table>
+
+<p>Criteria that are not yet implemented, or not applicable to a particular metadata schema, are <span class="not-measured">greyed out</span></p>
