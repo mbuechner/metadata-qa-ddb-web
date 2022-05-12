@@ -48,8 +48,8 @@
             <td class="bg-NA status">{$NA}</td>
           {else}
             <td {if $measured || $factor->isGroup}class="bg-passed status"{/if}></td>
-            <td class="bg-failed status"></td>
-            <td class="bg-NA status"></td>
+            <td {if $measured || $factor->isGroup}class="bg-failed status"{/if}></td>
+            <td {if $measured || $factor->isGroup}class="bg-NA status"{/if}></td>
           {/if}
           <td>
             {assign var="scoreId" value={$id|cat:':score'}}
