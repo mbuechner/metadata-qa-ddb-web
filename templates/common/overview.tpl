@@ -63,7 +63,7 @@
                     {/if}
                   </td>
                   {foreach $frequency[$scoreId] as $record name="records"}
-                    {if {$record['value']} != 'NA'}
+                    {if $record['value'] != 'NA'}
                       <td class="value">
                         <a href="?&tab=records&field={$scoreId}&value={$record['value']}{if !empty($schema)}&schema={$schema}{/if}{if !empty($provider_id)}&provider_id={$provider_id}{/if}{if !empty($set_id)}&set_id={$set_id}{/if}">
                           {$record['value']}
@@ -75,7 +75,7 @@
                 <tr>
                   <td class="">records</td>
                   {foreach $frequency[$scoreId] as $record name="records"}
-                    {if {$record['value']} != 'NA'}
+                    {if $record['value'] != 'NA'}
                       <td class="frequency">{$record['frequency']}</td>
                     {/if}
                   {/foreach}
