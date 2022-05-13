@@ -217,6 +217,15 @@ USING (file) ' . $where . ' GROUP BY set_id');
     return $stmt;
   }
 
+  public function getLastUpdate($schema = '', $provider_id = '', $set_id = '') {
+    $where = $this->getWhere($schema, $provider_id, $set_id);
+    $stmt = $this->db->prepare('SELECT max(datum) as last_update FROM file ' . $where);
+    $this->bindValues($schema, $provider_id, $set_id, $stmt);
+
+    $stmt->execute();
+    return $stmt;
+  }
+
   public function fetchValue(PDOStatement $result, $key) {
     return $result->fetch(PDO::FETCH_ASSOC)[$key];
   }

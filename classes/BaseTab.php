@@ -47,7 +47,7 @@ abstract class BaseTab implements Tab {
     $smarty->assign('factors', $this->getFactors($this->lang));
     // $smarty->assign('frequency', readCsv($this->getFilePath('frequency.csv'), 'field', TRUE));
     // $smarty->assign('variability', readCsv($this->getFilePath('variability.csv'), 'field', FALSE));
-    $smarty->assign('lastUpdate', '2021-07-30');
+    $smarty->assign('lastUpdate', $this->db->fetchValue($this->db->getLastUpdate(), 'last_update'));
 
     error_log('start');
     $all_schemas = $this->db->fetchAssoc($this->db->listSchemas(), 'metadata_schema');
