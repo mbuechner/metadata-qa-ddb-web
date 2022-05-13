@@ -105,6 +105,7 @@ class IssuesDBMySQL {
 
   public function getFrequency($schema = '', $provider_id = '', $set_id = '') {
     $where = $this->getWhere($schema, $provider_id, $set_id);
+    error_log('getFrequency: ' . $where);
     $stmt = $this->db->prepare('SELECT field, value, frequency FROM frequency ' . $where);
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
     error_log(cleanSql($this->getSQL($stmt)));
