@@ -295,12 +295,18 @@ USING (file) ' . $where . ' GROUP BY set_id');
   private function bindValues($schema, $provider_id, $set_id, &$stmt): void
   {
     if ($schema != '' || $provider_id != '' || $set_id != '') {
-      if ($schema != '')
+      if ($schema != '') {
+        error_log(':metadata_schema = ' . $schema);
         $stmt->bindValue(':metadata_schema', $schema, SQLITE3_TEXT);
-      if ($provider_id != '')
+      }
+      if ($provider_id != '') {
+        error_log(':provider_id = ' . $provider_id);
         $stmt->bindValue(':provider_id', $provider_id, SQLITE3_TEXT);
-      if ($set_id != '')
+      }
+      if ($set_id != '') {
+        error_log(':set_id = ' . $set_id);
         $stmt->bindValue(':set_id', $set_id, SQLITE3_TEXT);
+      }
     }
   }
 
