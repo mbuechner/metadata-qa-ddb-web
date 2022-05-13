@@ -76,7 +76,7 @@
                   <td class="">records</td>
                   {foreach $frequency[$scoreId] as $record name="records"}
                     {if $record['value'] != 'NA'}
-                      <td class="frequency">{$record['frequency']}</td>
+                      <td class="frequency">{$record['frequency']} {json_encode($record)}</td>
                     {/if}
                   {/foreach}
                 </tr>
