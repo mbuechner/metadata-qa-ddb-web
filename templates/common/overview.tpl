@@ -1,5 +1,31 @@
 <h3>{$count} records</h3>
 <p><a href="?tab=downloader&action=downloadFile&subdir={$subdir}">download file</a></p>
+
+<p>average score: <strong>{sprintf("%.2f", $totalScore)}</strong> (not measured: {$notMeasured} records)</p>
+<table class="values">
+  <caption>score distribution</caption>
+  <tr>
+    <td class="">score</td>
+    {foreach $frequency['ruleCatalog:score'] as $record name="records"}
+      {if !is_null($record['value']) && $record['value'] != 'NA'}
+        <td class="value">
+          <a href="?&tab=records&field=ruleCatalog:score&value={$record['value']}{if !empty($schema)}&schema={$schema}{/if}{if !empty($provider_id)}&provider_id={$provider_id}{/if}{if !empty($set_id)}&set_id={$set_id}{/if}">
+            {$record['value']}
+          </a>
+        </td>
+      {/if}
+   {/foreach}
+  </tr>
+  <tr>
+    <td class="">records</td>
+    {foreach $frequency['ruleCatalog:score'] as $record name="records"}
+      {if !is_null($record['value']) && $record['value'] != 'NA'}
+        <td class="frequency">{$record['frequency']}</td>
+      {/if}
+    {/foreach}
+  </tr>
+</table>
+
 <table id="criteria-table">
   <thead>
   <tr>
@@ -93,3 +119,6 @@
   Criteria that are not yet implemented, or not applicable to a particular metadata schema,
   are <span style="color: #cccccc;">greyed out</span>
 </p>
+
+
+
