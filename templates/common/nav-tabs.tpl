@@ -43,8 +43,7 @@
       <select id="schemas" name="schema" style="width: 300px;">
         <option value="">all</option>
         {foreach $schemas as $id => $_schema}
-          <option value="{$id}"{if $id == $schema} selected="selected"{/if}>{$id} ({$_schema['count']} files,
-            {if isset($recordsBySchema[$id])}{$recordsBySchema[$id]['count']}{else}0{/if} records)</option>
+          <option value="{$id}"{if $id == $schema} selected="selected"{/if}>{$id}</option>
         {/foreach}
       </select>
     </div>
@@ -54,8 +53,7 @@
       <select id="providers" name="provider_id" style="width: 300px;">
         <option value="">all</option>
         {foreach $providers as $id => $provider}
-          <option value="{$id}"{if $id == $provider_id} selected="selected"{/if}>{$provider['name']} ({$provider['count']} files,
-            {if isset($recordsByProvider[$id])}{$recordsByProvider[$id]['count']}{else}0{/if} records)</option>
+          <option value="{$id}"{if $id == $provider_id} selected="selected"{/if}>{$provider['name']}</option>
         {/foreach}
       </select>
     </div>
@@ -65,8 +63,7 @@
       <select id="sets" name="set_id" style="width: 300px;">
         <option value="">all</option>
         {foreach $sets as $id => $set}
-          <option value="{$id}"{if $id == $set_id} selected="selected"{/if}>{$set['name']} ({$set['count']} files,
-            {if isset($recordsBySet[$id])}{$recordsBySet[$id]['count']}{else}0{/if} records)</option>
+          <option value="{$id}"{if $id == $set_id} selected="selected"{/if}>{$set['name']}</option>
         {/foreach}
       </select>
     </div>
