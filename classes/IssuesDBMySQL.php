@@ -174,7 +174,17 @@ class IssuesDBMySQL {
 
   public function listSets($schema = '', $provider_id = '', $set_id = '') {
     $where = $this->getWhere($schema, $provider_id, $set_id);
-    $stmt = $this->db->prepare('SELECT set_id AS id, set_name AS name, COUNT(*) AS count FROM file ' . $where . ' GROUP BY set_id, set_name');
+    if ($where == '') {
+      $stmt = $this->db->prepare(
+        'SELECT set_id AS id, set_name AS name, COUNT(*) AS count FROM file GROUP BY set_id, set_name');
+    } else {
+      $stmt = $this->db->prepare(
+        'SELECT set_id AS id, set_name AS name, COUNT(*) AS count
+         FROM file AS f 
+         LEFT JOIN file_record AS fr ON (f.file = fr.file)'
+        . $where
+        . ' GROUP BY set_id, set_name');
+    }
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
 
     $stmt->execute();
