@@ -77,22 +77,16 @@ abstract class BaseTab implements Tab {
     $smarty->assign('providers', $all_providers);
     $smarty->assign('providersStatistic', $this->db->fetchAssoc($this->db->listProviders($schema, $provider_id, $set_id)));
     $smarty->assign('sets', $all_sets);
-    $a = $this->db->fetchAssoc($this->db->listSets($schema, $provider_id, $set_id));
-    error_log('listSets: ' . json_encode($a));
-    error_log('/lists2');
+    $smarty->assign('setsStatistic', $this->db->fetchAssoc($this->db->listSets($schema, $provider_id, $set_id)));
 
     $smarty->assign('recordsBySchema', $this->db->fetchAssoc($this->db->countRecordsBySchema($schema, $provider_id, $set_id)));
-    error_log('/countRecordsBySchema');
     $smarty->assign('recordsByProvider', $this->db->fetchAssoc($this->db->countRecordsByProvider($schema, $provider_id, $set_id)));
-    error_log('/countRecordsByProvider');
     $smarty->assign('recordsBySet', $this->db->fetchAssoc($this->db->countRecordsBySet($schema, $provider_id, $set_id)));
-    error_log('/countRecordsBySet');
 
     $this->schema = $schema == '' ? 'NA' : $schema;
     $this->set_id = $set_id == '' ? 'NA' : $set_id;
     $this->provider_id = $provider_id == '' ? 'NA' : $provider_id;
     $this->count = $this->db->fetchValue($this->db->getCount($this->schema, $this->provider_id, $this->set_id), 'count');
-    error_log('/count');
     $smarty->assign('count', $this->count);
   }
 

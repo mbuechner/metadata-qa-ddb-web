@@ -1,5 +1,9 @@
 <h3>{$count} records</h3>
-<p><a href="?tab=downloader&action=downloadFile&subdir={$subdir}">download file</a></p>
+<p>
+  schemas: {foreach $schemaStatistic as $_schema}{$_schema['name']} ({$_schema['count']}, {/foreach} |
+  providers: {foreach $providersStatistic as $_schema}{$_schema['name']} ({$_schema['count']}, {/foreach} |
+  datasets: {foreach $setsStatistic as $_schema}{$_schema['name']} ({$_schema['count']}, {/foreach}
+</p>
 
 <p>average score: <strong>{sprintf("%.2f", $totalScore)}</strong> (not measured: {$notMeasured} records)</p>
 <table class="values">
