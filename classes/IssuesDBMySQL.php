@@ -140,7 +140,7 @@ class IssuesDBMySQL {
         . ' GROUP BY metadata_schema ORDER BY metadata_schema');
     } else {
       $stmt = $this->db->prepare('SELECT metadata_schema, COUNT(*) AS count FROM file AS f 
-                                          LEFT JOIN file_record AS fr ON (f.file = fr.file)'
+                                  LEFT JOIN file_record AS fr ON (f.file = fr.file)'
         . $where
         . ' GROUP BY metadata_schema ORDER BY metadata_schema');
     }

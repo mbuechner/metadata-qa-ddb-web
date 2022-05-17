@@ -72,11 +72,12 @@ abstract class BaseTab implements Tab {
     $smarty->assign('provider_id', $provider_id);
     $smarty->assign('set_id', $set_id);
 
-    $a = $this->db->fetchAssoc($this->db->listSchemas($schema, $provider_id, $set_id), 'metadata_schema');
-    error_log('listSchemas: ' . json_encode($a));
     $smarty->assign('schemas', $all_schemas);
-    // $b = $this->db->fetchAssoc($this->db->listProviders($schema, $provider_id, $set_id));
+    $smarty->assign('schemasStatistic', $this->db->fetchAssoc($this->db->listSchemas($schema, $provider_id, $set_id), 'metadata_schema'));
     $smarty->assign('providers', $all_providers);
+    $a = $this->db->fetchAssoc($this->db->listProviders($schema, $provider_id, $set_id));
+    error_log('listProviders: ' . json_encode($a));
+    // $smarty->assign('providersStatistic', $a);
     $smarty->assign('sets', $all_sets); // $this->db->fetchAssoc($this->db->listSets($schema, $provider_id, $set_id)));
     error_log('/lists2');
 
