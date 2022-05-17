@@ -21,13 +21,6 @@
           <li>file size: {$filedata['size']}</li>
         </ul>
 
-        <xmp>{$record}</xmp>
-        <p>
-          <a href="?tab=downloader&action=downloadRecord&id={$id}">download record</a>
-          &mdash;
-          <a href="?tab=downloader&action=downloadFile&id={$id}">download file</a>
-        </p>
-
         <table>
           {foreach $issues as $id => $value}
             {if $id != 'recordId' && $id != 'providerid'}
@@ -60,6 +53,14 @@
             {/if}
           {/foreach}
         </table>
+
+        <xmp>{$record}</xmp>
+        <p>
+          <a href="?tab=downloader&action=downloadRecord&id={$id}">download record</a>
+          &mdash;
+          <a href="?tab=downloader&action=downloadFile&id={$id}">download file</a>
+        </p>
+
       {/if}
     </div>
   </div>
