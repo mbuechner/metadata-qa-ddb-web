@@ -1,8 +1,8 @@
 <h3>{$count} records</h3>
 <p>
-  schemas: {foreach $schemasStatistic as $item}{$item['metadata_schema']} ({$item['count']}, {/foreach} |
-  providers: {foreach $providersStatistic as $item}{$item['name']} ({$item['count']}), {/foreach} |
-  datasets: {foreach $setsStatistic as $item}{$item['name']} ({$item['count']}), {/foreach}
+  schemas: {foreach $schemasStatistic as $item name="stat"}{$item['metadata_schema']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}{/foreach} |
+  providers: {foreach $providersStatistic as $item}{$item['name']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}{/foreach} |
+  datasets: {foreach $setsStatistic as $item}{$item['name']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}{/foreach}
 </p>
 
 <p>average score: <strong>{sprintf("%.2f", $totalScore)}</strong> (not measured: {$notMeasured} records)</p>
