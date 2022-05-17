@@ -53,7 +53,7 @@
       <select id="providers" name="provider_id" style="width: 300px;">
         <option value="">all</option>
         {foreach $providers as $id => $provider}
-          <option value="{$id}"{if $id == $provider_id} selected="selected"{/if}>{$provider['name']}</option>
+          <option value="{$id}"{if $id == $provider_id} selected="selected"{/if}>{$provider['name']} ({$id})</option>
         {/foreach}
       </select>
     </div>
@@ -63,7 +63,7 @@
       <select id="sets" name="set_id" style="width: 300px;">
         <option value="">all</option>
         {foreach $sets as $id => $set}
-          <option value="{$id}"{if $id == $set_id} selected="selected"{/if}>{$set['name']}</option>
+          <option value="{$id}"{if $id == $set_id} selected="selected"{/if}>{$set['name']} ({$id})</option>
         {/foreach}
       </select>
     </div>
