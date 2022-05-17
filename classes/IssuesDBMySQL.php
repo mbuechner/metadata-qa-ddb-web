@@ -160,7 +160,7 @@ class IssuesDBMySQL {
         . ' GROUP BY provider_id, provider_name');
     } else {
       $stmt = $this->db->prepare(
-        'SELECT provider_id AS id, provider_name AS name, COUNT(*) AS count FROM file
+        'SELECT provider_id AS id, provider_name AS name, COUNT(*) AS count FROM file AS f
         LEFT JOIN file_record AS fr ON (f.file = fr.file)'
         . $where
         . ' GROUP BY provider_id, provider_name');
