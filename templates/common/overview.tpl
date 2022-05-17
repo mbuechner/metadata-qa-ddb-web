@@ -1,8 +1,8 @@
 <h3>{$count} records</h3>
 <p>
-  schemas: {foreach $schemaStatistic as $_schema}{$_schema['name']} ({$_schema['count']}, {/foreach} |
-  providers: {foreach $providersStatistic as $_schema}{$_schema['name']} ({$_schema['count']}, {/foreach} |
-  datasets: {foreach $setsStatistic as $_schema}{$_schema['name']} ({$_schema['count']}, {/foreach}
+  schemas: {json_encode($schemaStatistic)} {foreach $schemaStatistic as $_schema}{$_schema['metadata_schema']} ({$_schema['count']}, {/foreach} |
+  providers: {foreach $providersStatistic as $_schema}{$_schema['name']} ({$_schema['count']}), {/foreach} |
+  datasets: {foreach $setsStatistic as $_schema}{$_schema['name']} ({$_schema['count']}), {/foreach}
 </p>
 
 <p>average score: <strong>{sprintf("%.2f", $totalScore)}</strong> (not measured: {$notMeasured} records)</p>
