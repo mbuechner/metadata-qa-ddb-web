@@ -716,7 +716,10 @@ nav {
 
 div#record table td {padding: 5px}
 div#record h2 span {color: #d5073c; }
-div#record td.result {text-align: center}
+div#record td.result {
+  text-align: center;
+  width: 50px;
+}
 div#record td.passed {color: #37ba00}
 div#record td.failed {color: #d5073c}
 div#record td.NA {color: #999999}
@@ -741,4 +744,8 @@ table.values td.width50 {
 .status {
   width: 100px;
   text-align: center;
+}
+
+table {
+  max-width: 1200px;
 }

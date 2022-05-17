@@ -17,6 +17,7 @@ abstract class BaseTab implements Tab {
   protected $set_id;
   protected $provider_id;
   protected $count;
+  protected $parameters = [];
 
   public function __construct() {
     $this->configuration = parse_ini_file("configuration.cnf", false, INI_SCANNER_TYPED);
@@ -25,6 +26,7 @@ abstract class BaseTab implements Tab {
     $this->subdirs = array_values(array_diff(scandir($this->dir), ['.', '..']));
     $this->subdir = getOrDefault('subdir', 'DC-DDB-WuerzburgIMG', $this->subdirs);
     $this->lang = getOrDefault('lang', 'en', ['en', 'de']);
+    $this->parameters['lang'] = $this->lang;
     if (isset($this->configuration['MY_USER'])) {
       $this->db = new IssuesDBMySQL($this->configuration['MY_USER'], $this->configuration['MY_PASSWORD'], $this->configuration['MY_DB']);
     } else {
@@ -34,7 +36,7 @@ abstract class BaseTab implements Tab {
 
   public function prepareData(Smarty &$smarty) {
     global $tab;
-    error_log('tab: ' . $tab);
+    $this->parameters['tab'] = $tab;
 
     $smarty->assign('lang', $this->lang);
     $smarty->assign('tab', $this->tab);
@@ -54,11 +56,14 @@ abstract class BaseTab implements Tab {
     $all_providers = $this->db->fetchAssoc($this->db->listProviders());
     $all_sets = $this->db->fetchAssoc($this->db->listSets());
     $schema = getOrDefault('schema', '', array_keys($all_schemas));
+    $this->parameters['schema'] = $schema;
     $provider_id = getOrDefault('provider_id', '', array_keys($all_providers));
+    $this->parameters['provider_id'] = $provider_id;
     $set_id = getOrDefault('set_id', '', array_keys($all_sets));
+    $this->parameters['set_id'] = $set_id;
     $record_id = getOrDefault('record_id', '');
     if ($record_id != '') {
-      header('Location: ?tab=record&id=' . $record_id);
+      header('Location: ?tab=record&id=' . $record_id . '&lang=' . $this->parameters['lang']);
       return;
     }
 

@@ -3,13 +3,23 @@
                                        class="hidden-xs hidden-sm"></a>
 </p>
 <h1 style="text-align: right">
-  <i class="fa fa-cogs" aria-hidden="true"></i> <span>metadata quality assessment dashboard</span></h1>
-<p>
-  <i class="fa fa-book" aria-hidden="true"></i>
-  <span class="header-info">
-    {if $lastUpdate != ''}
-     last data update: <strong>{$lastUpdate}</strong>
-    {/if}
-  </span>
-</p>
+  <i class="fa fa-cogs" aria-hidden="true"></i> <span>metadata quality assessment dashboard</span>
+</h1>
+
+<diw class="row">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <i class="fa fa-book" aria-hidden="true"></i>
+    <span class="header-info">
+      {if $lastUpdate != ''}
+       last data update: <strong>{$lastUpdate}</strong>
+      {/if}
+    </span>
+  </div>
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <p style="text-align: right">
+      <a href="?lang=en">English</a> |
+      <a href="?lang=de">Deutsch</a>
+    </p>
+  </div>
+</diw>
 

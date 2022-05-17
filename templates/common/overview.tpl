@@ -9,7 +9,7 @@
     {foreach $frequency['ruleCatalog:score'] as $record name="records"}
       {if !is_null($record['value']) && $record['value'] != 'NA'}
         <td class="value">
-          <a href="?&tab=records&field=ruleCatalog:score&value={$record['value']}{if !empty($schema)}&schema={$schema}{/if}{if !empty($provider_id)}&provider_id={$provider_id}{/if}{if !empty($set_id)}&set_id={$set_id}{/if}">
+          <a href="?&tab=records&field=ruleCatalog:score&value={$record['value']}{if !empty($schema)}&schema={$schema}{/if}{if !empty($provider_id)}&provider_id={$provider_id}{/if}{if !empty($set_id)}&set_id={$set_id}{/if}&lang={$lang}">
             {$record['value']}
           </a>
         </td>
@@ -91,7 +91,7 @@
                   {foreach $frequency[$scoreId] as $record name="records"}
                     {if !is_null($record['value']) && $record['value'] != 'NA'}
                       <td class="value">
-                        <a href="?&tab=records&field={$scoreId}&value={$record['value']}{if !empty($schema)}&schema={$schema}{/if}{if !empty($provider_id)}&provider_id={$provider_id}{/if}{if !empty($set_id)}&set_id={$set_id}{/if}">
+                        <a href="?&tab=records&field={$scoreId}&value={$record['value']}{if !empty($schema)}&schema={$schema}{/if}{if !empty($provider_id)}&provider_id={$provider_id}{/if}{if !empty($set_id)}&set_id={$set_id}{/if}&lang={$lang}">
                           {$record['value']}
                         </a>
                       </td>
@@ -119,6 +119,4 @@
   Criteria that are not yet implemented, or not applicable to a particular metadata schema,
   are <span style="color: #cccccc;">greyed out</span>
 </p>
-
-
 

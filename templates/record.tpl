@@ -30,7 +30,7 @@
 
         <table>
           {foreach $issues as $id => $value}
-            {if $id != 'recordId'}
+            {if $id != 'recordId' && $id != 'providerid'}
               <tr>
                 <td>{$id}</td>
                 <td>
