@@ -135,12 +135,13 @@ class IssuesDBMySQL {
   public function listSchemas($schema = '', $provider_id = '', $set_id = '') {
     $where = $this->getWhere($schema, $provider_id, $set_id);
     if ($where == '') {
-      $stmt = $this->db->prepare('SELECT metadata_schema, COUNT(*) AS count FROM file '
-        . $where
+      $stmt = $this->db->prepare(
+        'SELECT metadata_schema, COUNT(*) AS count FROM file '
         . ' GROUP BY metadata_schema ORDER BY metadata_schema');
     } else {
-      $stmt = $this->db->prepare('SELECT metadata_schema, COUNT(*) AS count FROM file AS f 
-                                  LEFT JOIN file_record AS fr ON (f.file = fr.file)'
+      $stmt = $this->db->prepare(
+        'SELECT metadata_schema, COUNT(*) AS count FROM file AS f 
+        LEFT JOIN file_record AS fr ON (f.file = fr.file)'
         . $where
         . ' GROUP BY metadata_schema ORDER BY metadata_schema');
     }
@@ -153,9 +154,17 @@ class IssuesDBMySQL {
 
   public function listProviders($schema = '', $provider_id = '', $set_id = '') {
     $where = $this->getWhere($schema, $provider_id, $set_id);
-    $stmt = $this->db->prepare('SELECT provider_id AS id, provider_name AS name, COUNT(*) AS count FROM file  '
-      . $where
-      . ' GROUP BY provider_id, provider_name');
+    if ($where == '') {
+      $stmt = $this->db->prepare(
+        'SELECT provider_id AS id, provider_name AS name, COUNT(*) AS count FROM file'
+        . ' GROUP BY provider_id, provider_name');
+    } else {
+      $stmt = $this->db->prepare(
+        'SELECT provider_id AS id, provider_name AS name, COUNT(*) AS count FROM file
+        LEFT JOIN file_record AS fr ON (f.file = fr.file)'
+        . $where
+        . ' GROUP BY provider_id, provider_name');
+    }
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
     error_log(cleanSql($this->getSQL($stmt)));
 
