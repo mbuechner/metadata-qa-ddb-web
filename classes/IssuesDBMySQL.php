@@ -134,9 +134,16 @@ class IssuesDBMySQL {
 
   public function listSchemas($schema = '', $provider_id = '', $set_id = '') {
     $where = $this->getWhere($schema, $provider_id, $set_id);
-    $stmt = $this->db->prepare('SELECT metadata_schema, COUNT(*) AS count FROM file '
-      . $where
-      . ' GROUP BY metadata_schema ORDER BY metadata_schema');
+    if ($where == '') {
+      $stmt = $this->db->prepare('SELECT metadata_schema, COUNT(*) AS count FROM file '
+        . $where
+        . ' GROUP BY metadata_schema ORDER BY metadata_schema');
+    } else {
+      $stmt = $this->db->prepare('SELECT metadata_schema, COUNT(*) AS count FROM file AS f 
+                                          LEFT JOIN file_record AS fr ON (f.file = fr.file)'
+        . $where
+        . ' GROUP BY metadata_schema ORDER BY metadata_schema');
+    }
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
     error_log(cleanSql($this->getSQL($stmt)));
 
