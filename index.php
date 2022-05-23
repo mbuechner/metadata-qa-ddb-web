@@ -3,7 +3,7 @@ include_once 'common-functions.php';
 
 $smarty = createSmarty('templates');
 
-$tab = getOrDefault('tab', 'overview', ['overview', 'records', 'record', 'about', 'downloader']);
+$tab = getOrDefault('tab', 'overview', ['overview', 'records', 'record', 'about', 'downloader', 'fair']);
 $ajax = getOrDefault('ajax', 0, [0, 1]);
 $language = getOrDefault('language', 'en', ['en', 'de']);
 
@@ -14,6 +14,7 @@ $map = [
   'record'   => 'Record',
   'about'    => 'About',
   'downloader' => 'Downloader',
+  'fair' => 'Fair',
 ];
 
 include_once('classes/Tab.php');

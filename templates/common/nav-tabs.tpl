@@ -16,6 +16,11 @@
          id="record-tab" aria-controls="record"
          href="?tab=record">Record</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link1{if $tab == 'fair'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
+         id="fair-tab" aria-controls="fair"
+         href="?tab=fair">FAIR assessment</a>
+    </li>
 <!--
     <li class="nav-item">
       <a class="nav-link1{if $tab == 'images'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"

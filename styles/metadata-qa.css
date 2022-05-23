@@ -749,3 +749,12 @@ table.values td.width50 {
 table {
   max-width: 1200px;
 }
+
+table.fair td em {
+  color: cornflowerblue;
+}
+
+table.fair td.red {
+  background-color: #d5073c;
+  color: white;
+}
