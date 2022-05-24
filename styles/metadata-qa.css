@@ -754,7 +754,17 @@ table.fair td em {
   color: cornflowerblue;
 }
 
+table.fair th {
+  vertical-align: top;
+}
+
 table.fair td.red {
   background-color: #d5073c;
   color: white;
+}
+
+table.fair td.category {
+  font-weight: bold;
+  border-top: 1px solid #d5073c;
+  border-bottom: 1px solid #d5073c;
 }

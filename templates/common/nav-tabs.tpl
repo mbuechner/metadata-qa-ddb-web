@@ -2,7 +2,7 @@
 <nav>
   <ul class="nav nav-tabs" id="myTab">
     <li class="nav-item">
-      <a class="nav-link1{if $tab == 'factors'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
+      <a class="nav-link1{if $tab == 'overview'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
          id="overview-tab" aria-controls="overview"
          href="?tab=overview">Overview</a>
     </li>
@@ -42,6 +42,7 @@
 </nav>
 
 <form method="get" action="?">
+  <input type="hidden" name="tab" value="{$tab}">
   <div class="row">
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
       <label class="label label-info" for="schemas">metadata schema</label><br>

@@ -39,7 +39,7 @@ abstract class BaseTab implements Tab {
     $this->parameters['tab'] = $tab;
 
     $smarty->assign('lang', $this->lang);
-    $smarty->assign('tab', $this->tab);
+    $smarty->assign('tab', $tab);
     $smarty->assign('subdirs', $this->subdirs);
     $smarty->assign('subdir', $this->subdir);
 
