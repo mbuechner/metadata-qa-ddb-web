@@ -6,6 +6,19 @@
     <div class="tab-pane active" id="factors" role="tabpanel" aria-labelledby="factors-tab">
       <h2>FAIR assessment</h2>
 
+      <h3>{$count} records</h3>
+      <p>
+        metadata schemas: {foreach $schemasStatistic as $item name="stat"}
+          {$item['metadata_schema']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}
+          {/foreach}<br>
+        providers: {foreach $providersStatistic as $item name="stat"}
+          {$item['name']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}
+          {/foreach}<br>
+        datasets: {foreach $setsStatistic as $item name="stat"}
+              {$item['name']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}
+          {/foreach}
+      </p>
+
       <table class="fair">
         <thead>
           <tr>
