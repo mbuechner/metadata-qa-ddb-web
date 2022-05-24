@@ -779,9 +779,24 @@ table.fair td.fair-category-result span.label {
   font-weight: bold;
 }
 
+table.fair td.fair-category-result div.label {
+  border-radius: 100px;
+  padding-top: 30px;
+  width: 120px;
+  height: 120px;
+  text-align: center;
+  margin: auto;
+}
+
+table.fair td.fair-category-result div.label.red {background-color: #d5073c; color: white}
+table.fair td.fair-category-result div.label.orange {background-color: orange; color: white}
+table.fair td.fair-category-result div.label.green {background-color: #37ba00; color: white}
+
+/*
 table.fair td.fair-category-result .red    {color: #d5073c;}
 table.fair td.fair-category-result .orange {color: orange}
 table.fair td.fair-category-result .green  {color: #37ba00}
+ */
 
 table.fair td.score.red {background-color: #d5073c; color: white}
 table.fair td.score.orange {background-color: orange; color: white}

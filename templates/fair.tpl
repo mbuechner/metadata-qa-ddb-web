@@ -36,7 +36,7 @@
         </tr>
         <tr>
           <td class="fair-category-result" rowspan="14">
-            <span class="label {$fair['findable']['color']}">{$fair['findable']['label']}</span><br>
+            <div class="label {$fair['findable']['color']}">{$fair['findable']['label']}</div>
             <span class="score">({$fair['findable']['total']})</span>
           </td>
           <td class="{if isset($blocked['Q-1.1'])}red{/if}"><strong>Datensatz-ID</strong> ist vorhanden.*</td>
@@ -170,7 +170,7 @@
         </tr>
         <tr>
           <td class="fair-category-result" rowspan="9">
-            <span class="label {$fair['accessible']['color']}">{$fair['accessible']['label']}</span><br>
+            <div class="label {$fair['accessible']['color']}">{$fair['accessible']['label']}</div>
             <span class="score">({$fair['accessible']['total']})</span>
           </td>
           <td class="{if isset($blocked['Q-4.1'])}red{/if}"><strong>Link zu der Bilddatei/digitalen Objekt</strong> ist vorhanden*</td>
@@ -260,7 +260,7 @@
         </tr>
         <tr>
           <td class="fair-category-result" rowspan="13">
-            <span class="label {$fair['interoperable']['color']}">{$fair['interoperable']['label']}</span><br>
+            <div class="label {$fair['interoperable']['color']}">{$fair['interoperable']['label']}</div>
             <span class="score">({$fair['interoperable']['total']})</span>
           </td>
           <td><strong>Der Datengeber</strong> kann durch einen http-URI aus der GND identifiziert sein.</td>
@@ -384,7 +384,7 @@
         </tr>
         <tr>
           <td class="fair-category-result" rowspan="4">
-            <span class="label {$fair['reusable']['color']}">{$fair['reusable']['label']}</span><br>
+            <div class="label {$fair['reusable']['color']}">{$fair['reusable']['label']}</div>
             <span class="score">({$fair['reusable']['total']})</span>
           </td>
           <td class="{if isset($blocked['Q-5.1'])}red{/if}">Im Datensatz muss eine <strong>Lizenz</strong> für das Digitale Objekt angegeben sein.*</td>
