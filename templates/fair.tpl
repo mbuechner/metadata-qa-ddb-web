@@ -56,7 +56,6 @@
           </td>
           <td class="text-center">{include file="fair-table.tpl" table=$frequency['Q-1.2:score']}</td>
         </tr>
-----
         <tr>
           <td><strong>Datensatz-IDs </strong>für hierarchische Objekt Darstelleungen</td>
           <td class="text-center">Q 1.3 </td>
