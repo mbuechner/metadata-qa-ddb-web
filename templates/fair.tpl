@@ -26,11 +26,11 @@
           <th>Beschreibung</th>
           <th>Bewertungs-matrix</th>
           <th>Maximale Punktzahl</th>
-          <th class="red">blocked</th>
-          <th class="orange">poor</th>
-          <th>average</th>
-          <th class="green">good</th>
-          <th class="green">very good</th>
+          <th style="width: 80px" class="red">blocked</th>
+          <th style="width: 80px" class="orange">poor</th>
+          <th style="width: 80px">average</th>
+          <th style="width: 80px" class="green">good</th>
+          <th style="width: 80px" class="green">very good</th>
         </tr>
         </thead>
         <tbody>
