@@ -51,7 +51,7 @@
               <td class="text-center {if isset($blocked[$id])}red{/if}">{if $criteria['score'] < 0}{$criteria['score']}{else}0{/if}</td>
               <td class="text-center {if isset($blocked[$id])}red{/if}">{if $criteria['score'] > 0}{$criteria['score']}{else}0{/if}</td>
               <td class="text-center red">
-                {if isset($distribution[$id]['blocked'])}{$distribution[$id]['blocked']}{/if}
+                {if isset($distribution[$id]['blocked'])}{sprintf("%.0f%%", $distribution[$id]['blocked']*100/$count)}{/if}
               </td>
               <td class="text-center orange">
                 {if isset($distribution[$id]['To be improved'])}{sprintf("%.0f%%", $distribution[$id]['To be improved']*100/$count)}{/if}
