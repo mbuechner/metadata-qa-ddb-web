@@ -52,65 +52,151 @@ class Fair extends BaseTab {
       'findable' => [
         'name' => 'Auffindbarkeit und Identifzierbarkeit',
         'criteria' => [
-          'Q-1.1' => ['title' => '<strong>Datensatz-ID</strong> ist vorhanden.', 'score' => -9, 'blocker' => 1],
-          'Q-1.2' => ['title' => '<strong>Datensatz-ID</strong> ist eindeutig.', 'score' => -9],
-          'Q-1.3' => ['title' => '<strong>Datensatz-IDs </strong>für hierarchische Objekt Darstelleungen', 'score' => -9],
-          'Q-1.4' => ['title' => '<strong>Datensatz</strong>-ID ist unveränderlich', 'score' => -6],
-          'Q-2.1' => ['title' => '<strong>Datengeber-ID</strong> ist vorhanden.', 'score' => -6],
-          'Q-2.2' => ['title' => '<strong>Datengeber-ID</strong> ist weltweit eindeutig (stammt aus einer Normdatei)', 'score' => -3],
-          'Q-2.3' => ['title' => '<strong>Datengeber</strong>-ID ist unveränderlich', 'score' => -6],
-          'Q-3.2' => ['title' => '<strong>Das Vorschaubild </strong>muss explizit gekennzeichnet sein, wenn mehr als eine Bilddatei im Datensatz referenziert ist.', 'score' => -3],
-          'Q-6.1' => ['title' => 'Ein <strong>Objekttitel</strong> muss für den Datensatz vorhanden sein*', 'score' => -9, 'blocker' => 1],
-          'Q-6.2' => ['title' => 'Der <strong>Objekttitel</strong> muss eindeutig sein.', 'score' => -6],
-          'Q-6.3' => ['title' => 'Der <strong>Objekttitel</strong> muss aussagekräftig sein.', 'score' => -3],
-          'Q-6.4' => ['title' => 'Der <strong>Titel</strong> muss sinntragend sein und enthält keine sinnlosen Werte.', 'score' => -3],
-          'Q-6.5' => ['title' => 'Der <strong>Objekttitel</strong> muss eindeutig sein und darf nicht mit dem Objekttyp identisch sein.', 'score' => -3],
-          'Q-7.1' => ['title' => 'Im Datensatz muss mindestens eine bevorzugte Bezeichnung für den <strong>Objekttyp</strong> vorhanden sein.', 'score' => -9],
-          'Q-7.2' => ['title' => '', 'score' => -3],
-          'Q-7.4' => ['title' => 'Es handelt sich um eine spezifische <strong>Objekttyp</strong>-Bezeichnung und nicht um eine Objektbeschreibung oder Objektklassifizierung.', 'score' => -3]
+          'Q-1.1' => [
+            'title' => '<strong>Datensatz-ID</strong> ist vorhanden.',
+            'score' => -9, 'blocker' => 1],
+          'Q-1.2' => [
+            'title' => '<strong>Datensatz-ID</strong> ist eindeutig.',
+            'score' => -9],
+          'Q-1.3' => [
+            'title' => '<strong>Datensatz-IDs </strong>für hierarchische Objekt Darstelleungen',
+            'score' => -9],
+          'Q-1.4' => [
+            'title' => '<strong>Datensatz</strong>-ID ist unveränderlich',
+            'score' => -6],
+          'Q-2.1' => [
+            'title' => '<strong>Datengeber-ID</strong> ist vorhanden.',
+            'score' => -6],
+          'Q-2.2' => [
+            'title' => '<strong>Datengeber-ID</strong> ist weltweit eindeutig (stammt aus einer Normdatei)',
+            'score' => -3],
+          'Q-2.3' => [
+            'title' => '<strong>Datengeber</strong>-ID ist unveränderlich',
+            'score' => -6],
+          'Q-3.2' => [
+            'title' => '<strong>Das Vorschaubild </strong>muss explizit gekennzeichnet sein, wenn mehr als eine Bilddatei im Datensatz referenziert ist.',
+            'score' => -3],
+          'Q-6.1' => [
+            'title' => 'Ein <strong>Objekttitel</strong> muss für den Datensatz vorhanden sein*',
+            'score' => -9, 'blocker' => 1],
+          'Q-6.2' => [
+            'title' => 'Der <strong>Objekttitel</strong> muss eindeutig sein.',
+            'score' => -6],
+          'Q-6.3' => [
+            'title' => 'Der <strong>Objekttitel</strong> muss aussagekräftig sein.',
+            'score' => -3],
+          'Q-6.4' => [
+            'title' => 'Der <strong>Titel</strong> muss sinntragend sein und enthält keine sinnlosen Werte.',
+            'score' => -3],
+          'Q-6.5' => [
+            'title' => 'Der <strong>Objekttitel</strong> muss eindeutig sein und darf nicht mit dem Objekttyp identisch sein.',
+            'score' => -3],
+          'Q-7.1' => [
+            'title' => 'Im Datensatz muss mindestens eine bevorzugte Bezeichnung für den <strong>Objekttyp</strong> vorhanden sein.',
+            'score' => -9],
+          'Q-7.2' => [
+            'title' => 'Die Vorzugsbenennung für den <strong>Objekttyp</strong> muss in deutscher Sprache angegeben sein.',
+            'score' => -3],
+          'Q-7.4' => [
+            'title' => 'Es handelt sich um eine spezifische <strong>Objekttyp</strong>-Bezeichnung und nicht um eine Objektbeschreibung oder Objektklassifizierung.',
+            'score' => -3]
         ],
       ],
       'accessible' => [
         'name' => 'Zugänglichkeit',
         'criteria1' => ['Q-3.1', 'Q-3.3', 'Q-3.5', 'Q-4.1', 'Q-4.3', 'Q-4.4', 'Q-4.5', 'Q-4.6'],
         'criteria' => [
-          'Q-3.1' => ['title' => '<strong>Bilddatei</strong> - Im gelieferten Datensatz muss eine Referenz auf eine Bilddatei vorhanden sein (entweder als Link oder als Dateiname).', 'score' => -9],
-          'Q-3.3' => ['title' => 'Der <strong>Link zur Bilddatei</strong> muss valide sein.', 'score' => -3],
-          'Q-3.5' => ['title' => 'Link zum <strong>Vorschaubild ist vorhanden</strong>.', 'score' => 3],
-          'Q-4.1' => ['title' => '<strong>Link zu der Bilddatei/digitalen Objekt</strong> ist vorhanden*', 'score' => -9, 'blocker' => 1],
-          'Q-4.3' => ['title' => 'Der <strong>Link zur Bilddatei/ Digitalen Objekt</strong> muss valide sein.', 'score' => -9],
-          'Q-4.4' => ['title' => 'Der Datensatz enthält einen <strong>Link zu einer Mediendatei</strong>.', 'score' => 6],
-          'Q-4.5' => ['title' => 'Der Datensatz enthält einen <strong>Link zum Objekt im Kontext</strong>', 'score' => 3],
-          'Q-4.6' => ['title' => 'Der Datensatz enthält einen <strong>Link zum Objekt im Medienviewer</strong>', 'score' => 3]
+          'Q-3.1' => [
+            'title' => '<strong>Bilddatei</strong> - Im gelieferten Datensatz muss eine Referenz auf eine Bilddatei vorhanden sein (entweder als Link oder als Dateiname).',
+            'score' => -9],
+          'Q-3.3' => [
+            'title' => 'Der <strong>Link zur Bilddatei</strong> muss valide sein.',
+            'score' => -3],
+          'Q-3.5' => [
+            'title' => 'Link zum <strong>Vorschaubild ist vorhanden</strong>.',
+            'score' => 3],
+          'Q-4.1' => [
+            'title' => '<strong>Link zu der Bilddatei/digitalen Objekt</strong> ist vorhanden*',
+            'score' => -9, 'blocker' => 1],
+          'Q-4.3' => [
+            'title' => 'Der <strong>Link zur Bilddatei/ Digitalen Objekt</strong> muss valide sein.',
+            'score' => -9],
+          'Q-4.4' => [
+            'title' => 'Der Datensatz enthält einen <strong>Link zu einer Mediendatei</strong>.',
+            'score' => 6],
+          'Q-4.5' => [
+            'title' => 'Der Datensatz enthält einen <strong>Link zum Objekt im Kontext</strong>',
+            'score' => 3],
+          'Q-4.6' => [
+            'title' => 'Der Datensatz enthält einen <strong>Link zum Objekt im Medienviewer</strong>',
+            'score' => 3]
         ],
       ],
       'interoperable' => [
         'name' => 'Interoperabilität und Maschinenlesbarkeit',
         'criteria' => [
-          'Q-1.5' => ['title' => 'Der <strong>Datensatz-ID</strong> ist maschinell gut zu verarbeiten', 'score' => 3],
-          'Q-2.4' => ['title' => '<strong>Datengeber</strong>-ID- Der Datengeber soll durch einen International Standard Identifier for Libraries and Related Organisations (ISIL) identifiziert sein.', 'score' => 3],
-          'Q-2.5' => ['title' => 'Der <strong>Datengeber-ID</strong> soll durch einen http-URI aus der ISIL-Registrierung referenziert sein.', 'score' => 6],
-          'Q-2.6' => ['title' => '<strong>Der Datengeber</strong> kann durch einen http-URI aus der GND identifiziert sein', 'score' => 3],
-          'Q-3.6' => ['title' => '<strong>Die Bilddatei</strong> soll in einem bevorzugten Format geliefert werden', 'score' => 3],
-          'Q-4.2' => ['title' => '<strong>Bilddateien</strong> müssen in einem von der DDB unterstützten Format geliefert werden', 'score' => -3],
-          'Q-5.2' => ['title' => 'Die <strong>Lizenz</strong> muss durch einen http-URI gekennzeichnet sein, der im Lizenzkorb der Deutschen Digitalen Bibliothek genannt ist', 'score' => -9],
-          'Q-7.3' => ['title' => 'Der <strong>Objekttyp</strong> muss aus einem kontrollierten Vokabular stammen', 'score' => -6],
-          'Q-7.5' => ['title' => 'Der <strong>Objekttyp</strong> stammt aus der Gemeinsamen Normdatei (GND) oder dem Art &amp; Architecture Thesaurus (AAT).', 'score' => 6],
-          'Q-7.6' => ['title' => 'Der <strong>Objekttyp</strong> ist durch einen http-URI aus einem LOD-Vokabular referenziert', 'score' => 6],
-          'Q-7.7' => ['title' => 'Der http-URI für den <strong>Objekttyp</strong> verweist auf einen Begriff in der GND oder dem AAT.', 'score' => 9],
-          'Q-7.8' => ['title' => 'Der <strong>Objekttyp</strong> http-URI verweist auf einen Begriff in Wikidata', 'score' => 6]
+          'Q-1.5' => [
+            'title' => 'Der <strong>Datensatz-ID</strong> ist maschinell gut zu verarbeiten',
+            'score' => 3],
+          'Q-2.4' => [
+            'title' => '<strong>Datengeber</strong>-ID- Der Datengeber soll durch einen International Standard Identifier for Libraries and Related Organisations (ISIL) identifiziert sein.',
+            'score' => 3],
+          'Q-2.5' => [
+            'title' => 'Der <strong>Datengeber-ID</strong> soll durch einen http-URI aus der ISIL-Registrierung referenziert sein.',
+            'score' => 6],
+          'Q-2.6' => [
+            'title' => '<strong>Der Datengeber</strong> kann durch einen http-URI aus der GND identifiziert sein',
+            'score' => 3],
+          'Q-3.6' => [
+            'title' => '<strong>Die Bilddatei</strong> soll in einem bevorzugten Format geliefert werden',
+            'score' => 3],
+          'Q-4.2' => [
+            'title' => '<strong>Bilddateien</strong> müssen in einem von der DDB unterstützten Format geliefert werden',
+            'score' => -3],
+          'Q-5.2' => [
+            'title' => 'Die <strong>Lizenz</strong> muss durch einen http-URI gekennzeichnet sein, der im Lizenzkorb der Deutschen Digitalen Bibliothek genannt ist',
+            'score' => -9],
+          'Q-7.3' => [
+            'title' => 'Der <strong>Objekttyp</strong> muss aus einem kontrollierten Vokabular stammen',
+            'score' => -6],
+          'Q-7.5' => [
+            'title' => 'Der <strong>Objekttyp</strong> stammt aus der Gemeinsamen Normdatei (GND) oder dem Art &amp; Architecture Thesaurus (AAT).',
+            'score' => 6],
+          'Q-7.6' => [
+            'title' => 'Der <strong>Objekttyp</strong> ist durch einen http-URI aus einem LOD-Vokabular referenziert',
+            'score' => 6],
+          'Q-7.7' => [
+            'title' => 'Der http-URI für den <strong>Objekttyp</strong> verweist auf einen Begriff in der GND oder dem AAT.',
+            'score' => 9],
+          'Q-7.8' => [
+            'title' => 'Der <strong>Objekttyp</strong> http-URI verweist auf einen Begriff in Wikidata',
+            'score' => 6]
         ],
       ],
       'reusable' => [
         'name' => 'Wiederverwendbarkeit',
         'criteria' => [
-          'Q-3.4' => ['title' => '', 'score' => -3],
-          'Q-5.1' => ['title' => 'Im Datensatz muss eine <strong>Lizenz</strong> für das Digitale Objekt angegeben sein', 'score' => -9, 'blocker' => 1],
-          'Q-5.3' => ['title' => '', 'score' => -3],
-          'Q-5.4' => ['title' => 'Es wird eine <strong>offene Lizenz</strong> für den Rechtsstatus verwendet', 'score' => 6],
-          'Q-5.5' => ['title' => 'Es wird eine <strong>offene Lizenz mit Namensnennung</strong> verwendet', 'score' => 3],
-          'Q-5.6' => ['title' => '<strong>Lizenz</strong> - Es wird ein standardisierter Rechtehinweis verwendet. Das Digitale Objekt darf mit Einschränkungen genutzt werden.', 'score' => 0],
-          'Q-5.7' => ['title' => '<strong>Lizenz</strong>: Es wird ein standardisierter Rechtehinweis verwendet. Die Nutzungsrechte müssen erfragt werden', 'score' => 0]
+          'Q-3.4' => [
+            'title' => 'Das <strong>Bild</strong> muss mindestens 800 Pixel breit und mindestens 600 Pixel hoch sein.',
+            'score' => -3],
+          'Q-5.1' => [
+            'title' => 'Im Datensatz muss eine <strong>Lizenz</strong> für das Digitale Objekt angegeben sein',
+            'score' => -9, 'blocker' => 1],
+          'Q-5.3' => [
+            'title' => 'Der <strong>Rechtsstatus</strong> muss für jede Mediendatei, die im Datensatz referenziert, angegeben sein.',
+            'score' => -3],
+          'Q-5.4' => [
+            'title' => 'Es wird eine <strong>offene Lizenz</strong> für den Rechtsstatus verwendet',
+            'score' => 6],
+          'Q-5.5' => [
+            'title' => 'Es wird eine <strong>offene Lizenz mit Namensnennung</strong> verwendet',
+            'score' => 3],
+          'Q-5.6' => [
+            'title' => '<strong>Lizenz</strong> - Es wird ein standardisierter Rechtehinweis verwendet. Das Digitale Objekt darf mit Einschränkungen genutzt werden.',
+            'score' => 0],
+          'Q-5.7' => [
+            'title' => '<strong>Lizenz</strong>: Es wird ein standardisierter Rechtehinweis verwendet. Die Nutzungsrechte müssen erfragt werden',
+            'score' => 0]
         ],
       ]
     ];
@@ -181,6 +267,7 @@ class Fair extends BaseTab {
           }
         }
       }
+
       foreach ($definition['criteria'] as $Q) {
         if (isset($means[$Q]) && $means[$Q] != '&mdash;' && !isset($colors[$Q])) {
           list($l, $c) = $this->getLabel((float) $means[$Q], $definition['ranges']);

@@ -50,16 +50,16 @@
               <td class="text-center {if isset($blocked[$id])}red{/if}">{$id}</td>
               <td class="text-center {if isset($blocked[$id])}red{/if}">{if $criteria['score'] < 0}{$criteria['score']}{else}0{/if}</td>
               <td class="text-center {if isset($blocked[$id])}red{/if}">{if $criteria['score'] > 0}{$criteria['score']}{else}0{/if}</td>
-              <td class="text-center red">
+              <td class="text-center red" title="{sprintf("%.4f%%, %d records", $distribution[$id]['blocked']*100/$count, $distribution[$id]['blocked'])}">
                 {if isset($distribution[$id]['blocked'])}{sprintf("%.0f%%", $distribution[$id]['blocked']*100/$count)}{/if}
               </td>
-              <td class="text-center orange">
+              <td class="text-center orange" title="{sprintf("%.4f%%, %d records", $distribution[$id]['To be improved']*100/$count, $distribution[$id]['To be improved'])}">
                 {if isset($distribution[$id]['To be improved'])}{sprintf("%.0f%%", $distribution[$id]['To be improved']*100/$count)}{/if}
               </td>
-              <td class="text-center">
+              <td class="text-center" title="{sprintf("%.4f%%, %d records", $distribution[$id]['Acceptable']*100/$count, $distribution[$id]['Acceptable'])}">
                 {if isset($distribution[$id]['Acceptable'])}{sprintf("%.0f%%", $distribution[$id]['Acceptable']*100/$count)}{/if}
               </td>
-              <td class="text-center green">
+              <td class="text-center green" title="{sprintf("%.4f%%, %d records", $distribution[$id]['Good']*100/$count, $distribution[$id]['Good'])}">
                 {if isset($distribution[$id]['Good'])}{sprintf("%.0f%%", $distribution[$id]['Good']*100/$count)}{/if}
               </td>
             </tr>
