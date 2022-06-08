@@ -54,13 +54,13 @@
                 {if isset($distribution[$id]['blocked'])}{$distribution[$id]['blocked']}{/if}
               </td>
               <td class="text-center orange">
-                {if isset($distribution[$id]['To be improved'])}{$distribution[$id]['To be improved']}{/if}
+                {if isset($distribution[$id]['To be improved'])}{sprintf("%.0f%%", $distribution[$id]['To be improved']*100/$count)}{/if}
               </td>
               <td class="text-center">
-                {if isset($distribution[$id]['Acceptable'])}{$distribution[$id]['Acceptable']}{/if}
+                {if isset($distribution[$id]['Acceptable'])}{sprintf("%.0f%%", $distribution[$id]['Acceptable']*100/$count)}{/if}
               </td>
               <td class="text-center green">
-                {if isset($distribution[$id]['Good'])}{$distribution[$id]['Good']}{/if}
+                {if isset($distribution[$id]['Good'])}{sprintf("%.0f%%", $distribution[$id]['Good']*100/$count)}{/if}
               </td>
             </tr>
           {/foreach}
