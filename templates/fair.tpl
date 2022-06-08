@@ -25,12 +25,12 @@
           <th style="min-width: 100px; max-width: 150px;">Kategorien für Qualitätskriterien (FAIR Prinzipien)</th>
           <th>Beschreibung</th>
           <th>Bewertungs-matrix</th>
-          <th>Maximale Punktzahl</th>
+          <th>Kriterium nicht erfüllt</th>
+          <th>Kriterium erfüllt</th>
           <th style="width: 80px" class="red">blocked</th>
-          <th style="width: 80px" class="orange">poor</th>
-          <th style="width: 80px">average</th>
-          <th style="width: 80px" class="green">good</th>
-          <th style="width: 80px" class="green">very good</th>
+          <th style="width: 80px" class="orange">To be improved</th>
+          <th style="width: 80px">Acceptable</th>
+          <th style="width: 80px" class="green">Good</th>
         </tr>
         </thead>
         <tbody>
@@ -48,21 +48,19 @@
               {/if}
               <td class="{if isset($blocked[$id])}red{/if}">{$criteria['title']}</td>
               <td class="text-center {if isset($blocked[$id])}red{/if}">{$id}</td>
-              <td class="text-center {if isset($blocked[$id])}red{/if}">{$criteria['score']}</td>
+              <td class="text-center {if isset($blocked[$id])}red{/if}">{if $criteria['score'] < 0}{$criteria['score']}{else}0{/if}</td>
+              <td class="text-center {if isset($blocked[$id])}red{/if}">{if $criteria['score'] > 0}{$criteria['score']}{else}0{/if}</td>
               <td class="text-center red">
                 {if isset($distribution[$id]['blocked'])}{$distribution[$id]['blocked']}{/if}
               </td>
               <td class="text-center orange">
-                {if isset($distribution[$id]['poor'])}{$distribution[$id]['poor']}{/if}
+                {if isset($distribution[$id]['To be improved'])}{$distribution[$id]['To be improved']}{/if}
               </td>
               <td class="text-center">
-                {if isset($distribution[$id]['average'])}{$distribution[$id]['average']}{/if}
+                {if isset($distribution[$id]['Acceptable'])}{$distribution[$id]['Acceptable']}{/if}
               </td>
               <td class="text-center green">
-                {if isset($distribution[$id]['good'])}{$distribution[$id]['good']}{/if}
-              </td>
-              <td class="text-center green">
-                {if isset($distribution[$id]['very good'])}{$distribution[$id]['very good']}{/if}
+                {if isset($distribution[$id]['Good'])}{$distribution[$id]['Good']}{/if}
               </td>
             </tr>
           {/foreach}
