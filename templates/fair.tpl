@@ -60,7 +60,7 @@
                   <div>{sprintf("%.0f%%", $distribution[$id]['To be improved']*100/$count)}</div>
                 {/if}
               </td>
-              <td class="text-center" title="{sprintf("%.4f%%, %d records", $distribution[$id]['Acceptable']*100/$count, $distribution[$id]['Acceptable'])}">
+              <td class="text-center white" title="{sprintf("%.4f%%, %d records", $distribution[$id]['Acceptable']*100/$count, $distribution[$id]['Acceptable'])}">
                 {if isset($distribution[$id]['Acceptable'])}
                   <div>{sprintf("%.0f%%", $distribution[$id]['Acceptable']*100/$count)}</div>
                 {/if}
