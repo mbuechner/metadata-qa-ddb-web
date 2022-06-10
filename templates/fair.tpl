@@ -108,14 +108,49 @@
           </tr>
           <tr>
             <td colspan="9">
-              <strong>Zugänglichkeit</strong>
-              <table>
+              <div class="text-center" style="margin-bottom: 10px;"><strong>Zugänglichkeit</strong></div>
+              <table style="width: 100%; margin-bottom: 20px;">
                 <tr>
-                  <td>Good</td>
-                  <td><div style="background-color: #37ba00; width: {$categoryCount[$name]['green']['raw']}">&nbsp;</div> {$categoryCount[$name]['green']}</td>
+                  <td style="width: 50%; text-align: right; padding-right: 5px; border-right: 3px solid #cccccc">
+                    Good {if isset($categoryCount[$name]['green'])}({$categoryCount[$name]['green']['formatted']}){/if}
+                  </td>
+                  <td style="padding-left: 5px; ">
+                    {if isset($categoryCount[$name]['green'])}
+                      <div style="background-color: #37ba00; width: {$categoryCount[$name]['green']['raw']}px;">&nbsp;</div>
+                    {/if}
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%; text-align: right; padding-right: 5px; border-right: 3px solid #cccccc">
+                    Acceptable {if isset($categoryCount[$name]['white'])}({$categoryCount[$name]['white']['formatted']}){/if}
+                  </td>
+                  <td style="padding-left: 5px; ">
+                    {if isset($categoryCount[$name]['white'])}
+                      <div style="background-color: #cccccc; width: {$categoryCount[$name]['white']['raw']}px;">&nbsp;</div>
+                    {/if}
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%; text-align: right; padding-right: 5px; border-right: 3px solid #cccccc;">
+                    {if isset($categoryCount[$name]['orange'])}
+                      <div style="background-color: orange; float: right; width: {$categoryCount[$name]['orange']['raw']}px;">&nbsp;</div>
+                    {/if}
+                  </td>
+                  <td style="padding-left: 5px; ">
+                    To be improved {if isset($categoryCount[$name]['orange'])}({$categoryCount[$name]['orange']['formatted']}){/if}
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%; text-align: right; padding-right: 5px; border-right: 3px solid #cccccc">
+                    {if isset($categoryCount[$name]['red'])}
+                      <div style="background-color: #d5073c; float: right; width: {$categoryCount[$name]['red']['raw']}px;">&nbsp;</div>
+                    {/if}
+                  </td>
+                  <td style="padding-left: 5px; ">
+                    Blocked {if isset($categoryCount[$name]['red'])}({$categoryCount[$name]['red']['formatted']}){/if}
+                  </td>
                 </tr>
               </table>
-
             </td>
           </tr>
         {/foreach}
