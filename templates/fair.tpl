@@ -142,12 +142,12 @@
                 </tr>
                 <tr>
                   <td style="width: 50%; text-align: right; padding-right: 5px; border-right: 3px solid #cccccc">
-                    {if isset($categoryCount[$name]['red'])}
-                      <div style="background-color: #d5073c; float: right; width: {$categoryCount[$name]['red']['raw']}px;">&nbsp;</div>
+                    {if isset($categoryCount[$name]['blocked'])}
+                      <div style="background-color: #d5073c; float: right; width: {$categoryCount[$name]['blocked']['raw']}px;">&nbsp;</div>
                     {/if}
                   </td>
                   <td style="padding-left: 5px; ">
-                    Blocked {if isset($categoryCount[$name]['red'])}({$categoryCount[$name]['red']['formatted']}){/if}
+                    Blocked {if isset($categoryCount[$name]['blocked'])}({$categoryCount[$name]['blocked']['formatted']}){/if}
                   </td>
                 </tr>
               </table>
