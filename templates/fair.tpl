@@ -87,23 +87,35 @@
             <td colspan="5" style="padding-bottom: 50px;"><strong>Average PERCENTAGE</strong></td>
             <td class="text-center {if isset($categoryCount[$name]['blocked'])}red{/if}">
               {if isset($categoryCount[$name]['blocked'])}
-                <div>{$categoryCount[$name]['blocked']}</div>
+                <div>{$categoryCount[$name]['blocked']['formatted']}</div>
               {/if}
             </td>
             <td class="text-center orange">
               {if isset($categoryCount[$name]['orange'])}
-                <div>{$categoryCount[$name]['orange']}</div>
+                <div>{$categoryCount[$name]['orange']['formatted']}</div>
               {/if}
             </td>
             <td class="text-center white">
               {if isset($categoryCount[$name]['white'])}
-                <div>{$categoryCount[$name]['white']}</div>
+                <div>{$categoryCount[$name]['white']['formatted']}</div>
               {/if}
             </td>
             <td class="text-center green">
-                {if isset($categoryCount[$name]['green'])}
-                    <div>{$categoryCount[$name]['green']}</div>
-                {/if}
+              {if isset($categoryCount[$name]['green'])}
+                <div>{$categoryCount[$name]['green']['formatted']}</div>
+              {/if}
+            </td>
+          </tr>
+          <tr>
+            <td colspan="9">
+              <strong>Zugänglichkeit</strong>
+              <table>
+                <tr>
+                  <td>Good</td>
+                  <td><div style="background-color: #37ba00; width: {$categoryCount[$name]['green']['raw']}">&nbsp;</div> {$categoryCount[$name]['green']}</td>
+                </tr>
+              </table>
+
             </td>
           </tr>
         {/foreach}

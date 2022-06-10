@@ -341,7 +341,10 @@ class Fair extends BaseTab {
         }
       }
       foreach ($categoryCount[$id] as $color => $percent) {
-        $categoryCount[$id][$color] = sprintf("%.2f%%", $percent / $total);
+        $categoryCount[$id][$color] = [
+          'raw' => round($percent / $total),
+          'formatted' => sprintf("%.2f%%", $percent / $total)
+        ];
       }
     }
     return $categoryCount;
