@@ -78,10 +78,10 @@
           {/foreach}
           <tr>
             <td colspan="5"></td>
-            <td style="width: 80px">blocked</td>
-            <td style="width: 80px">To be improved</td>
-            <td style="width: 80px">Acceptable</td>
-            <td style="width: 80px">Good</td>
+            <td style="width: 80px"><strong>Blocked</strong></td>
+            <td style="width: 80px"><strong>To be improved</strong></td>
+            <td style="width: 80px"><strong>Acceptable</strong></td>
+            <td style="width: 80px"><strong>Good</strong></td>
           </tr>
           <tr>
             <td colspan="5" style="margin-bottom: 20px;"><strong>Average PERCENTAGE</strong></td>
