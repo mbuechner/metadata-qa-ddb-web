@@ -8,14 +8,17 @@
 
       <h3>{$count} records</h3>
       <p>
-        metadata schemas: {foreach $schemasStatistic as $item name="stat"}
-          {$item['metadata_schema']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}
+        metadata schemas:
+          {foreach $schemasStatistic as $item name="stat"}
+            {$item['metadata_schema']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}
           {/foreach}<br>
-        providers: {foreach $providersStatistic as $item name="stat"}
-          {$item['name']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}
+        providers:
+          {foreach $providersStatistic as $item name="stat"}
+            {$item['name']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}
           {/foreach}<br>
-        datasets: {foreach $setsStatistic as $item name="stat"}
-              {$item['name']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}
+        datasets:
+          {foreach $setsStatistic as $item name="stat"}
+            {$item['name']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}
           {/foreach}
       </p>
 
@@ -34,44 +37,51 @@
         </tr>
         </thead>
         <tbody>
-        {foreach $categories as $name => $cat}
+        {foreach $categories as $name => $cat_definition}
           <tr>
-            <td class="category" colspan="9">{$cat['name']}</td>
+            <td class="category" colspan="9">{$cat_definition['name']}</td>
           </tr>
-          {foreach $cat['criteria'] as $id => $criteria name="criteria"}
+          {foreach $cat_definition['criteria'] as $id => $criteria name="criteria"}
+            {assign var="value" value=$values[$id]}
             <tr>
               {if $smarty.foreach.criteria.first}
-                <td class="fair-category-result" rowspan="{count($cat['criteria'])}">
+                <td class="fair-category-result" rowspan="{count($cat_definition['criteria'])}">
                   <div class="label {$fair[$name]['color']}">{$fair[$name]['label']}</div>
                   <span class="score">({$fair[$name]['total']})</span>
                 </td>
               {/if}
-              <td class="{if isset($blocked[$id])}red{/if}">{$criteria['title']}</td>
-              <td class="text-center {if isset($blocked[$id])}red{/if}">{$id}</td>
-              <td class="text-center {if isset($blocked[$id])}red{/if}">{if $criteria['score'] < 0}{$criteria['score']}{else}0{/if}</td>
-              <td class="text-center {if isset($blocked[$id])}red{/if}">{if $criteria['score'] > 0}{$criteria['score']}{else}0{/if}</td>
-              <td class="text-center {if isset($blocked[$id])}red{/if}" title="{sprintf("%.4f%%, %d records", $distribution[$id]['blocked']*100/$count, $distribution[$id]['blocked'])}">
-                {if isset($distribution[$id]['blocked'])}
-                  <div>{sprintf("%.0f%%", $distribution[$id]['blocked']*100/$count)}</div>
+              <td class="{$value->getClass()}">{$criteria['title']}</td>
+              <td class="text-center {$value->getClass()}">{$id}</td>
+              <td class="text-center {$value->getClass()}">{if $criteria['score'] < 0}{$criteria['score']}{else}0{/if}</td>
+              <td class="text-center {$value->getClass()}">{if $criteria['score'] > 0}{$criteria['score']}{else}0{/if}</td>
+              <td class="text-center {if $value->isBlocked()}red{/if}" title="{$value->tooltip('blocked', $count)}">
+                {if $value->isBlocked()}
+                  <div>{$value->percent('blocked', $count)}</div>
                 {/if}
               </td>
-              <td class="text-center orange" title="{sprintf("%.4f%%, %d records", $distribution[$id]['To be improved']*100/$count, $distribution[$id]['To be improved'])}">
-                {if isset($distribution[$id]['To be improved'])}
-                  <div>{sprintf("%.0f%%", $distribution[$id]['To be improved']*100/$count)}</div>
+              <td class="text-center orange" title="{$value->tooltip('orange', $count)}">
+                {if $value->has('orange')}
+                  <div>{$value->percent('orange', $count)}</div>
                 {/if}
               </td>
-              <td class="text-center white" title="{sprintf("%.4f%%, %d records", $distribution[$id]['Acceptable']*100/$count, $distribution[$id]['Acceptable'])}">
-                {if isset($distribution[$id]['Acceptable'])}
-                  <div>{sprintf("%.0f%%", $distribution[$id]['Acceptable']*100/$count)}</div>
+              <td class="text-center white" title="{$value->tooltip('white', $count)}">
+                {if $value->has('white')}
+                  <div>{$value->percent('white', $count)}</div>
                 {/if}
               </td>
-              <td class="text-center green" title="{sprintf("%.4f%%, %d records", $distribution[$id]['Good']*100/$count, $distribution[$id]['Good'])}">
-                {if isset($distribution[$id]['Good'])}
-                  <div>{sprintf("%.0f%%", $distribution[$id]['Good']*100/$count)}</div>
+              <td class="text-center green" title="{$value->tooltip('green', $count)}">
+                {if $value->has('green')}
+                  <div>{$value->percent('green', $count)}</div>
                 {/if}
               </td>
             </tr>
           {/foreach}
+          <tr>
+            <td colspan="6"></td>
+            <td class="text-center">{if isset($categoryCount[$name]['orange'])}{$categoryCount[$name]['orange']}{/if}</td>
+            <td class="text-center">{if isset($categoryCount[$name]['white'])}{$categoryCount[$name]['white']}{/if}</td>
+            <td class="text-center">{if isset($categoryCount[$name]['green'])}{$categoryCount[$name]['green']}{/if}</td>
+          </tr>
         {/foreach}
         </tbody>
       </table>

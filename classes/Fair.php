@@ -1,5 +1,6 @@
 <?php
 
+include_once 'Criterium.php';
 class Fair extends BaseTab {
 
   public function prepareData(Smarty &$smarty) {
@@ -104,7 +105,6 @@ class Fair extends BaseTab {
       ],
       'accessible' => [
         'name' => 'Zugänglichkeit',
-        'criteria1' => ['Q-3.1', 'Q-3.3', 'Q-3.5', 'Q-4.1', 'Q-4.3', 'Q-4.4', 'Q-4.5', 'Q-4.6'],
         'criteria' => [
           'Q-3.1' => [
             'title' => '<strong>Bilddatei</strong> - Im gelieferten Datensatz muss eine Referenz auf eine Bilddatei vorhanden sein (entweder als Link oder als Dateiname).',
@@ -201,52 +201,9 @@ class Fair extends BaseTab {
       ]
     ];
     $smarty->assign('categories', $categories);
-    $Qindex = [];
-    foreach ($categories as $name => $category) {
-      foreach (array_keys($category['criteria']) as $Q) {
-        $Qindex[$Q] = $name;
-      }
-    }
-
-    $means = [];
-    $distribution = [];
-    foreach ($frequency as $key => $values) {
-      if (preg_match('/^(Q.*):score$/', $key, $matches)) {
-        $Q = $matches[1];
-        if (!isset($distribution[$Q]))
-          $distribution[$Q] = [];
-        $definition = $Qindex[$Q];
-        $count = 0;
-        $total = 0;
-        foreach ($values as $record) {
-          if (!is_null($record['value']) && $record['value'] != 'NA') {
-            $count += $record['frequency'];
-            $total += ($record['frequency'] * $record['value']);
-            list($label, $color) = $this->getLabel((float)$record['value'], $fair[$definition]['ranges']);
-            if ($label != '') {
-              if (!isset($distribution[$Q][$label]))
-                $distribution[$Q][$label] = 0;
-              $distribution[$Q][$label] += $record['frequency'];
-            }
-          }
-        }
-        $means[$Q] = ($count > 0) ? sprintf("%.2f", ($total / $count)) : '&mdash;';
-      } else if (preg_match('/^(Q.*):status/', $key, $matches)) {
-        $Q = $matches[1];
-        if (!isset($distribution[$Q]))
-          $distribution[$Q] = [];
-        $definition = $Qindex[$Q];
-        if (in_array($Q, $fair[$definition]['blockers'])) {
-          foreach ($values as $record) {
-            if ($record['value'] == '0') {
-              $distribution[$Q]['blocked'] = $record['frequency'];
-            }
-          }
-        }
-      }
-    }
-    $smarty->assign('means', $means);
-    $smarty->assign('distribution', $distribution);
+    $values = $this->createCriteria($frequency, $categories);
+    $smarty->assign('values', $this->createCriteria($frequency, $categories));
+    $smarty->assign('categoryCount', $this->calculateCategoryCount($categories, $values));
 
     $blocked = [];
     $colors = [];
@@ -294,18 +251,18 @@ class Fair extends BaseTab {
     $smarty->assign('blocked', $blocked);
     $smarty->assign('colors', $colors);
 
-    $count = 0;
+    $categoryCount = 0;
     $total = 0;
     $not_measured = 0;
     foreach ($frequency['ruleCatalog:score'] as $record) {
       if (!is_null($record['value']) && $record['value'] != 'NA') {
-        $count += $record['frequency'];
+        $categoryCount += $record['frequency'];
         $total += ($record['frequency'] * $record['value']);
       } else {
         $not_measured += $record['frequency'];
       }
     }
-    $smarty->assign('totalScore', $total / $count);
+    $smarty->assign('totalScore', $total / $categoryCount);
     $smarty->assign('notMeasured', $not_measured);
   }
 
@@ -342,5 +299,51 @@ class Fair extends BaseTab {
     }
     */
     return [$label, $color];
+  }
+
+  private function createCriteria($frequency, $categories) {
+    $index = [];
+    foreach ($categories as $name => $category) {
+      foreach (array_keys($category['criteria']) as $Q) {
+        $index[$Q] = $name;
+      }
+    }
+
+    $criteria = [];
+    foreach ($frequency as $key => $values) {
+      if (preg_match('/^(Q.*):(score|status)$/', $key, $matches)) {
+        $criteria[$matches[1]][$matches[2]] = $values;
+      }
+    }
+
+    foreach ($criteria as $id => $item) {
+      $category = $index[$id];
+      $criteria_definition = $categories[$category]['criteria'][$id];
+      $criteria[$id] = new Criterium($id, $category, $criteria_definition, $item['status'], $item['score']);
+    }
+
+    return $criteria;
+  }
+
+  private function calculateCategoryCount($categories, $values) {
+    $categoryCount = [];
+    foreach ($categories as $id => $category) {
+      $total = 0;
+      foreach ($category['criteria'] as $critId => $critDef) {
+        $dao = $values[$critId];
+        if ($dao->isMeasured()) {
+          $total++;
+          foreach ($dao->getDistribution() as $color => $frequency) {
+            if (!isset($categoryCount[$id][$color]))
+              $categoryCount[$id][$color] = 0;
+            $categoryCount[$id][$color] += ($frequency * 100 / $this->count);
+          }
+        }
+      }
+      foreach ($categoryCount[$id] as $color => $percent) {
+        $categoryCount[$id][$color] = sprintf("%.2f%%", $percent / $total);
+      }
+    }
+    return $categoryCount;
   }
 }

@@ -784,6 +784,7 @@ table.fair td.fair-category-result div.label {
   margin: auto;
 }
 
+table.fair td.grey {color: #cccccc}
 table.fair div.label.red {background-color: #d5073c; color: white}
 table.fair div.label.orange {background-color: orange; color: white;}
 table.fair div.label.green {background-color: #37ba00; color: white;}
