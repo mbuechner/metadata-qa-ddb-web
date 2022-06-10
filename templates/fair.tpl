@@ -85,7 +85,7 @@
           </tr>
           <tr>
             <td colspan="5" style="margin-bottom: 20px;"><strong>Average PERCENTAGE</strong></td>
-            <td class="text-center red">
+            <td class="text-center {if isset($categoryCount[$name]['blocked'])}red{/if}">
               {if isset($categoryCount[$name]['blocked'])}
                 <div>{$categoryCount[$name]['blocked']}</div>
               {/if}
