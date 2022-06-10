@@ -77,7 +77,15 @@
             </tr>
           {/foreach}
           <tr>
-            <td colspan="6"></td>
+            <td colspan="5"></td>
+            <td style="width: 80px" class="red">blocked</td>
+            <td style="width: 80px" class="orange">To be improved</td>
+            <td style="width: 80px">Acceptable</td>
+            <td style="width: 80px" class="green">Good</td>
+          </tr>
+          <tr>
+            <td colspan="5"><strong>Average PERCENTAGE</strong></td>
+            <td class="text-center">{if isset($categoryCount[$name]['blocked'])}{$categoryCount[$name]['blocked']}{/if}</td>
             <td class="text-center">{if isset($categoryCount[$name]['orange'])}{$categoryCount[$name]['orange']}{/if}</td>
             <td class="text-center">{if isset($categoryCount[$name]['white'])}{$categoryCount[$name]['white']}{/if}</td>
             <td class="text-center">{if isset($categoryCount[$name]['green'])}{$categoryCount[$name]['green']}{/if}</td>
