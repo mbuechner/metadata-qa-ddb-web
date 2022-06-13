@@ -817,7 +817,7 @@ table.fair td.green div {background-color: #37ba00; color: white;
   margin: auto;
 }
 
-table.fair td.blocked div a {color: white; text-decoration: underline;}
+table.fair td.red div a {color: white; text-decoration: underline;}
 table.fair td.orange div a {color: white; text-decoration: underline;}
 table.fair td.green div a {color: white; text-decoration: underline;}
 table.fair td.white div a {text-decoration: underline;}
