@@ -81,38 +81,41 @@
             </tr>
           {/foreach}
           <tr>
-            <td colspan="3"></td>
-            <td style="width: 100px; text-align: center"><strong>Blocked</strong></td>
-            <td style="width: 100px; text-align: center"><strong>To be improved</strong></td>
-            <td style="width: 100px; text-align: center"><strong>Acceptable</strong></td>
-            <td style="width: 100px; text-align: center"><strong>Good</strong></td>
-          </tr>
-          <tr>
-            <td colspan="3" class="text-right" style="vertical-align: middle; padding-right: 10px;"><strong>Average percentage</strong></td>
-            <td class="text-center {if isset($categoryCount[$name]['blocked'])}red{/if}">
-              {if isset($categoryCount[$name]['blocked'])}
-                <div>{$categoryCount[$name]['blocked']['formatted']}</div>
-              {/if}
-            </td>
-            <td class="text-center orange">
-              {if isset($categoryCount[$name]['orange'])}
-                <div>{$categoryCount[$name]['orange']['formatted']}</div>
-              {/if}
-            </td>
-            <td class="text-center white">
-              {if isset($categoryCount[$name]['white'])}
-                <div>{$categoryCount[$name]['white']['formatted']}</div>
-              {/if}
-            </td>
-            <td class="text-center green">
-              {if isset($categoryCount[$name]['green'])}
-                <div>{$categoryCount[$name]['green']['formatted']}</div>
-              {/if}
-            </td>
-          </tr>
-          <tr>
-            <td colspan="7">
-              <div class="text-center" style="margin-bottom: 10px;"><strong>Zugänglichkeit</strong></div>
+            <td colspan="7" style="padding: 50px 0 50px 0;">
+              <table style="margin: auto;">
+                <tr>
+                  <td colspan="3"></td>
+                  <td style="width: 100px; text-align: center"><strong>Blocked</strong></td>
+                  <td style="width: 100px; text-align: center"><strong>To be improved</strong></td>
+                  <td style="width: 100px; text-align: center"><strong>Acceptable</strong></td>
+                  <td style="width: 100px; text-align: center"><strong>Good</strong></td>
+                </tr>
+                <tr>
+                  <td colspan="3" class="text-right" style="vertical-align: middle; padding-right: 10px;"><strong>Average percentage</strong></td>
+                  <td class="text-center {if isset($categoryCount[$name]['blocked'])}red{/if}">
+                      {if isset($categoryCount[$name]['blocked'])}
+                        <div>{$categoryCount[$name]['blocked']['formatted']}</div>
+                      {/if}
+                  </td>
+                  <td class="text-center orange">
+                      {if isset($categoryCount[$name]['orange'])}
+                        <div>{$categoryCount[$name]['orange']['formatted']}</div>
+                      {/if}
+                  </td>
+                  <td class="text-center white">
+                      {if isset($categoryCount[$name]['white'])}
+                        <div>{$categoryCount[$name]['white']['formatted']}</div>
+                      {/if}
+                  </td>
+                  <td class="text-center green">
+                      {if isset($categoryCount[$name]['green'])}
+                        <div>{$categoryCount[$name]['green']['formatted']}</div>
+                      {/if}
+                  </td>
+                </tr>
+              </table>
+
+              <div class="text-center" style="margin: 30px auto 0 auto;"><strong>Zugänglichkeit</strong></div>
               <table style="width: 100%; margin-bottom: 20px;">
                 <tr>
                   <td style="width: 50%; text-align: right; padding-right: 5px; border-right: 3px solid #cccccc">
