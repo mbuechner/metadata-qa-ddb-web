@@ -32,10 +32,10 @@
           <th>Kriterium nicht erfüllt</th>
           <th>Kriterium erfüllt</th>
 *}
-          <th style="width: 80px" class="red">Blocked</th>
-          <th style="width: 80px" class="orange">To be improved</th>
-          <th style="width: 80px">Acceptable</th>
-          <th style="width: 80px" class="green">Good</th>
+          <th style="width: 100px" class="red">Blocked</th>
+          <th style="width: 100px" class="orange">To be improved</th>
+          <th style="width: 100px">Acceptable</th>
+          <th style="width: 100px" class="green">Good</th>
         </tr>
         </thead>
         <tbody>
