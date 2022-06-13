@@ -16,6 +16,7 @@ class Records extends BaseTab {
     // $value = getOrDefault('value', '1', ['0', '1', 'NA']);
     $page = getOrDefault('page', 0);
     $limit = getOrDefault('limit', 100, [25, 50, 100]);
+    $op = getOrDefault('op', 'eq', ['eq', 'lt', 'gt']);
     if (preg_match('/^(.*?):(score|status)$/', $field, $matches)) {
       $factor = $matches[1];
       $type = $matches[2];
@@ -26,17 +27,18 @@ class Records extends BaseTab {
     $smarty->assign('factor', $factor);
     $smarty->assign('type', $type);
 
-    $recordCount = $this->db->fetchValue($this->db->getIssuesCount($field, $value,
-      $this->unsetNa($this->schema), $this->unsetNa($this->provider_id), $this->unsetNa($this->set_id)), 'count');
-    $result = $this->db->getIssues($field, $value,
-      $this->unsetNa($this->schema), $this->unsetNa($this->provider_id), $this->unsetNa($this->set_id),
+    $recordCount = $this->db->fetchValue(
+      $this->db->getIssuesCount(
+        $field, $value, $op, $this->unsetNa($this->schema), $this->unsetNa($this->provider_id), $this->unsetNa($this->set_id)
+      ), 'count');
+    $result = $this->db->getIssues(
+      $field, $value, $op, $this->unsetNa($this->schema), $this->unsetNa($this->provider_id), $this->unsetNa($this->set_id),
       $page * $limit, $limit
     );
     $recordIds = [];
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
       $recordIds[] = $row;
     }
-    error_log('recordIds: '. join(', ', $recordIds));
     $smarty->assign('recordCount', $recordCount);
     $smarty->assign('page', $page);
     $smarty->assign('limit', $limit);

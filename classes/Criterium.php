@@ -113,18 +113,33 @@ Class Criterium {
     $this->mean = ($count > 0) ? sprintf("%.2f", ($total / $count)) : '&mdash;';
   }
 
-  /**
-   * @param mixed $status
-   */
-  public function setStatus($status): void {
-    $this->status = $status;
+  public function getId() {
+    return $this->id;
   }
 
-  /**
-   * @param mixed $score
-   */
-  public function setScore($score): void {
-    $this->score = $score;
+  public function getLink($color, Fair $controller) {
+    $suffix = 'score';
+    $op = 'eq';
+    $value = 0;
+    if ($color == 'red') {
+      $suffix = 'status';
+    } else if ($color == 'orange') {
+      $op = 'lt';
+    } else if ($color == 'white') {
+    } else if ($color == 'green') {
+      $op = 'gt';
+    }
+    $params = [
+      'tab' => 'records',
+      'schema' => ($controller->getSchema() == 'NA' ? '' : $controller->getSchema()),
+      'provider_id' => ($controller->getProviderId() == 'NA' ? '' : $controller->getProviderId()),
+      'set_id' => ($controller->getSetId() == 'NA' ? '' : $controller->getSetId()),
+      'field' => $this->id . ':' . $suffix,
+      'value' => $value,
+      'op' => $op,
+    ];
+
+    return '?' . http_build_query($params);
   }
 
   private function getLabel($score) {

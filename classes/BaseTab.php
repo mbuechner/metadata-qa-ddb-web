@@ -149,4 +149,29 @@ abstract class BaseTab implements Tab {
     return $text == '' ? 'NA' : $text;
   }
 
+  /**
+   * @return mixed
+   */
+  public function getSchema()
+  {
+    return $this->schema;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getSetId()
+  {
+    return $this->set_id;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getProviderId()
+  {
+    return $this->provider_id;
+  }
+
+
 }

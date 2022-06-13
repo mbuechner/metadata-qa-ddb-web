@@ -9,20 +9,21 @@ class IssuesDBMySQL {
     $this->db = new PDO($dsn, $user, $password);
   }
 
-  public function getIssuesCount($field, $value, $schema = '', $provider_id = '', $set_id = '') {
+  public function getIssuesCount($field, $value, $op = 'eq', $schema = '', $provider_id = '', $set_id = '') {
     error_log($field . ' -- ' . $value);
     error_log(sprintf('%s %s %s', $schema, $provider_id, $set_id));
     $where = $this->getWhere($schema, $provider_id, $set_id, FALSE);
+    $_op = $op == 'eq' ? '=' : ($op == 'lt' ? '<' : '>');
     if ($where == '') {
       $sql = 'SELECT COUNT(*) AS count
        FROM issue AS i
-       WHERE `' . $field . '` = :value';
+       WHERE `' . $field . '` ' . $_op . ' :value';
     } else {
       $sql = 'SELECT COUNT(*) AS count
         FROM issue AS i
         LEFT JOIN file_record fr ON (fr.recordId = i.recordId)
         LEFT JOIN file AS f ON (fr.file = f.file)
-        WHERE `' . $field . '` = :value AND ' . $where;
+        WHERE `' . $field . '` ' . $_op . ' :value AND ' . $where;
     }
     error_log(cleanSql($sql));
     $stmt = $this->db->prepare($sql);
@@ -35,18 +36,19 @@ class IssuesDBMySQL {
     return $stmt;
   }
 
-  public function getIssues($field, $value, $schema = '', $provider_id = '', $set_id = '', $offset = 0, $limit = 10)
+  public function getIssues($field, $value, $op = 'eq', $schema = '', $provider_id = '', $set_id = '', $offset = 0, $limit = 10)
   {
     error_log($field . ' -- ' . $value);
     error_log(sprintf('%s %s %s', $schema, $provider_id, $set_id));
     $default_order = 'recordid';
     $where = $this->getWhere($schema, $provider_id, $set_id, FALSE);
+    $_op = $op == 'eq' ? '=' : ($op == 'lt' ? '<' : '>');
     if ($where == '') {
       $sql = 'SELECT i.*, f.metadata_schema, f.provider_name
        FROM issue AS i
        LEFT JOIN file_record fr ON (fr.recordId = i.recordId)
        LEFT JOIN file AS f ON (fr.file = f.file)
-       WHERE `' . $field . '` = :value
+       WHERE `' . $field . '` ' . $_op . ' :value
        ORDER BY ' . $default_order . '
        LIMIT :limit
        OFFSET :offset';
@@ -55,7 +57,7 @@ class IssuesDBMySQL {
        FROM issue AS i
        LEFT JOIN file_record fr ON (fr.recordId = i.recordId)
        LEFT JOIN file AS f ON (fr.file = f.file)
-       WHERE `' . $field . '` = :value AND ' . $where . '
+       WHERE `' . $field . '` ' . $_op . ' :value AND ' . $where . '
        ORDER BY ' . $default_order . ' 
        LIMIT :limit
        OFFSET :offset';

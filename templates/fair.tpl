@@ -56,22 +56,22 @@
               <td class="text-center {$value->getClass()}">{if $criteria['score'] > 0}{$criteria['score']}{else}0{/if}</td>
               <td class="text-center {if $value->isBlocked()}red{/if}" title="{$value->tooltip('blocked', $count)}">
                 {if $value->isBlocked()}
-                  <div>{$value->percent('blocked', $count)}</div>
+                  <div><a href="{$value->getLink('blocked', $controller)}">{$value->percent('blocked', $count)}</a></div>
                 {/if}
               </td>
               <td class="text-center orange" title="{$value->tooltip('orange', $count)}">
                 {if $value->has('orange')}
-                  <div>{$value->percent('orange', $count)}</div>
+                  <div><a href="{$value->getLink('orange', $controller)}">{$value->percent('orange', $count)}</a></div>
                 {/if}
               </td>
               <td class="text-center white" title="{$value->tooltip('white', $count)}">
                 {if $value->has('white')}
-                  <div>{$value->percent('white', $count)}</div>
+                  <div><a href="{$value->getLink('white', $controller)}">{$value->percent('white', $count)}</a></div>
                 {/if}
               </td>
               <td class="text-center green" title="{$value->tooltip('green', $count)}">
                 {if $value->has('green')}
-                  <div>{$value->percent('green', $count)}</div>
+                  <div><a href="{$value->getLink('green', $controller)}">{$value->percent('green', $count)}</a></div>
                 {/if}
               </td>
             </tr>
