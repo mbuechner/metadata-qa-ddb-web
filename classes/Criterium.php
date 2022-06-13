@@ -110,6 +110,12 @@ Class Criterium {
         }
       }
     }
+    if ($this->isBlocked() && isset($this->distribution['orange'])) {
+      $this->distribution['orange'] -= $this->distribution['blocked'];
+      if ($this->distribution['orange'] == 0) {
+        unset($this->distribution['orange']);
+      }
+    }
     $this->mean = ($count > 0) ? sprintf("%.2f", ($total / $count)) : '&mdash;';
   }
 
