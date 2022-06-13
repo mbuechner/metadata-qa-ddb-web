@@ -807,6 +807,8 @@ table.fair td.orange div {background-color: orange; color: white;
   margin: auto;
 }
 
+table.fair td.orange div a {color: white; text-underline: white}
+
 table.fair td.green div {background-color: #37ba00; color: white;
   border-radius: 50px;
   padding-top: 12px;
