@@ -84,7 +84,7 @@
             <td style="width: 80px"><strong>Good</strong></td>
           </tr>
           <tr>
-            <td colspan="5" class="text-right"><strong>Average percentage</strong></td>
+            <td colspan="5" class="text-right" style="vertical-align: middle; padding-right: 10px;"><strong>Average percentage</strong></td>
             <td class="text-center {if isset($categoryCount[$name]['blocked'])}red{/if}">
               {if isset($categoryCount[$name]['blocked'])}
                 <div>{$categoryCount[$name]['blocked']['formatted']}</div>
