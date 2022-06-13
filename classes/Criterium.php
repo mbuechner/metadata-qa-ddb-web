@@ -127,7 +127,7 @@ Class Criterium {
     $suffix = 'score';
     $op = 'eq';
     $value = 0;
-    if ($color == 'red') {
+    if ($color == 'blocked') {
       $suffix = 'status';
     } else if ($color == 'orange') {
       $op = 'lt';
