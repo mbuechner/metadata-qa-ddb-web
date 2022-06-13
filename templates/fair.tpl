@@ -28,8 +28,10 @@
           <th style="min-width: 100px; max-width: 150px;">Kategorien für Qualitätskriterien (FAIR Prinzipien)</th>
           <th>Beschreibung</th>
           <th>Bewertungs-matrix</th>
+{*
           <th>Kriterium nicht erfüllt</th>
           <th>Kriterium erfüllt</th>
+*}
           <th style="width: 80px" class="red">Blocked</th>
           <th style="width: 80px" class="orange">To be improved</th>
           <th style="width: 80px">Acceptable</th>
@@ -39,7 +41,7 @@
         <tbody>
         {foreach $categories as $name => $cat_definition}
           <tr>
-            <td class="category" colspan="9">{$cat_definition['name']}</td>
+            <td class="category" colspan="7">{$cat_definition['name']}</td>
           </tr>
           {foreach $cat_definition['criteria'] as $id => $criteria name="criteria"}
             {assign var="value" value=$values[$id]}
@@ -52,8 +54,10 @@
               {/if}
               <td class="{$value->getClass()}">{$criteria['title']}</td>
               <td class="text-center {$value->getClass()}">{$id}</td>
+{*
               <td class="text-center {$value->getClass()}">{if $criteria['score'] < 0}{$criteria['score']}{else}0{/if}</td>
               <td class="text-center {$value->getClass()}">{if $criteria['score'] > 0}{$criteria['score']}{else}0{/if}</td>
+*}
               <td class="text-center {if $value->isBlocked()}red{/if}" title="{$value->tooltip('blocked', $count)}">
                 {if $value->isBlocked()}
                   <div><a href="{$value->getLink('blocked', $controller)}">{$value->percent('blocked', $count)}</a></div>
@@ -77,14 +81,14 @@
             </tr>
           {/foreach}
           <tr>
-            <td colspan="5"></td>
+            <td colspan="3"></td>
             <td style="width: 80px"><strong>Blocked</strong></td>
             <td style="width: 80px"><strong>To be improved</strong></td>
             <td style="width: 80px"><strong>Acceptable</strong></td>
             <td style="width: 80px"><strong>Good</strong></td>
           </tr>
           <tr>
-            <td colspan="5" class="text-right" style="vertical-align: middle; padding-right: 10px;"><strong>Average percentage</strong></td>
+            <td colspan="3" class="text-right" style="vertical-align: middle; padding-right: 10px;"><strong>Average percentage</strong></td>
             <td class="text-center {if isset($categoryCount[$name]['blocked'])}red{/if}">
               {if isset($categoryCount[$name]['blocked'])}
                 <div>{$categoryCount[$name]['blocked']['formatted']}</div>
@@ -107,7 +111,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan="9">
+            <td colspan="7">
               <div class="text-center" style="margin-bottom: 10px;"><strong>Zugänglichkeit</strong></div>
               <table style="width: 100%; margin-bottom: 20px;">
                 <tr>
