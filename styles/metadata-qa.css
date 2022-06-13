@@ -816,6 +816,8 @@ table.fair td.green div {background-color: #37ba00; color: white;
   margin: auto;
 }
 
+table.fair td.green div a {color: white; text-underline: white}
+
 table.fair td.white div {background-color: #eeeeee;
   border: 1px solid #999999;
   border-radius: 50px;
