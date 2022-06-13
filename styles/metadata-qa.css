@@ -807,7 +807,6 @@ table.fair td.orange div {background-color: orange; color: white;
   margin: auto;
 }
 
-table.fair td.orange div a {color: white; text-underline: white}
 
 table.fair td.green div {background-color: #37ba00; color: white;
   border-radius: 50px;
@@ -818,7 +817,10 @@ table.fair td.green div {background-color: #37ba00; color: white;
   margin: auto;
 }
 
-table.fair td.green div a {color: white; text-underline: white}
+table.fair td.blocked div a {color: white; text-decoration: underline;}
+table.fair td.orange div a {color: white; text-decoration: underline;}
+table.fair td.green div a {color: white; text-decoration: underline;}
+table.fair td.white div a {text-decoration: underline;}
 
 table.fair td.white div {background-color: #eeeeee;
   border: 1px solid #999999;
