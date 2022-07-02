@@ -74,9 +74,9 @@
             {assign var="failed" value=0}
             {assign var="NA" value=0}
             {foreach from=$frequency[$statusId] item=$record name="records"}
-              {if $record['value'] == "1"}
+              {if $record['value'] == "1" || $record['value'] == "TRUE"}
                 {assign var="passed" value=$record['frequency']}
-              {elseif $record['value'] == "0"}
+              {elseif $record['value'] == "0" || $record['value'] == "FALSE"}
                 {assign var="failed" value=$record['frequency']}
               {elseif $record['value'] == "NA"}
                 {assign var="NA" value=$record['frequency']}
