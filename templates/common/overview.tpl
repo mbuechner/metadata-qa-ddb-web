@@ -65,8 +65,6 @@
                 <em title='{str_replace('|', "\n", $factor->criterium)}'><i class="fa fa-question"></i></em>
               {/if}
             {/if}
-            <br>
-            {$statusId}: {json_encode($frequency[$statusId])}
           </td>
 
           {if isset($frequency[$statusId]) && !is_null($frequency[$statusId][0]['value'])}
