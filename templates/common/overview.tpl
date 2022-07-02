@@ -65,12 +65,15 @@
                 <em title='{str_replace('|', "\n", $factor->criterium)}'><i class="fa fa-question"></i></em>
               {/if}
             {/if}
+            <br>
+            {$statusId}: {json_encode($frequency[$statusId])}
           </td>
+
           {if isset($frequency[$statusId]) && !is_null($frequency[$statusId][0]['value'])}
             {assign var="passed" value=0}
             {assign var="failed" value=0}
             {assign var="NA" value=0}
-            {foreach $frequency[$statusId] as $record name="records"}
+            {foreach from=$frequency[$statusId] item=$record name="records"}
               {if $record['value'] == "1"}
                 {assign var="passed" value=$record['frequency']}
               {elseif $record['value'] == "0"}
