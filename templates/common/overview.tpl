@@ -66,6 +66,7 @@
               {/if}
             {/if}
             {json_encode($frequency[$statusId])}
+            {json_encode($frequency[$scoreId])}
           </td>
 
           {if isset($frequency[$statusId]) && !is_null($frequency[$statusId][0]['value'])}
