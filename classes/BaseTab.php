@@ -38,6 +38,7 @@ abstract class BaseTab implements Tab {
     global $tab;
     $this->parameters['tab'] = $tab;
 
+    $smarty->assign('controller', $this);
     $smarty->assign('lang', $this->lang);
     $smarty->assign('tab', $tab);
     $smarty->assign('subdirs', $this->subdirs);
@@ -104,6 +105,12 @@ abstract class BaseTab implements Tab {
     readfile($this->source . '/' . $file);
   }
 
+  protected function downloadCsv($file, $contentType = 'text/csv') {
+    header(sprintf('Content-Type: %s; charset=utf-8', $contentType));
+    header('Content-Disposition: ' . sprintf('attachment; filename="%s"', $file));
+    readfile($this->dir . '/' . $file);
+  }
+
   protected function downloadContent($content, $filename, $contentType) {
     header(sprintf('Content-Type: %s; charset=utf-8', $contentType));
     header('Content-Disposition: ' . sprintf('attachment; filename="%s"', $filename));
@@ -152,26 +159,29 @@ abstract class BaseTab implements Tab {
   /**
    * @return mixed
    */
-  public function getSchema()
-  {
+  public function getSchema() {
     return $this->schema;
   }
 
   /**
    * @return mixed
    */
-  public function getSetId()
-  {
+  public function getSetId() {
     return $this->set_id;
   }
 
   /**
    * @return mixed
    */
-  public function getProviderId()
-  {
+  public function getProviderId() {
     return $this->provider_id;
   }
 
-
+  public function getCOmmonUrlParameters() {
+    $params = [];
+    $params['schema'] = $this->schema == 'NA' ? '' : $this->schema;
+    $params['set_id'] = $this->set_id == 'NA' ? '' : $this->set_id;
+    $params['provider_id'] = $this->provider_id == 'NA' ? '' : $this->provider_id;
+    return http_build_query($params);
+  }
 }

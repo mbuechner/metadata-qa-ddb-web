@@ -6,7 +6,7 @@ class Downloader extends BaseTab {
     parent::prepareData($smarty);
     $this->outputType = 'none';
 
-    $this->action = getOrDefault('action', 'downloadFile', ['downloadRecord', 'downloadFile']);
+    $this->action = getOrDefault('action', 'downloadFile', ['downloadRecord', 'downloadFile', 'csvFile']);
     $id = getOrDefault('id', '');
     if ($id != '' && $this->action == 'downloadRecord') {
       include_once('Record.php');
@@ -18,8 +18,14 @@ class Downloader extends BaseTab {
 
       $this->outputType = 'none';
       $this->downloadFile($filename, 'application/xml');
+    } else if ($this->action == 'csvFile') {
+      include_once('Download.php');
+      $filename = getOrDefault('file', '', Download::getAllowableFiles());
+      if ($filename != '') {
+        $this->outputType = 'none';
+        $this->downloadCsv($filename);
+      }
     }
-
   }
 
   public function getTemplate() {

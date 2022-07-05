@@ -48,8 +48,10 @@
             <tr>
               {if $smarty.foreach.criteria.first}
                 <td class="fair-category-result" rowspan="{count($cat_definition['criteria'])}">
+                  {*
                   <div class="label {$fair[$name]['color']}">{$fair[$name]['label']}</div>
                   <span class="score">({$fair[$name]['total']})</span>
+                  *}
                 </td>
               {/if}
               <td class="{$value->getClass()}">{$criteria['title']}</td>
