@@ -1,15 +1,5 @@
 <h3>{$count} records</h3>
-<p>
-  metadata schemas: {foreach $schemasStatistic as $item name="stat"}
-    {$item['metadata_schema']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}
-  {/foreach}<br>
-  providers: {foreach $providersStatistic as $item name="stat"}
-    {$item['name']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}
-  {/foreach}<br>
-  datasets: {foreach $setsStatistic as $item name="stat"}
-    {$item['name']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}
-  {/foreach}
-</p>
+{include 'common/data-source-statistics.tpl'}
 
 <p>average score: <strong>{sprintf("%.2f", $totalScore)}</strong> (not measured: {$notMeasured} records)</p>
 <table class="values">

@@ -1,26 +1,13 @@
 {include 'common/html-head.tpl'}
 <div class="container">
-    {include 'common/header.tpl'}
+  {include 'common/header.tpl'}
     {include 'common/nav-tabs.tpl'}
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane active" id="factors" role="tabpanel" aria-labelledby="factors-tab">
       <h2>FAIR assessment</h2>
 
       <h3>{$count} records</h3>
-      <p>
-        metadata schemas:
-          {foreach $schemasStatistic as $item name="stat"}
-            {$item['metadata_schema']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}
-          {/foreach}<br>
-        providers:
-          {foreach $providersStatistic as $item name="stat"}
-            {$item['name']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}
-          {/foreach}<br>
-        datasets:
-          {foreach $setsStatistic as $item name="stat"}
-            {$item['name']} ({$item['count']}){if !$smarty.foreach.stat.last}, {/if}
-          {/foreach}
-      </p>
+      {include 'common/data-source-statistics.tpl'}
 
       <table class="fair">
         <thead>

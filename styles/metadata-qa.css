@@ -831,3 +831,7 @@ table.fair td.white div {background-color: #eeeeee;
   text-align: center;
   margin: auto;
 }
+
+p.data-source-statistics span {
+  color: #ccc;
+}

@@ -122,7 +122,7 @@ abstract class BaseTab implements Tab {
   }
 
   private function getFactors($lang) {
-    $entries = parse_ini_file(sprintf("locale.%s.ini", $lang), false, INI_SCANNER_RAW);
+    $entries = parse_ini_file(sprintf("locale/factors.%s.ini", $lang), false, INI_SCANNER_RAW);
     $factors = [];
     foreach ($entries as $key => $value) {
       preg_match('/^(Q-\d)(\.\d)?.(description|criterium|scoring)$/', $key, $matches);
@@ -137,9 +137,6 @@ abstract class BaseTab implements Tab {
   }
 
   private function getFactors2($lang) {
-    $locale = parse_ini_file(sprintf("locale.%s.ini", $lang), false, INI_SCANNER_RAW);
-    error_log(json_encode($locale));
-
     $factors = readCsv('factors.csv', 'id');
     foreach ($factors as $factor) {
       $factor->isGroup = preg_match('/^Q-\d$/', $factor->id);

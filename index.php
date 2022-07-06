@@ -5,7 +5,8 @@ $smarty = createSmarty('templates');
 
 $tab = getOrDefault('tab', 'overview', ['overview', 'records', 'record', 'about', 'downloader', 'fair', 'download']);
 $ajax = getOrDefault('ajax', 0, [0, 1]);
-$language = getOrDefault('language', 'en', ['en', 'de']);
+$language = getOrDefault('lang', 'en', ['en', 'de']);
+error_log('$language: ' . $language);
 
 $map = [
   'overview' => 'Overview',
@@ -23,6 +24,8 @@ include_once('classes/BaseTab.php');
 $class = isset($map[$tab]) ? $map[$tab] : 'Completeness';
 $controller = createTab($class);
 $controller->prepareData($smarty);
+include_once('classes/Locale.php');
+$locale = new Locale($language);
 
 if ($ajax == 1) {
   if (!is_null($controller->getAjaxTemplate()))
