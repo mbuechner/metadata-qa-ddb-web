@@ -73,17 +73,15 @@
                 {assign var="NA" value=$record['frequency']}
               {/if}
             {/foreach}
-            <td class="bg-passed status">{$passed}</td>
-            <td class="bg-failed status">
-              {if in_array($id, $blockers) && $failed > 0}
-                <a href="?&tab=records&field={$statusId}&value=0&{$controller->getCommonUrlParameters()}">
-                  {$failed}
-                </a>
-              {else}
-                {$failed}
-              {/if}
+            <td class="bg-passed status">
+              {include file='common/overview.status.tpl' statusCount=$passed statusValue='1'}
             </td>
-            <td class="bg-NA status">{$NA}</td>
+            <td class="bg-failed status">
+              {include file='common/overview.status.tpl' statusCount=$failed statusValue='0'}
+            </td>
+            <td class="bg-NA status">
+              {include file='common/overview.status.tpl' statusCount=$NA statusValue='NA'}
+            </td>
           {else}
             <td {if $measured}class="bg-passed status"{/if}></td>
             <td {if $measured}class="bg-failed status"{/if}></td>
