@@ -28,6 +28,7 @@ abstract class BaseTab implements Tab {
     $this->lang = getOrDefault('lang', 'en', ['en', 'de']);
     $this->parameters['lang'] = $this->lang;
     if (isset($this->configuration['MY_USER'])) {
+      error_log('use mysql');
       $this->db = new IssuesDBMySQL($this->configuration['MY_USER'], $this->configuration['MY_PASSWORD'], $this->configuration['MY_DB']);
     } else {
       $this->db = new IssuesDB($this->dir);
