@@ -19,7 +19,7 @@
     {foreach $frequency['ruleCatalog:score'] as $record name="records"}
       {if !is_null($record['value']) && $record['value'] != 'NA'}
         <td class="value">
-          <a href="?&tab=records&field=ruleCatalog:score&value={$record['value']}&{$control->getCommonParameters()}">
+          <a href="?&tab=records&field=ruleCatalog:score&value={$record['value']}&{$controller->getCommonUrlParameters()}">
             {$record['value']}
           </a>
         </td>

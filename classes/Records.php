@@ -11,7 +11,7 @@ class Records extends BaseTab {
   public function prepareData(Smarty &$smarty) {
     parent::prepareData($smarty);
 
-    $field = getOrDefault('field', '1.1');
+    $field = getOrDefault('field', 'Q-1.1');
     $value = getOrDefault('value', '');
     // $value = getOrDefault('value', '1', ['0', '1', 'NA']);
     $page = getOrDefault('page', 0);
