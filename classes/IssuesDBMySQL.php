@@ -210,6 +210,7 @@ class IssuesDBMySQL {
   }
 
   public function countRecordsBySchema($schema = '', $provider_id = '', $set_id = '') {
+    error_log('countRecordsBySchema');
     $where = $this->getWhere($schema, $provider_id, $set_id);
     $stmt = $this->db->prepare('SELECT metadata_schema AS id, COUNT(*) AS count
 FROM issue AS i
