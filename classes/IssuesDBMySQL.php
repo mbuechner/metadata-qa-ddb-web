@@ -212,9 +212,10 @@ class IssuesDBMySQL {
   public function countRecordsBySchema($schema = '', $provider_id = '', $set_id = '') {
     $where = $this->getWhere($schema, $provider_id, $set_id);
     $stmt = $this->db->prepare('SELECT metadata_schema AS id, COUNT(*) AS count
-FROM file AS f
-INNER JOIN file_record AS r
-USING (file) ' . $where . ' GROUP BY metadata_schema');
+FROM issue AS i
+LEFT JOIN file_record AS r USING (recordId)
+INNER JOIN file AS f USING (file) '
+      . $where . ' GROUP BY metadata_schema');
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
     error_log(cleanSql($this->getSQL($stmt)));
 
