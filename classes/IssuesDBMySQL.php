@@ -10,8 +10,6 @@ class IssuesDBMySQL {
   }
 
   public function getIssuesCount($field, $value, $op = 'eq', $schema = '', $provider_id = '', $set_id = '') {
-    error_log($field . ' -- ' . $value);
-    error_log(sprintf('%s %s %s', $schema, $provider_id, $set_id));
     $where = $this->getWhere($schema, $provider_id, $set_id, FALSE);
     $_op = $op == 'eq' ? '=' : ($op == 'lt' ? '<' : '>');
     if ($where == '') {
@@ -25,21 +23,19 @@ class IssuesDBMySQL {
         LEFT JOIN file AS f ON (fr.file = f.file)
         WHERE `' . $field . '` ' . $_op . ' :value AND ' . $where;
     }
-    error_log(cleanSql($sql));
+    // error_log(cleanSql($sql));
     $stmt = $this->db->prepare($sql);
     $stmt->bindValue(':value', $value, preg_match('/:score$/', $field) ? SQLITE3_INTEGER : SQLITE3_TEXT);
     if ($where != '')
       $this->bindValues($schema, $provider_id, $set_id, $stmt);
 
-    error_log(cleanSql($this->getSQL($stmt)));
+    // error_log(cleanSql($this->getSQL($stmt)));
     $stmt->execute();
     return $stmt;
   }
 
   public function getIssues($field, $value, $op = 'eq', $schema = '', $provider_id = '', $set_id = '', $offset = 0, $limit = 10)
   {
-    error_log($field . ' -- ' . $value);
-    error_log(sprintf('%s %s %s', $schema, $provider_id, $set_id));
     $default_order = 'recordid';
     $where = $this->getWhere($schema, $provider_id, $set_id, FALSE);
     $_op = $op == 'eq' ? '=' : ($op == 'lt' ? '<' : '>');
@@ -62,14 +58,14 @@ class IssuesDBMySQL {
        LIMIT :limit
        OFFSET :offset';
     }
-    error_log(cleanSql($sql));
+    // error_log(cleanSql($sql));
     $stmt = $this->db->prepare($sql);
     $stmt->bindValue(':value', $value, preg_match('/:score$/', $field) ? SQLITE3_INTEGER : SQLITE3_TEXT);
     if ($where != '')
       $this->bindValues($schema, $provider_id, $set_id, $stmt);
     $stmt->bindValue(':offset', $offset, SQLITE3_INTEGER);
     $stmt->bindValue(':limit', $limit, SQLITE3_INTEGER);
-    error_log(cleanSql($this->getSQL($stmt)));
+    // error_log(cleanSql($this->getSQL($stmt)));
 
     $stmt->execute();
     return $stmt;
@@ -107,10 +103,8 @@ class IssuesDBMySQL {
 
   public function getFrequency($schema = '', $provider_id = '', $set_id = '') {
     $where = $this->getWhere($schema, $provider_id, $set_id);
-    error_log('getFrequency: ' . $where);
     $stmt = $this->db->prepare('SELECT field, value, frequency FROM frequency ' . $where);
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
-    error_log(cleanSql($this->getSQL($stmt)));
 
     $stmt->execute();
     return $stmt;
@@ -120,7 +114,6 @@ class IssuesDBMySQL {
     $where = $this->getWhere($schema, $provider_id, $set_id);
     $stmt = $this->db->prepare('SELECT field, number_of_values FROM variability ' . $where);
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
-    error_log(cleanSql($this->getSQL($stmt)));
 
     $stmt->execute();
     return $stmt;
@@ -148,7 +141,7 @@ class IssuesDBMySQL {
         . ' GROUP BY metadata_schema ORDER BY metadata_schema');
     }
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
-    error_log(cleanSql($this->getSQL($stmt)));
+    // error_log(cleanSql($this->getSQL($stmt)));
 
     $stmt->execute();
     return $stmt;
@@ -168,7 +161,7 @@ class IssuesDBMySQL {
         . ' GROUP BY provider_id, provider_name');
     }
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
-    error_log(cleanSql($this->getSQL($stmt)));
+    // error_log(cleanSql($this->getSQL($stmt)));
 
     $stmt->execute();
     return $stmt;
@@ -210,15 +203,14 @@ class IssuesDBMySQL {
   }
 
   public function countRecordsBySchema($schema = '', $provider_id = '', $set_id = '') {
-    error_log('countRecordsBySchema');
     $where = $this->getWhere($schema, $provider_id, $set_id);
-    $stmt = $this->db->prepare('SELECT metadata_schema AS id, COUNT(*) AS count
+    $stmt = $this->db->prepare('SELECT metadata_schema as id, COUNT(*) AS count
 FROM issue AS i
 LEFT JOIN file_record AS r USING (recordId)
 INNER JOIN file AS f USING (file) '
       . $where . ' GROUP BY metadata_schema');
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
-    error_log(cleanSql($this->getSQL($stmt)));
+    // error_log(cleanSql($this->getSQL($stmt)));
 
     $stmt->execute();
     return $stmt;
@@ -226,11 +218,13 @@ INNER JOIN file AS f USING (file) '
 
   public function countRecordsByProvider($schema = '', $provider_id = '', $set_id = '') {
     $where = $this->getWhere($schema, $provider_id, $set_id);
-    $stmt = $this->db->prepare('SELECT provider_id AS id, COUNT(*) AS count
-FROM file AS f
-INNER JOIN file_record AS r
-USING (file) ' . $where . ' GROUP BY provider_id');
+    $stmt = $this->db->prepare('SELECT provider_name AS name, provider_id AS id, COUNT(*) AS count
+FROM issue AS i
+LEFT JOIN file_record AS r USING (recordId)
+INNER JOIN file AS f USING (file) '
+      . $where . ' GROUP BY provider_name, provider_id');
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
+    // error_log(cleanSql($this->getSQL($stmt)));
 
     $stmt->execute();
     return $stmt;
@@ -238,10 +232,11 @@ USING (file) ' . $where . ' GROUP BY provider_id');
 
   public function countRecordsBySet($schema = '', $provider_id = '', $set_id = '') {
     $where = $this->getWhere($schema, $provider_id, $set_id);
-    $stmt = $this->db->prepare('SELECT set_id AS id, COUNT(*) AS count
-FROM file AS f
-INNER JOIN file_record AS r
-USING (file) ' . $where . ' GROUP BY set_id');
+    $stmt = $this->db->prepare('SELECT set_name AS name, set_id AS id, COUNT(*) AS count
+FROM issue AS i
+LEFT JOIN file_record AS r USING (recordId)
+INNER JOIN file AS f USING (file) '
+     . $where . ' GROUP BY set_name, set_id');
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
 
     $stmt->execute();
@@ -326,15 +321,15 @@ USING (file) ' . $where . ' GROUP BY set_id');
   {
     if ($schema != '' || $provider_id != '' || $set_id != '') {
       if ($schema != '') {
-        error_log(':metadata_schema = ' . $schema);
+        // error_log(':metadata_schema = ' . $schema);
         $stmt->bindValue(':metadata_schema', $schema, SQLITE3_TEXT);
       }
       if ($provider_id != '') {
-        error_log(':provider_id = ' . $provider_id);
+        // error_log(':provider_id = ' . $provider_id);
         $stmt->bindValue(':provider_id', $provider_id, SQLITE3_TEXT);
       }
       if ($set_id != '') {
-        error_log(':set_id = ' . $set_id);
+        // error_log(':set_id = ' . $set_id);
         $stmt->bindValue(':set_id', $set_id, SQLITE3_TEXT);
       }
     }

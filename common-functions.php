@@ -93,8 +93,6 @@ function translate($params, $content, $smarty, &$repeat) {
   global $locale;
 
   if (isset($content)) {
-    if (isset($params))
-      error_log('params: ' . json_encode($params));
     return $locale->translate($content, array_values($params));
   }
   return $content;

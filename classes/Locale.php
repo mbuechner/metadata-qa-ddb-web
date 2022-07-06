@@ -148,7 +148,6 @@ class Locale {
       for ($i = 1, $max = count($args); $i < $max; $i++) {
         $replace['{a:' . $i . '}'] = $args[$i];
       }
-      error_log('replace: ' . json_encode($replace));
       // interpolate replacement values into the messsage then return
       return strtr($translation, $replace);
     }

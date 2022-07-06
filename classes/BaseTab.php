@@ -28,7 +28,6 @@ abstract class BaseTab implements Tab {
     $this->lang = getOrDefault('lang', 'en', ['en', 'de']);
     $this->parameters['lang'] = $this->lang;
     if (isset($this->configuration['MY_USER'])) {
-      error_log('use mysql');
       $this->db = new IssuesDBMySQL($this->configuration['MY_USER'], $this->configuration['MY_PASSWORD'], $this->configuration['MY_DB']);
     } else {
       $this->db = new IssuesDB($this->dir);
@@ -75,15 +74,13 @@ abstract class BaseTab implements Tab {
     $smarty->assign('set_id', $set_id);
 
     $smarty->assign('schemas', $all_schemas);
-    $smarty->assign('schemasStatistic', $this->db->fetchAssoc($this->db->listSchemas($schema, $provider_id, $set_id), 'metadata_schema'));
+    // $smarty->assign('schemasStatistic', $this->db->fetchAssoc($this->db->listSchemas($schema, $provider_id, $set_id), 'metadata_schema'));
     $smarty->assign('providers', $all_providers);
-    $smarty->assign('providersStatistic', $this->db->fetchAssoc($this->db->listProviders($schema, $provider_id, $set_id)));
+    // $smarty->assign('providersStatistic', $this->db->fetchAssoc($this->db->listProviders($schema, $provider_id, $set_id)));
     $smarty->assign('sets', $all_sets);
-    $smarty->assign('setsStatistic', $this->db->fetchAssoc($this->db->listSets($schema, $provider_id, $set_id)));
+    // $smarty->assign('setsStatistic', $this->db->fetchAssoc($this->db->listSets($schema, $provider_id, $set_id)));
 
-    error_log('collect data source statistics');
     $smarty->assign('recordsBySchema', $this->db->fetchAssoc($this->db->countRecordsBySchema($schema, $provider_id, $set_id)));
-    error_log(json_encode($smarty->getTemplateVars('recordsBySchema')));
     $smarty->assign('recordsByProvider', $this->db->fetchAssoc($this->db->countRecordsByProvider($schema, $provider_id, $set_id)));
     $smarty->assign('recordsBySet', $this->db->fetchAssoc($this->db->countRecordsBySet($schema, $provider_id, $set_id)));
 
