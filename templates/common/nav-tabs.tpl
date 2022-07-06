@@ -39,7 +39,7 @@
   <input type="hidden" name="lang" value="{$lang}">
   <div class="row">
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-      <label class="label label-info" for="schemas">metadata schema</label><br>
+      <label class="label label-info" for="schemas">{t}metadata schema{/t}</label><br>
       <select id="schemas" name="schema" style="width: 300px;">
         <option value="">all</option>
         {foreach $schemas as $id => $_schema}
@@ -49,7 +49,7 @@
     </div>
 
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-      <label class="label label-info" for="providers">data provider</label><br>
+      <label class="label label-info" for="providers">{t}data provider{/t}</label><br>
       <select id="providers" name="provider_id" style="width: 300px;">
         <option value="">all</option>
         {foreach $providers as $id => $provider}
@@ -59,7 +59,7 @@
     </div>
 
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-      <label class="label label-info" for="sets">dataset</label><br>
+      <label class="label label-info" for="sets">{t}dataset{/t}</label><br>
       <select id="sets" name="set_id" style="width: 300px;">
         <option value="">all</option>
         {foreach $sets as $id => $set}
@@ -73,15 +73,15 @@
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
       <p style="margin-top: 0.5rem">
-        <label class="label label-info col-form-label" for="record_id">record ID</label><br/>
+        <label class="label label-info col-form-label" for="record_id">{t}record ID{/t}</label><br/>
         <input type="text" name="record_id" id="record_id"><br>
-        <span style="color: #999999">type in a complete record number</span>
+        <span style="color: #999999">{t}type in a complete record number{/t}</span>
       </p>
     </div>
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
       <p style="margin-top: 2rem" class="text-right">
-        <button type="submit" class="btn btn-primary btn-lg">Select</button>
-        <button type="submit" class="btr btn-info">cancel</button>
+        <button type="submit" class="btn btn-primary btn-lg">{t}Select{/t}</button>
+        <button type="submit" class="btr btn-info">{t}cancel{/t}</button>
       </p>
       <p>
     </p>

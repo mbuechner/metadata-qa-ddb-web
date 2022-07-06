@@ -4,7 +4,7 @@
       <a href="?tab={$tab}&schema={$item['metadata_schema']}&lang={$lang}">{$item['metadata_schema']}</a>
       <span>({t 1=$item['count']}n.records{/t})</span>{if !$smarty.foreach.stat.last}, {/if}
     {/foreach}<br>
-  <strong>{t}providers{/t}:</strong>
+  <strong>{t}data providers{/t}:</strong>
     {foreach $providersStatistic as $item name="stat"}
       <a href="?tab={$tab}&provider_id={$item['id']}&lang={$lang}">{$item['name']}</a>
       <span>({t 1=$item['count']}n.records{/t})</span>{if !$smarty.foreach.stat.last}, {/if}

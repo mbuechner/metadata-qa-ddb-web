@@ -3,7 +3,7 @@
                                        class="hidden-xs hidden-sm"></a>
 </p>
 <h1 style="text-align: right">
-  <i class="fa fa-cogs" aria-hidden="true"></i> <span>metadata quality assessment dashboard</span>
+  <i class="fa fa-cogs" aria-hidden="true"></i> <span>{t}metadata quality assessment dashboard{/t}</span>
 </h1>
 
 <diw class="row">
