@@ -177,11 +177,12 @@ abstract class BaseTab implements Tab {
     return $this->provider_id;
   }
 
-  public function getCOmmonUrlParameters() {
+  public function getCommonUrlParameters() {
     $params = [];
     $params['schema'] = $this->schema == 'NA' ? '' : $this->schema;
     $params['set_id'] = $this->set_id == 'NA' ? '' : $this->set_id;
     $params['provider_id'] = $this->provider_id == 'NA' ? '' : $this->provider_id;
+    $params['lang'] = $this->lang;
     return http_build_query($params);
   }
 }

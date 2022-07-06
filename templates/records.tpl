@@ -19,7 +19,7 @@
       </p>
       <ol start="{($page * $limit) + 1}">
         {foreach $recordIds as $row}
-          <li><a href="?&tab=record&id={$row['recordId']}&lang={$lang}">{$row['recordId']}</a> ({$row['metadata_schema']}, from {$row['provider_name']})</li>
+          <li><a href="?&tab=record&id={$row['recordId']}&{$control->getCommonParameters()}">{$row['recordId']}</a> ({$row['metadata_schema']}, from {$row['provider_name']})</li>
         {/foreach}
       </ol>
 

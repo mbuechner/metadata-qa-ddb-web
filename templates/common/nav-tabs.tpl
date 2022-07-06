@@ -4,7 +4,7 @@
     <li class="nav-item">
       <a class="nav-link1{if $tab == 'overview'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
          id="overview-tab" aria-controls="overview"
-         href="?tab=overview&{$controller->getCOmmonUrlParameters()}">Overview</a>
+         href="?tab=overview&{$controller->getCommonUrlParameters()}">Overview</a>
     </li>
     <li class="nav-item">
       <a class="nav-link1{if $tab == 'records'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
@@ -19,12 +19,12 @@
     <li class="nav-item">
       <a class="nav-link1{if $tab == 'fair'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
          id="fair-tab" aria-controls="fair"
-         href="?tab=fair&{$controller->getCOmmonUrlParameters()}">FAIR assessment</a>
+         href="?tab=fair&{$controller->getCommonUrlParameters()}">FAIR assessment</a>
     </li>
     <li class="nav-item1">
       <a class="nav-link1{if $tab == 'download'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
          id="download-tab" aria-controls="download"
-         href="?tab=download&{$controller->getCOmmonUrlParameters()}">Download</a>
+         href="?tab=download&{$controller->getCommonUrlParameters()}">Download</a>
     </li>
     <li class="nav-item1">
       <a class="nav-link1{if $tab == 'about'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"

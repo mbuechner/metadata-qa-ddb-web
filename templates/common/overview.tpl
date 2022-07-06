@@ -19,7 +19,7 @@
     {foreach $frequency['ruleCatalog:score'] as $record name="records"}
       {if !is_null($record['value']) && $record['value'] != 'NA'}
         <td class="value">
-          <a href="?&tab=records&field=ruleCatalog:score&value={$record['value']}{if !empty($schema)}&schema={$schema}{/if}{if !empty($provider_id)}&provider_id={$provider_id}{/if}{if !empty($set_id)}&set_id={$set_id}{/if}&lang={$lang}">
+          <a href="?&tab=records&field=ruleCatalog:score&value={$record['value']}&{$control->getCommonParameters()}">
             {$record['value']}
           </a>
         </td>
@@ -84,7 +84,15 @@
               {/if}
             {/foreach}
             <td class="bg-passed status">{$passed}</td>
-            <td class="bg-failed status">{$failed}</td>
+            <td class="bg-failed status">
+              {if in_array($id, $blockers) && $failed > 0}
+                <a href="?&tab=records&field={$statusId}&value=0&{$controller->getCommonUrlParameters()}">
+                  {$failed}
+                </a>
+              {else}
+                {$failed}
+              {/if}
+            </td>
             <td class="bg-NA status">{$NA}</td>
           {else}
             <td {if $measured}class="bg-passed status"{/if}></td>
@@ -108,7 +116,7 @@
                     {foreach $frequency[$scoreId] as $record name="records"}
                       {if !is_null($record['value']) && $record['value'] != 'NA'}
                         <td class="value">
-                          <a href="?&tab=records&field={$scoreId}&value={$record['value']}&{$controller->getCOmmonUrlParameters()}&lang={$lang}">
+                          <a href="?&tab=records&field={$scoreId}&value={$record['value']}&{$controller->getCommonUrlParameters()}">
                             {$record['value']}
                           </a>
                         </td>
