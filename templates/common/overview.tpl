@@ -94,7 +94,7 @@
 
           {* score *}
           <td>
-            {if isset($blockers[$id])}
+            {if in_array($id, $blockers)}
               {assign var="scoreId" value={$id|cat:':score'}}
               {if isset($frequency[$scoreId]) && !is_null($frequency[$scoreId][0]['value'])}
                 <table class="values">
