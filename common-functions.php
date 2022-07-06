@@ -40,7 +40,7 @@ function createSmarty($templateDir) {
   // standard PHP function
   $smarty->registerPlugin("modifier", "str_replace", "str_replace");
   $smarty->registerPlugin("modifier", "number_format", "number_format");
-  $smarty->registerPlugin("block", "translate", "do_translation");
+  $smarty->registerPlugin("block", "t", "translate");
   return $smarty;
 }
 
@@ -89,11 +89,11 @@ function cleanSql($sql) {
   return preg_replace('/[\n\s]+/', ' ', $sql);
 }
 
-function do_translation($params, $content, $smarty, &$repeat) {
+function translate($params, $content, $smarty, &$repeat) {
   global $locale;
 
   if (isset($content)) {
-    return $locale->translate($content);
+    return $locale->translate($content, array_values($params));
   }
   return $content;
 }

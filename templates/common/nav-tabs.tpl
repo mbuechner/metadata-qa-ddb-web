@@ -4,38 +4,39 @@
     <li class="nav-item">
       <a class="nav-link1{if $tab == 'overview'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
          id="overview-tab" aria-controls="overview"
-         href="?tab=overview&{$controller->getCommonUrlParameters()}">Overview</a>
+         href="?tab=overview&{$controller->getCommonUrlParameters()}">{t}Overview{/t}</a>
     </li>
     <li class="nav-item">
       <a class="nav-link1{if $tab == 'records'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
          id="records-tab" aria-controls="records"
-         href="?tab=records">Records</a>
+         href="?tab=records">{t}Records{/t}</a>
     </li>
     <li class="nav-item">
       <a class="nav-link1{if $tab == 'record'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
          id="record-tab" aria-controls="record"
-         href="?tab=record">Record</a>
+         href="?tab=record">{t}Record{/t}</a>
     </li>
     <li class="nav-item">
       <a class="nav-link1{if $tab == 'fair'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
          id="fair-tab" aria-controls="fair"
-         href="?tab=fair&{$controller->getCommonUrlParameters()}">FAIR assessment</a>
+         href="?tab=fair&{$controller->getCommonUrlParameters()}">{t}FAIR assessment{/t}</a>
     </li>
     <li class="nav-item1">
       <a class="nav-link1{if $tab == 'download'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
          id="download-tab" aria-controls="download"
-         href="?tab=download&{$controller->getCommonUrlParameters()}">Download</a>
+         href="?tab=download&{$controller->getCommonUrlParameters()}">{t}Download{/t}</a>
     </li>
     <li class="nav-item1">
       <a class="nav-link1{if $tab == 'about'} active{/if}" data-toggle="tab1" role="tab1" aria-selected="false"
          id="about-tab" aria-controls="about"
-         href="?tab=about">About</a>
+         href="?tab=about">{t}About{/t}</a>
     </li>
   </ul>
 </nav>
 
 <form method="get" action="?">
   <input type="hidden" name="tab" value="{$tab}">
+  <input type="hidden" name="lang" value="{$lang}">
   <div class="row">
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
       <label class="label label-info" for="schemas">metadata schema</label><br>

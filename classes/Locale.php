@@ -143,8 +143,9 @@ class Locale {
     // Replace arguments
     if (false !== strpos($translation, '{a:')) {
       $replace = array();
-      $args = func_get_args();
-      for ($i = 1, $max = count($args); $i < $max; $i ++) {
+      $args = func_get_args()[1];
+      array_unshift($args, '');
+      for ($i = 1, $max = count($args); $i < $max; $i++) {
         $replace['{a:' . $i . '}'] = $args[$i];
       }
       // interpolate replacement values into the messsage then return
