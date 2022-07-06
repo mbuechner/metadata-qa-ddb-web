@@ -81,6 +81,7 @@ abstract class BaseTab implements Tab {
     $smarty->assign('sets', $all_sets);
     $smarty->assign('setsStatistic', $this->db->fetchAssoc($this->db->listSets($schema, $provider_id, $set_id)));
 
+    error_log('collect data source statistics');
     $smarty->assign('recordsBySchema', $this->db->fetchAssoc($this->db->countRecordsBySchema($schema, $provider_id, $set_id)));
     $smarty->assign('recordsByProvider', $this->db->fetchAssoc($this->db->countRecordsByProvider($schema, $provider_id, $set_id)));
     $smarty->assign('recordsBySet', $this->db->fetchAssoc($this->db->countRecordsBySet($schema, $provider_id, $set_id)));
