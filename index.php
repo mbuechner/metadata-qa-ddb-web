@@ -23,8 +23,8 @@ include_once('classes/BaseTab.php');
 $class = isset($map[$tab]) ? $map[$tab] : 'Completeness';
 $controller = createTab($class);
 $controller->prepareData($smarty);
-include_once('classes/Locale.php');
-$locale = new Locale($language);
+include_once('classes/DdbLocale.php');
+$locale = new DdbLocale($language);
 
 if ($ajax == 1) {
   if (!is_null($controller->getAjaxTemplate()))

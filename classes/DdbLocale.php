@@ -1,7 +1,7 @@
 <?php
 
 // modified version of https://stackoverflow.com/questions/19249159/best-practice-multi-language-website
-class Locale {
+class DdbLocale {
 
   protected $translation = array();
   protected $locale;
