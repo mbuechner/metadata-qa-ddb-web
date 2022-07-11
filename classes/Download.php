@@ -20,8 +20,8 @@ class Download extends BaseTab {
 
   public function prepareData(Smarty &$smarty) {
     parent::prepareData($smarty);
-    $smarty->assign('summary', $this->getFileInfo('summary'));
-    $smarty->assign('schemas', $this->getFileInfo('schemas'));
+    $smarty->assign('summaryFiles', $this->getFileInfo('summary'));
+    $smarty->assign('schemaFiles', $this->getFileInfo('schemas'));
   }
 
   public function getTemplate() {

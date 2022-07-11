@@ -10,14 +10,14 @@
 
         <h3>summary statistics</h3>
         <ul>
-          {foreach from=$summary key=$file item=$info}
+          {foreach from=$summaryFiles key=$file item=$info}
             <li><a href="?tab=downloader&action=csvFile&file={$file}">{$info['label']}</a> ({$info['size']})</li>
           {/foreach}
         </ul>
 
         <h3>quality assessment per metadata schemas</h3>
         <ul>
-          {foreach from=$schemas key=$file item=$info}
+          {foreach from=$schemaFiles key=$file item=$info}
             <li><a href="?tab=downloader&action=csvFile&file={$file}">{$info['label']}</a> ({$info['size']})</li>
           {/foreach}
         </ul>
