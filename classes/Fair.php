@@ -40,7 +40,7 @@ class Fair extends BaseTab {
         'blockers' => []
       ],
       'reusable' => [
-        'criteria' => ['Q-3.4', 'Q-5.1', 'Q-5.3', 'Q-5.4', 'Q-5.5', 'Q-5.6', 'Q-5.7'],
+        'criteria' => ['Q-3.4', 'Q-5.1', 'Q-5.3', 'Q-5.4'], //, 'Q-5.5', 'Q-5.6', 'Q-5.7'
         'ranges' => [
           'poor' => ['range' => [-6.0, -3.0], 'color' => 'orange'],
           'average' => ['range' => 0.0, 'color' => 'green'],
@@ -61,7 +61,7 @@ class Fair extends BaseTab {
             'title' => '<strong>Datensatz-ID</strong> ist eindeutig.',
             'score' => -9],
           'Q-1.3' => [
-            'title' => '<strong>Datensatz-IDs </strong>für hierarchische Objekt Darstelleungen',
+            'title' => '<strong>Datensatz-IDs</strong> für hierarchische Objekt Darstelleungen',
             'score' => -9],
           'Q-1.4' => [
             'title' => '<strong>Datensatz</strong>-ID ist unveränderlich',
@@ -189,6 +189,7 @@ class Fair extends BaseTab {
           'Q-5.4' => [
             'title' => 'Es wird eine <strong>offene Lizenz</strong> für den Rechtsstatus verwendet',
             'score' => 6],
+          /*
           'Q-5.5' => [
             'title' => 'Es wird eine <strong>offene Lizenz mit Namensnennung</strong> verwendet',
             'score' => 3],
@@ -198,6 +199,7 @@ class Fair extends BaseTab {
           'Q-5.7' => [
             'title' => '<strong>Lizenz</strong>: Es wird ein standardisierter Rechtehinweis verwendet. Die Nutzungsrechte müssen erfragt werden',
             'score' => 0]
+          */
         ],
       ]
     ];
