@@ -30,7 +30,7 @@
           <tr>
             <td class="category" colspan="7">{$cat_definition['name']}</td>
           </tr>
-          {foreach $cat_definition['criteria'] as $id => $criteria name="criteria"}
+          {foreach from=$cat_definition['criteria'] key=$id item=$criteria name="criteria"}
             {assign var="value" value=$values[$id]}
             <tr>
               {if $smarty.foreach.criteria.first}
@@ -41,7 +41,7 @@
                   *}
                 </td>
               {/if}
-              <td class="{$value->getClass()}">{$criteria['title']}</td>
+              <td class="{$value->getClass()}">{$factors[$id]->description}</td>
               <td class="text-center {$value->getClass()}">{$id}</td>
 {*
               <td class="text-center {$value->getClass()}">{if $criteria['score'] < 0}{$criteria['score']}{else}0{/if}</td>
