@@ -11,7 +11,7 @@ class Fair extends BaseTab {
     $smarty->assign('variability', $this->db->fetchAssocList($this->db->getVariablitily($this->schema, $this->provider_id, $this->set_id), 'field'));
     $fair = [
       'findable' => [
-        'criteria' => ['Q-1.1', 'Q-1.2', 'Q-1.3', 'Q-1.4', 'Q-2.1', 'Q-2.2', 'Q-2.3', 'Q-3.2', 'Q-6.1', 'Q-6.2', 'Q-6.3', 'Q-6.4', 'Q-6.5', 'Q-7.1', 'Q-7.2', 'Q-7.4'],
+        'criteria' => ['Q-1.1', 'Q-1.2', 'Q-1.3', 'Q-1.4', 'Q-2.1', 'Q-2.2', 'Q-2.3', 'Q-3.1', 'Q-6.1', 'Q-6.2', 'Q-6.3', 'Q-6.4', 'Q-6.5', 'Q-7.1', 'Q-7.2', 'Q-7.4'],
         'ranges' => [
           'poor' => ['range' => [-72.0, -30.0], 'color' => 'orange'],
           'average' => ['range' => [-27.0, -3.0], 'color' => 'orange'],
@@ -20,7 +20,7 @@ class Fair extends BaseTab {
         'blockers' => ['Q-1.1', 'Q-6.1']
       ],
       'accessible' => [
-        'criteria' => ['Q-3.1', 'Q-3.3', 'Q-3.5', 'Q-4.1', 'Q-4.3', 'Q-4.4', 'Q-4.5', 'Q-4.6'],
+        'criteria' => ['Q-3.2', 'Q-3.4', 'Q-4.1', 'Q-4.3', 'Q-4.4', 'Q-4.5', 'Q-4.6'],
         'ranges' => [
           'poor' => ['range' => [-12.0, -3.0], 'color' => 'orange'],
           'average' => ['range' => 0.0, 'color' => 'green'],
@@ -30,7 +30,7 @@ class Fair extends BaseTab {
         'blockers' => ['Q-4.1']
       ],
       'interoperable' => [
-        'criteria' => ['Q-1.5', 'Q-2.4', 'Q-2.5', 'Q-2.6', 'Q-3.6', 'Q-4.2', 'Q-5.2', 'Q-7.3', 'Q-7.5', 'Q-7.6', 'Q-7.7', 'Q-7.8'],
+        'criteria' => ['Q-1.5', 'Q-2.4', 'Q-2.5', 'Q-2.6', 'Q-3.5', 'Q-4.2', 'Q-5.2', 'Q-7.3', 'Q-7.5', 'Q-7.6', 'Q-7.7', 'Q-7.8'], // 'Q-3.6'
         'ranges' => [
           'poor' => ['range' => [-18.0, -15.0], 'color' => 'orange'],
           'average' => ['range' => [-12.0, 0.0], 'color' => 'orange'],
@@ -40,7 +40,7 @@ class Fair extends BaseTab {
         'blockers' => []
       ],
       'reusable' => [
-        'criteria' => ['Q-3.4', 'Q-5.1', 'Q-5.3', 'Q-5.4'], //, 'Q-5.5', 'Q-5.6', 'Q-5.7'
+        'criteria' => ['Q-3.3', 'Q-5.1', 'Q-5.3', 'Q-5.4'], //, 'Q-5.5', 'Q-5.6', 'Q-5.7'
         'ranges' => [
           'poor' => ['range' => [-6.0, -3.0], 'color' => 'orange'],
           'average' => ['range' => 0.0, 'color' => 'green'],
@@ -75,9 +75,9 @@ class Fair extends BaseTab {
           'Q-2.3' => [
             'title' => '<strong>Datengeber</strong>-ID ist unveränderlich',
             'score' => -6],
-          'Q-3.2' => [
-            'title' => '<strong>Das Vorschaubild </strong>muss explizit gekennzeichnet sein, wenn mehr als eine Bilddatei im Datensatz referenziert ist.',
-            'score' => -3],
+          'Q-3.1' => [
+            'title' => '<strong>Bilddatei</strong> - Im gelieferten Datensatz muss eine Referenz auf eine Bilddatei vorhanden sein (entweder als Link oder als Dateiname).',
+            'score' => -9],
           'Q-6.1' => [
             'title' => 'Ein <strong>Objekttitel</strong> muss für den Datensatz vorhanden sein*',
             'score' => -9, 'blocker' => 1],
@@ -107,15 +107,12 @@ class Fair extends BaseTab {
       'accessible' => [
         'name' => 'Zugänglichkeit',
         'criteria' => [
-          'Q-3.1' => [
-            'title' => '<strong>Bilddatei</strong> - Im gelieferten Datensatz muss eine Referenz auf eine Bilddatei vorhanden sein (entweder als Link oder als Dateiname).',
-            'score' => -9],
-          'Q-3.3' => [
-            'title' => 'Der <strong>Link zur Bilddatei</strong> muss valide sein.',
+          'Q-3.2' => [
+            'title' => '<strong>Das Vorschaubild </strong>muss explizit gekennzeichnet sein, wenn mehr als eine Bilddatei im Datensatz referenziert ist.',
             'score' => -3],
-          'Q-3.5' => [
-            'title' => 'Link zum <strong>Vorschaubild ist vorhanden</strong>.',
-            'score' => 3],
+          'Q-3.4' => [
+            'title' => 'Das <strong>Bild</strong> muss mindestens 800 Pixel breit und mindestens 600 Pixel hoch sein.',
+            'score' => -3],
           'Q-4.1' => [
             'title' => '<strong>Link zu der Bilddatei/digitalen Objekt</strong> ist vorhanden*',
             'score' => -9, 'blocker' => 1],
@@ -148,9 +145,14 @@ class Fair extends BaseTab {
           'Q-2.6' => [
             'title' => '<strong>Der Datengeber</strong> kann durch einen http-URI aus der GND identifiziert sein',
             'score' => 3],
+          'Q-3.5' => [
+            'title' => 'Link zum <strong>Vorschaubild ist vorhanden</strong>.',
+            'score' => 3],
+          /*
           'Q-3.6' => [
             'title' => '<strong>Die Bilddatei</strong> soll in einem bevorzugten Format geliefert werden',
             'score' => 3],
+          */
           'Q-4.2' => [
             'title' => '<strong>Bilddateien</strong> müssen in einem von der DDB unterstützten Format geliefert werden',
             'score' => -3],
@@ -177,8 +179,8 @@ class Fair extends BaseTab {
       'reusable' => [
         'name' => 'Wiederverwendbarkeit',
         'criteria' => [
-          'Q-3.4' => [
-            'title' => 'Das <strong>Bild</strong> muss mindestens 800 Pixel breit und mindestens 600 Pixel hoch sein.',
+          'Q-3.3' => [
+            'title' => 'Der <strong>Link zur Bilddatei</strong> muss valide sein.',
             'score' => -3],
           'Q-5.1' => [
             'title' => 'Im Datensatz muss eine <strong>Lizenz</strong> für das Digitale Objekt angegeben sein',
