@@ -3,9 +3,9 @@
 class IssuesDBMySQL {
   private $db;
 
-  function __construct($user, $password, $database) {
+  function __construct($user, $password, $database, $host, $port) {
     // $this->db = new mysqli("localhost", $user, $password, $database);
-    $dsn = sprintf('mysql:dbname=%s;host=localhost', $database);
+    $dsn = sprintf('mysql:dbname=%s;host=%s;port=%s', $database, $host, $port);
     $this->db = new PDO($dsn, $user, $password);
   }
 
