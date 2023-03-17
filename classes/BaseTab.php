@@ -21,9 +21,9 @@ abstract class BaseTab implements Tab {
 
   public function __construct() {
     $this->configuration = parse_ini_file("configuration.cnf", false, INI_SCANNER_TYPED);
-    $this->dir = $this->configuration['dir'];
-    $this->source = $this->configuration['source'];
-    $this->subdirs = array_values(array_diff(scandir($this->dir), ['.', '..']));
+    $this->inputDir = $this->configuration['INPUT_DIR'];
+    $this->outputDir = $this->configuration['OUTPUT_DIR'];
+    $this->subdirs = array_values(array_diff(scandir($this->outputDir), ['.', '..']));
     $this->subdir = getOrDefault('subdir', 'DC-DDB-WuerzburgIMG', $this->subdirs);
     $this->lang = getOrDefault('lang', 'en', ['en', 'de']);
     $this->parameters['lang'] = $this->lang;
@@ -34,7 +34,7 @@ abstract class BaseTab implements Tab {
         $this->configuration['MY_HOST'], $this->configuration['MY_PORT']
       );
     } else {
-      $this->db = new IssuesDB($this->dir);
+      $this->db = new IssuesDB($this->outputDir);
     }
   }
 
@@ -96,7 +96,7 @@ abstract class BaseTab implements Tab {
   }
 
   protected function getDir() {
-    return $this->dir . '/' . $this->subdir;
+    return $this->outputDir . '/' . $this->subdir;
   }
 
   protected function getFilePath($name) {
@@ -106,13 +106,13 @@ abstract class BaseTab implements Tab {
   protected function downloadFile($file, $contentType) {
     header(sprintf('Content-Type: %s; charset=utf-8', $contentType));
     header('Content-Disposition: ' . sprintf('attachment; filename="%s"', $file));
-    readfile($this->source . '/' . $file);
+    readfile($this->inputDir . '/' . $file);
   }
 
   protected function downloadCsv($file, $contentType = 'text/csv') {
     header(sprintf('Content-Type: %s; charset=utf-8', $contentType));
     header('Content-Disposition: ' . sprintf('attachment; filename="%s"', $file));
-    readfile($this->dir . '/' . $file);
+    readfile($this->outputDir . '/' . $file);
   }
 
   protected function downloadContent($content, $filename, $contentType) {

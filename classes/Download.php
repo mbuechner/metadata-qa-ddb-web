@@ -43,7 +43,7 @@ class Download extends BaseTab {
     foreach ($summary as $file => $label) {
       $summary[$file] = [
         'label' => $label,
-        'size' => $this->human_filesize(filesize($this->dir . '/' . $file), 0)
+        'size' => $this->human_filesize(filesize($this->outputDir . '/' . $file), 0)
       ];
     }
     return $summary;

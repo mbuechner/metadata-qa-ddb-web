@@ -1,6 +1,6 @@
 # data directories
-source=<path to input directory>
-dir=<path to output directory>
+INPUT_DIR=<path to input directory>
+OUTPUT_DIR=<path to output directory>
 
 # MySQL database settings
 MY_HOST=localhost

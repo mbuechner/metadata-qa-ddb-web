@@ -45,7 +45,7 @@ class Record extends BaseTab {
   }
 
   public function getXml($id) {
-    $db = new IssuesDB($this->dir, 'ddb-record.sqlite');
+    $db = new IssuesDB($this->outputDir, 'ddb-record.sqlite');
     return $db->getRecord($id)->fetchArray(SQLITE3_ASSOC)['xml'];
   }
 
