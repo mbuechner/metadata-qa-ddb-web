@@ -1,0 +1,14 @@
+# data directories
+INPUT_DIR=${MQA_DATA}/input
+OUTPUT_DIR=${MQA_DATA}/output
+
+# MySQL database settings
+MY_HOST=${MQA_MY_HOST}
+MY_PORT=${MQA_MY_PORT}
+MY_DB=${MQA_MY_DB}
+MY_USER=${MQA_MY_USER}
+MY_PASSWORD=${MQA_MY_PASSWORD}
+
+# Apache Solr settings
+SOLR_HOST=${MQA_SOLR_HOST}
+SOLR_PORT=${MQA_SOLR_PORT}

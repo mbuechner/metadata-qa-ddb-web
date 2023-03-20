@@ -1,43 +1,27 @@
-FROM ubuntu:20.04
-
+FROM php:7.4-apache-bullseye
 LABEL maintainer="Péter Király <pkiraly@gwdg.de>"
 LABEL description="A metadata quality assessment tool for Deutsche Digitale Bibliothek."
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Berlin
+ENV RUN_USER nobody
+ENV RUN_GROUP 0
 
 ARG SMARTY_VERSION=3.1.33
 
 RUN apt-get update \
- && apt-get install -y --no-install-recommends software-properties-common \
- && apt-get install -y --no-install-recommends \
-      # install basic OS tools
-      apt-utils \
-      unzip \
-      nano \
-      jq \
-      curl \
-      openssl \
-      # install Java
-      # openjdk-11-jre-headless \
-      sqlite3 \
-      less \
-      apache2 \
-      mysql-server \
-      php php-mysql php-sqlite3 php-intl \
+ && apt-get install -y unzip curl \
  && rm -rf /var/lib/apt/lists/* \
- && cd /var/www/html/ \
- && curl -s -L https://github.com/pkiraly/metadata-qa-ddb-web/archive/refs/heads/main.zip --output master.zip \
- && unzip -q master.zip \
- && rm master.zip \
- && mv metadata-qa-ddb-web-main metadata-qa-ddb \
- && cd metadata-qa-ddb \
+ && rm -rf /var/www/html/* \
+ && docker-php-ext-install pdo_mysql
+
+COPY --chown=${RUN_USER}:${RUN_GROUP} . /var/www/html/
+WORKDIR /var/www/html/
+ 
  #
  # set configuration
  #
- && mv configuration.cnf.template configuration.cnf \
- && sed -i.bak 's,<path to input directory>,/opt/metadata-qa-ddb/input,' configuration.cnf \
- && sed -i.bak 's,<path to output directory>,/opt/metadata-qa-ddb/output,' configuration.cnf \
- && sed -i.bak 's,<MySQL database name>,ddb,' configuration.cnf \
- && sed -i.bak 's,<MySQL user name>,ddb,' configuration.cnf \
- && sed -i.bak 's,<MySQL password>,ddb,' configuration.cnf \
+RUN mv configuration.cnf.docker configuration.cnf \
  #
  # set smarty
  #
@@ -48,13 +32,24 @@ RUN apt-get update \
  && mkdir -p _smarty/templates_c \
  && chmod a+w -R _smarty/templates_c/ \
  #
- # set apache
+ # Configure Apache
  #
- && sed -i.bak 's,</VirtualHost>,        RedirectMatch ^/$ /metadata-qa-ddb/\n        <Directory /var/www/html/metadata-qa-ddb>\n                Options Indexes FollowSymLinks MultiViews\n                AllowOverride All\n                Order allow\,deny\n                allow from all\n                DirectoryIndex index.php index.html\n        </Directory>\n</VirtualHost>,' /etc/apache2/sites-available/000-default.conf \
- #
- # set directories
- #
- && mkdir -p /opt/metadata-qa-ddb/input \
- && mkdir -p /opt/metadata-qa-ddb/output
-
-WORKDIR /opt/metadata-qa-ddb
+ && sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf \
+ && { \
+	echo "<VirtualHost *:8080>"; \
+	echo "	ServerAdmin webmaster@localhost"; \
+	echo "	DocumentRoot /var/www/html"; \
+	echo "	ErrorLog /dev/stderr"; \
+	echo "	CustomLog /dev/stdout combined"; \
+        echo "	<Directory /var/www/html>"; \
+        echo "		Options Indexes FollowSymLinks MultiViews"; \
+        echo "		AllowOverride All"; \
+        echo "		Order allow,deny"; \
+        echo "		allow from all"; \
+        echo "		DirectoryIndex index.php index.html"; \
+        echo "	</Directory>"; \
+	echo "</VirtualHost>"; \
+    } > /etc/apache2/sites-available/000-default.conf
+ 
+CMD ["apache2-foreground"]
+EXPOSE 8080
