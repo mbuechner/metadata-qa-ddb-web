@@ -32,7 +32,7 @@
           </tr>
           {foreach from=$cat_definition['criteria'] key=$id item=$criteria name="criteria"}
             {assign var="value" value=$values[$id]}
-            <tr>
+            <tr class="criteria">
               {if $smarty.foreach.criteria.first}
                 <td class="fair-category-result" rowspan="{count($cat_definition['criteria'])}">
                   {*
@@ -41,13 +41,13 @@
                   *}
                 </td>
               {/if}
-              <td class="{$value->getClass()}">{$factors[$id]->description}</td>
-              <td class="text-center {$value->getClass()}">{$id}</td>
+              <td class="description {$value->getClass()}">{$factors[$id]->description}</td>
+              <td class="id text-center {$value->getClass()}">{$id}</td>
 {*
               <td class="text-center {$value->getClass()}">{if $criteria['score'] < 0}{$criteria['score']}{else}0{/if}</td>
               <td class="text-center {$value->getClass()}">{if $criteria['score'] > 0}{$criteria['score']}{else}0{/if}</td>
 *}
-              <td class="text-center {if $value->isBlocked()}red{/if}" title="{$value->tooltip('blocked', $count)}">
+              <td class="blocked text-center {if $value->isBlocked()}red{/if}" title="{$value->tooltip('blocked', $count)}">
                 {if $value->isBlocked()}
                   <div><a href="{$value->getLink('blocked', $controller)}">{$value->percent('blocked', $count)}</a></div>
                 {/if}

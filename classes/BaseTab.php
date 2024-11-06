@@ -21,8 +21,10 @@ abstract class BaseTab implements Tab {
 
   public function __construct() {
     $this->configuration = parse_ini_file("configuration.cnf", false, INI_SCANNER_TYPED);
+    error_log('configuration: ' . json_encode($this->configuration));
     $this->inputDir = $this->configuration['INPUT_DIR'];
     $this->outputDir = $this->configuration['OUTPUT_DIR'];
+    error_log('outputDir: ' . $this->outputDir);
     $this->subdirs = array_values(array_diff(scandir($this->outputDir), ['.', '..']));
     $this->subdir = getOrDefault('subdir', 'DC-DDB-WuerzburgIMG', $this->subdirs);
     $this->lang = getOrDefault('lang', 'en', ['en', 'de']);
@@ -126,16 +128,21 @@ abstract class BaseTab implements Tab {
   }
 
   private function getFactors($lang) {
-    $entries = parse_ini_file(sprintf("locale/factors.%s.ini", $lang), false, INI_SCANNER_RAW);
+    $tranlation_file = sprintf("locale/factors.%s.ini", $lang);
+    $entries = parse_ini_file($tranlation_file, false, INI_SCANNER_RAW);
     $factors = [];
     foreach ($entries as $key => $value) {
-      preg_match('/^(Q-\d)(\.\d)?.(description|criterium|scoring)$/', $key, $matches);
-      $id = $matches[1] . $matches[2];
-      if (!isset($factors[$id]))
-        $factors[$id] = (object)[];
+      preg_match('/^(Q-\d)(\.\d+)?.(description|criterium|scoring)$/', $key, $matches);
+      if (empty($matches)) {
+        error_log(sprintf('missing key "%s" from file %s', $key, $tranlation_file));
+      } else {
+        $id = $matches[1] . $matches[2];
+        if (!isset($factors[$id]))
+          $factors[$id] = (object)[];
 
-      $factors[$id]->isGroup = ($matches[2] == "");
-      $factors[$id]->{$matches[3]} = $value;
+        $factors[$id]->isGroup = ($matches[2] == "");
+        $factors[$id]->{$matches[3]} = $value;
+      }
     }
     return $factors;
   }

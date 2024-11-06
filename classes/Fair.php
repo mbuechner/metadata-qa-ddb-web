@@ -11,7 +11,9 @@ class Fair extends BaseTab {
     $smarty->assign('variability', $this->db->fetchAssocList($this->db->getVariablitily($this->schema, $this->provider_id, $this->set_id), 'field'));
     $fair = [
       'findable' => [
-        'criteria' => ['Q-1.1', 'Q-1.2', 'Q-1.3', 'Q-1.4', 'Q-2.1', 'Q-2.2', 'Q-2.3', 'Q-3.1', 'Q-6.1', 'Q-6.2', 'Q-6.3', 'Q-6.4', 'Q-6.5', 'Q-7.1', 'Q-7.2', 'Q-7.4'],
+        'criteria' => ['Q-1.1', 'Q-1.2', 'Q-1.3', 'Q-1.4', 'Q-2.1', 'Q-2.2', 'Q-2.3', 'Q-3.1', 'Q-6.1',
+          'Q-6.2', 'Q-6.3', 'Q-6.4', 'Q-6.5', 'Q-7.1', 'Q-7.2', 'Q-7.4', 'Q-8.1', 'Q-9.1', 'Q-9.4',
+          'Q-9.8', 'Q-9.9', 'Q-9.10'],
         'ranges' => [
           'poor' => ['range' => [-72.0, -30.0], 'color' => 'orange'],
           'average' => ['range' => [-27.0, -3.0], 'color' => 'orange'],
@@ -20,7 +22,7 @@ class Fair extends BaseTab {
         'blockers' => ['Q-1.1', 'Q-6.1']
       ],
       'accessible' => [
-        'criteria' => ['Q-3.2', 'Q-3.4', 'Q-4.1', 'Q-4.3', 'Q-4.4', 'Q-4.5', 'Q-4.6'],
+        'criteria' => ['Q-3.2', 'Q-3.4', 'Q-3.6', 'Q-4.1', 'Q-4.3', 'Q-4.4', 'Q-4.5', 'Q-4.6'],
         'ranges' => [
           'poor' => ['range' => [-12.0, -3.0], 'color' => 'orange'],
           'average' => ['range' => 0.0, 'color' => 'green'],
@@ -30,7 +32,7 @@ class Fair extends BaseTab {
         'blockers' => ['Q-4.1']
       ],
       'interoperable' => [
-        'criteria' => ['Q-1.5', 'Q-2.4', 'Q-2.5', 'Q-2.6', 'Q-3.5', 'Q-4.2', 'Q-5.2', 'Q-7.3', 'Q-7.5', 'Q-7.6', 'Q-7.7', 'Q-7.8'], // 'Q-3.6'
+        'criteria' => ['Q-1.5', 'Q-2.4', 'Q-2.5', 'Q-2.6', 'Q-3.5', 'Q-4.2', 'Q-5.2', 'Q-7.3', 'Q-7.5', 'Q-7.6', 'Q-7.7', 'Q-7.8', 'Q-8.2', 'Q-8.3', 'Q-8.4', 'Q-9.2', 'Q-9.3', 'Q-9.5', 'Q-9.6', 'Q-9.7'], // 'Q-3.6'
         'ranges' => [
           'poor' => ['range' => [-18.0, -15.0], 'color' => 'orange'],
           'average' => ['range' => [-12.0, 0.0], 'color' => 'orange'],
@@ -40,7 +42,7 @@ class Fair extends BaseTab {
         'blockers' => []
       ],
       'reusable' => [
-        'criteria' => ['Q-3.3', 'Q-5.1', 'Q-5.3', 'Q-5.4'], //, 'Q-5.5', 'Q-5.6', 'Q-5.7'
+        'criteria' => ['Q-3.3', 'Q-5.1', 'Q-5.3', 'Q-5.4', 'Q-5.5', 'Q-5.6'], //'Q-5.7'
         'ranges' => [
           'poor' => ['range' => [-6.0, -3.0], 'color' => 'orange'],
           'average' => ['range' => 0.0, 'color' => 'green'],
@@ -101,7 +103,25 @@ class Fair extends BaseTab {
             'score' => -3],
           'Q-7.4' => [
             'title' => 'Es handelt sich um eine spezifische <strong>Objekttyp</strong>-Bezeichnung und nicht um eine Objektbeschreibung oder Objektklassifizierung.',
-            'score' => -3]
+            'score' => -3],
+          'Q-8.1' => [
+            'title' => 'Im Datensatz muss mindestens eine bevorzugte Bezeichnung für die <strong>Objektkategorie</strong> vorhanden sein.',
+            'score' => -3],
+          'Q-9.1' => [
+            'title' => 'Im Datensatz muss mindestens eine bevorzugte Bezeichnung für die <strong>Sachkategorie</strong> vorhanden sein.',
+            'score' => -3],
+          'Q-9.4' => [
+            'title' => 'Im Datensatz muss mindestens eine bevorzugte Bezeichnung für einen <strong>thematischen Bezug</strong> vorhanden sein.',
+            'score' => -3],
+          'Q-9.8' => [
+            'title' => 'Im Datensatz muss mindestens eine <strong>Objektbeschreibung</strong> vorhanden sein.',
+            'score' => -3],
+          'Q-9.9' => [
+            'title' => 'Die <strong>Objektbeschreibung</strong> muss aussagekräftig sein.',
+            'score' => -3],
+          'Q-9.10' => [
+            'title' => 'Es handelt sich um eine spezifische <strong>Objekttyp</strong>-Bezeichnung und nicht um eine Objektbeschreibung oder Objektklassifizierung.',
+            'score' => -3],
         ],
       ],
       'accessible' => [
@@ -159,6 +179,7 @@ class Fair extends BaseTab {
           'Q-5.2' => [
             'title' => 'Die <strong>Lizenz</strong> muss durch einen http-URI gekennzeichnet sein, der im Lizenzkorb der Deutschen Digitalen Bibliothek genannt ist',
             'score' => -9],
+          //  'Q-8.2', 'Q-8.3', 'Q-8.4', 'Q-9.2', 'Q-9.3', 'Q-9.5', 'Q-9.6', 'Q-9.7'], // 'Q-3.6'
           'Q-7.3' => [
             'title' => 'Der <strong>Objekttyp</strong> muss aus einem kontrollierten Vokabular stammen',
             'score' => -6],
@@ -173,7 +194,31 @@ class Fair extends BaseTab {
             'score' => 9],
           'Q-7.8' => [
             'title' => 'Der <strong>Objekttyp</strong> http-URI verweist auf einen Begriff in Wikidata',
-            'score' => 6]
+            'score' => 6],
+          'Q-8.2' => [
+            'title' => 'Die <strong>Objektkategorie</strong> ist durch einen http-URI aus einem LOD-Vokabular referenziert.',
+            'score' => 6],
+          'Q-8.3' => [
+            'title' => 'Der http-URI verweist auf einen Begriff in der GND oder dem AAT.',
+            'score' => 6],
+          'Q-8.4' => [
+            'title' => 'Der http-URI verweist auf einen Begriff in Wikidata.',
+            'score' => 6],
+          'Q-9.2' => [
+            'title' => 'Die <strong>Sachkategorie</strong> muss aus einem kontrollierten Vokabular stammen.',
+            'score' => 6],
+          'Q-9.3' => [
+            'title' => 'Der http-URI verweist auf einen <strong>Begriff</strong> aus den GND-Sachgruppen.',
+            'score' => 6],
+          'Q-9.5' => [
+            'title' => 'Die Bezeichnung für den <strong>thematischen Bezug</strong> muss aus einem kontrollierten Vokabular stammen.',
+            'score' => 6],
+          'Q-9.6' => [
+            'title' => 'Der http-URI verweist auf einen <strong>Begriff</strong> in der GND oder dem AAT.',
+            'score' => 6],
+          'Q-9.7' => [
+            'title' => 'Der http-URI verweist auf einen <strong>Begriff</strong> in Wikidata.',
+            'score' => 6],
         ],
       ],
       'reusable' => [
@@ -191,16 +236,16 @@ class Fair extends BaseTab {
           'Q-5.4' => [
             'title' => 'Es wird eine <strong>offene Lizenz</strong> für den Rechtsstatus verwendet',
             'score' => 6],
-          /*
           'Q-5.5' => [
             'title' => 'Es wird eine <strong>offene Lizenz mit Namensnennung</strong> verwendet',
             'score' => 3],
           'Q-5.6' => [
             'title' => '<strong>Lizenz</strong> - Es wird ein standardisierter Rechtehinweis verwendet. Das Digitale Objekt darf mit Einschränkungen genutzt werden.',
             'score' => 0],
+          /*
           'Q-5.7' => [
             'title' => '<strong>Lizenz</strong>: Es wird ein standardisierter Rechtehinweis verwendet. Die Nutzungsrechte müssen erfragt werden',
-            'score' => 0]
+            'score' => 0],
           */
         ],
       ]
