@@ -19,7 +19,7 @@ class IssuesDBMySQL {
     } else {
       $sql = 'SELECT COUNT(*) AS count
         FROM issue AS i
-        LEFT JOIN file_record fr ON (fr.recordId = i.recordId)
+        LEFT JOIN file_record fr ON (fr.recordId = i.recordId AND i.filename = r.file)
         LEFT JOIN file AS f ON (fr.file = f.file)
         WHERE `' . $field . '` ' . $_op . ' :value AND ' . $where;
     }
@@ -34,15 +34,14 @@ class IssuesDBMySQL {
     return $stmt;
   }
 
-  public function getIssues($field, $value, $op = 'eq', $schema = '', $provider_id = '', $set_id = '', $offset = 0, $limit = 10)
-  {
+  public function getIssues($field, $value, $op = 'eq', $schema = '', $provider_id = '', $set_id = '', $offset = 0, $limit = 10) {
     $default_order = 'recordid';
     $where = $this->getWhere($schema, $provider_id, $set_id, FALSE);
     $_op = $op == 'eq' ? '=' : ($op == 'lt' ? '<' : '>');
     if ($where == '') {
       $sql = 'SELECT i.*, f.metadata_schema, f.provider_name
        FROM issue AS i
-       LEFT JOIN file_record fr ON (fr.recordId = i.recordId)
+       LEFT JOIN file_record fr ON (fr.recordId = i.recordId AND i.filename = r.file)
        LEFT JOIN file AS f ON (fr.file = f.file)
        WHERE `' . $field . '` ' . $_op . ' :value
        ORDER BY ' . $default_order . '
@@ -51,7 +50,7 @@ class IssuesDBMySQL {
     } else {
       $sql = 'SELECT i.*, f.metadata_schema, f.provider_name
        FROM issue AS i
-       LEFT JOIN file_record fr ON (fr.recordId = i.recordId)
+       LEFT JOIN file_record fr ON (fr.recordId = i.recordId AND i.filename = r.file)
        LEFT JOIN file AS f ON (fr.file = f.file)
        WHERE `' . $field . '` ' . $_op . ' :value AND ' . $where . '
        ORDER BY ' . $default_order . ' 
@@ -206,7 +205,7 @@ class IssuesDBMySQL {
     $where = $this->getWhere($schema, $provider_id, $set_id);
     $stmt = $this->db->prepare('SELECT metadata_schema as id, COUNT(*) AS count
 FROM issue AS i
-LEFT JOIN file_record AS r USING (recordId)
+LEFT JOIN file_record AS r ON (i.recordId = r.recordId AND i.filename = r.file)
 INNER JOIN file AS f USING (file) '
       . $where . ' GROUP BY metadata_schema');
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
@@ -220,7 +219,7 @@ INNER JOIN file AS f USING (file) '
     $where = $this->getWhere($schema, $provider_id, $set_id);
     $stmt = $this->db->prepare('SELECT provider_name AS name, provider_id AS id, COUNT(*) AS count
 FROM issue AS i
-LEFT JOIN file_record AS r USING (recordId)
+LEFT JOIN file_record AS r ON (i.recordId = r.recordId AND i.filename = r.file)
 INNER JOIN file AS f USING (file) '
       . $where . ' GROUP BY provider_name, provider_id');
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
@@ -234,7 +233,7 @@ INNER JOIN file AS f USING (file) '
     $where = $this->getWhere($schema, $provider_id, $set_id);
     $stmt = $this->db->prepare('SELECT set_name AS name, set_id AS id, COUNT(*) AS count
 FROM issue AS i
-LEFT JOIN file_record AS r USING (recordId)
+LEFT JOIN file_record AS r ON (i.recordId = r.recordId AND i.filename = r.file)
 INNER JOIN file AS f USING (file) '
      . $where . ' GROUP BY set_name, set_id');
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
@@ -245,15 +244,29 @@ INNER JOIN file AS f USING (file) '
 
   public function getLastUpdate($schema = '', $provider_id = '', $set_id = '') {
     $where = $this->getWhere($schema, $provider_id, $set_id);
-    $stmt = $this->db->prepare('SELECT max(datum) as last_update FROM file ' . $where);
-    $this->bindValues($schema, $provider_id, $set_id, $stmt);
+    if (!empty($where))
+      $where = ' ' . $where;
+    $stmt = $this->db->prepare('SELECT max(datum) as last_update FROM file' . $where . ';');
+    if (!empty($where))
+      $this->bindValues($schema, $provider_id, $set_id, $stmt);
 
     $stmt->execute();
     return $stmt;
   }
 
   public function fetchValue(PDOStatement $result, $key) {
-    return $result->fetch(PDO::FETCH_ASSOC)[$key];
+    $row = $result->fetch(PDO::FETCH_ASSOC);
+    if (!is_array($row)) {
+      error_log('SQL: ' . $this->getSQL($result));
+      error_log('ERROR key: ' . $key);
+      error_log(json_encode(debug_backtrace()));
+    }
+    try {
+      return $row[$key];
+    }
+    catch (PDOException $e) {
+      error_log('fetchValue error: ' . $e->getMessage());
+    }
   }
 
   public function fetchList(PDOStatement $result, $key) {
@@ -293,8 +306,7 @@ INNER JOIN file AS f USING (file) '
    * @param $set_id
    * @return string
    */
-  private function getWhere($schema, $provider_id, $set_id, $prefix = TRUE): string
-  {
+  private function getWhere($schema, $provider_id, $set_id, $prefix = TRUE): string {
     if ($schema != '' || $provider_id != '' || $set_id != '') {
       $criteria = [];
       if ($schema != '')
@@ -317,8 +329,7 @@ INNER JOIN file AS f USING (file) '
    * @param $stmt
    * @return void
    */
-  private function bindValues($schema, $provider_id, $set_id, &$stmt): void
-  {
+  private function bindValues($schema, $provider_id, $set_id, &$stmt): void {
     if ($schema != '' || $provider_id != '' || $set_id != '') {
       if ($schema != '') {
         // error_log(':metadata_schema = ' . $schema);
@@ -342,5 +353,4 @@ INNER JOIN file AS f USING (file) '
     ob_end_clean();
     return $r;
   }
-
 }
