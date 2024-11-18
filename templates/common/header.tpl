@@ -1,6 +1,6 @@
 <p>
-  <a href="." class="header-link"><img src="https://www.deutsche-digitale-bibliothek.de/assets/DDB_Logo_RGB_Reduziert_Claim-a18eb91420ebf3d4531c194d99ad972f.png"
-                                       class="hidden-xs hidden-sm"></a>
+  <a href="." class="header-link"><img class="hidden-xs hidden-sm"
+    src="https://www.deutsche-digitale-bibliothek.de/assets/ddb-logo-rgb-e74dcc445aa1fd3fe5014274d4d7c6ed.png"></a>
 </p>
 <h1 style="text-align: right">
   <i class="fa fa-cogs" aria-hidden="true"></i> <span>{t}metadata quality assessment dashboard{/t}</span>

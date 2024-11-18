@@ -13,6 +13,7 @@ class Record extends BaseTab {
     error_log(__FILE__ . ':' . __LINE__);
 
     $this->action = getOrDefault('action', 'display', ['display', 'downloadRecord', 'downloadFile']);
+    error_log('action:' . $this->action);
 
     $id = getOrDefault('id', '');
     $smarty->assign('id', $id);
