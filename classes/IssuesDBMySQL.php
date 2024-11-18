@@ -20,7 +20,7 @@ class IssuesDBMySQL {
       $sql = 'SELECT COUNT(*) AS count
         FROM issue AS i
         LEFT JOIN file_record r ON (i.recordId = r.recordId AND i.filename = r.file)
-        LEFT JOIN file AS f ON (fr.file = f.file)
+        LEFT JOIN file AS f ON (r.file = f.file)
         WHERE `' . $field . '` ' . $_op . ' :value AND ' . $where;
     }
     // error_log(cleanSql($sql));
@@ -50,7 +50,7 @@ class IssuesDBMySQL {
     } else {
       $sql = 'SELECT i.*, f.metadata_schema, f.provider_name
        FROM issue AS i
-       LEFT JOIN file_record r ON (i.recordId = r.recordId AND i.filename = fr.file)
+       LEFT JOIN file_record r ON (i.recordId = r.recordId AND i.filename = r.file)
        LEFT JOIN file AS f ON (r.file = f.file)
        WHERE `' . $field . '` ' . $_op . ' :value AND ' . $where . '
        ORDER BY ' . $default_order . ' 
@@ -195,7 +195,7 @@ class IssuesDBMySQL {
   }
 
   public function getFileDataByRecordId($record_id = '') {
-    $stmt = $this->db->prepare('SELECT f.* FROM file_record AS fr JOIN file AS f ON (f.file = fr.file) WHERE recordId = :record_id');
+    $stmt = $this->db->prepare('SELECT f.* FROM file_record AS r JOIN file AS f ON (f.file = r.file) WHERE recordId = :record_id');
     $stmt->bindValue(':record_id', $record_id, SQLITE3_TEXT);
 
     $stmt->execute();
