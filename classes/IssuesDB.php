@@ -107,21 +107,26 @@ class IssuesDB extends SQLite3 {
     $where = $this->getWhere($schema, $provider_id, $set_id);
     $stmt = $this->prepare('SELECT field, number_of_values FROM variability ' . $where);
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
-    error_log(cleanSql($stmt->getSQL(TRUE)));
+    // error_log(cleanSql($stmt->getSQL(TRUE)));
 
     return $stmt->execute();
   }
 
-  public function getRecord($id) {
-    $stmt = $this->prepare('SELECT xml FROM record WHERE id = :value');
-    $stmt->bindValue(':value', $id, SQLITE3_TEXT);
+  public function getRecord($file, $id): SQLite3Result {
+    $stmt = $this->prepare('SELECT xml FROM record WHERE file = :file AND id = :id');
+    $stmt->bindValue(':file', $file, SQLITE3_TEXT);
+    $stmt->bindValue(':id',   $id,   SQLITE3_TEXT);
+    // error_log(cleanSql($stmt->getSQL(TRUE)));
 
     return $stmt->execute();
   }
 
   public function listSchemas($schema = '', $provider_id = '', $set_id = '') {
     $where = $this->getWhere($schema, $provider_id, $set_id);
-    $stmt = $this->prepare('SELECT schema, COUNT(*) AS count FROM files ' . $where . ' GROUP BY schema ORDER BY schema');
+    $stmt = $this->prepare('SELECT schema, COUNT(*) AS count
+      FROM files '
+      . $where
+      . ' GROUP BY schema ORDER BY schema');
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
     return $stmt->execute();
   }

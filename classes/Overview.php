@@ -12,15 +12,17 @@ class Overview extends BaseTab {
     $count = 0;
     $total = 0;
     $not_measured = 0;
-    foreach ($frequency['ruleCatalog:score'] as $record) {
-      if (!is_null($record['value']) && $record['value'] != 'NA') {
-        $count += $record['frequency'];
-        $total += ($record['frequency'] * $record['value']);
-      } else {
-        $not_measured += $record['frequency'];
+    if (!is_null($frequency) && !empty($frequency)) {
+      foreach ($frequency['ruleCatalog:score'] as $record) {
+        if (!is_null($record['value']) && $record['value'] != 'NA') {
+          $count += $record['frequency'];
+          $total += ($record['frequency'] * $record['value']);
+        } else {
+          $not_measured += $record['frequency'];
+        }
       }
     }
-    $smarty->assign('totalScore', $total / $count);
+    $smarty->assign('totalScore', ($total == 0 ? 0 : $total / $count));
     $smarty->assign('notMeasured', $not_measured);
     $smarty->assign('blockers', $this->blockers);
   }
