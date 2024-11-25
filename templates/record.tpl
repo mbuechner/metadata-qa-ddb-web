@@ -21,12 +21,17 @@
           <li>file size: {$filedata['size']}</li>
         </ul>
 
-        <table>
+        <p>
+          [<a href="#criteria">{t}criteria{/t}</a>]
+          [<a href="#content">{t}XML content{/t}</a>]
+        </p>
+
+        <table id="criteria">
           {foreach $issues as $id => $value}
             {if $id != 'recordId' && $id != 'providerid'}
               <tr>
-                <td>{$id}</td>
-                <td>
+                <td class="id">{$id}</td>
+                <td class="factor">
                   {if isset($factors[$id])}
                     {$factors[$id]->description}
                     {if isset($factors[$id]->criterium)}
@@ -54,7 +59,7 @@
           {/foreach}
         </table>
 
-        <xmp>{$record}</xmp>
+        <xmp id="content">{$record}</xmp>
         <p>
           <a href="?tab=downloader&action=downloadRecord&id={$id}">download record</a>
           &mdash;
