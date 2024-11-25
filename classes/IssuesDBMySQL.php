@@ -34,8 +34,8 @@ class IssuesDBMySQL {
     return $stmt;
   }
 
-  public function getIssues($field, $value, $op = 'eq', $schema = '', $provider_id = '', $set_id = '', $offset = 0, $limit = 10) {
-    error_log("getIssues");
+  public function getIssues($field, $value, $op = 'eq', $schema = '', $provider_id = '', $set_id = '',
+                            $offset = 0, $limit = 10): PDOStatement {
     $default_order = 'recordid';
     $where = $this->getWhere($schema, $provider_id, $set_id, FALSE, 'i.');
     $_op = $op == 'eq' ? '=' : ($op == 'lt' ? '<' : '>');
@@ -60,12 +60,13 @@ class IssuesDBMySQL {
     }
     // error_log(cleanSql($sql));
     $stmt = $this->db->prepare($sql);
-    $stmt->bindValue(':value', $value, preg_match('/:score$/', $field) ? SQLITE3_INTEGER : SQLITE3_TEXT);
+    $value_type = preg_match('/:score$/', $field) ? SQLITE3_INTEGER : SQLITE3_TEXT;
+    $stmt->bindValue(':value', $value, $value_type);
     if ($where != '')
       $this->bindValues($schema, $provider_id, $set_id, $stmt);
     $stmt->bindValue(':offset', $offset, SQLITE3_INTEGER);
     $stmt->bindValue(':limit', $limit, SQLITE3_INTEGER);
-    error_log(cleanSql($this->getSQL($stmt)));
+    // error_log(cleanSql($this->getSQL($stmt)));
 
     $stmt->execute();
     return $stmt;
@@ -74,6 +75,16 @@ class IssuesDBMySQL {
   public function getIssuesByRecordId($id) {
     $default_order = 'recordid';
     $stmt = $this->db->prepare('SELECT * FROM issue WHERE recordId = :value');
+    $stmt->bindValue(':value', $id, SQLITE3_TEXT);
+
+    $stmt->execute();
+    return $stmt;
+  }
+
+  public function getIssuesByFileAndRecordId($file, $id) {
+    $default_order = 'recordid';
+    $stmt = $this->db->prepare('SELECT * FROM issue WHERE filename = :file AND recordId = :value');
+    $stmt->bindValue(':file', $file, SQLITE3_TEXT);
     $stmt->bindValue(':value', $id, SQLITE3_TEXT);
 
     $stmt->execute();
@@ -195,8 +206,12 @@ class IssuesDBMySQL {
     return $stmt;
   }
 
-  public function getFileDataByRecordId($record_id = '') {
-    $stmt = $this->db->prepare('SELECT f.* FROM file_record AS r JOIN file AS f ON (f.file = r.file) WHERE recordId = :record_id');
+  public function getFileDataByRecordId($file, $record_id = '') {
+    $stmt = $this->db->prepare('SELECT f.* 
+      FROM file_record AS r 
+      JOIN file AS f ON (f.file = r.file) 
+      WHERE r.file = :file AND r.recordId = :record_id');
+    $stmt->bindValue(':file', $file, SQLITE3_TEXT);
     $stmt->bindValue(':record_id', $record_id, SQLITE3_TEXT);
 
     $stmt->execute();

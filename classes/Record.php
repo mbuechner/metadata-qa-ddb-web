@@ -10,10 +10,8 @@ class Record extends BaseTab {
 
   public function prepareData(Smarty &$smarty) {
     parent::prepareData($smarty);
-    error_log(__FILE__ . ':' . __LINE__);
 
     $this->action = getOrDefault('action', 'display', ['display', 'downloadRecord', 'downloadFile']);
-    error_log('action:' . $this->action);
 
     $id = getOrDefault('id', '');
     $file = getOrDefault('file', '');
@@ -25,14 +23,14 @@ class Record extends BaseTab {
         $this->downloadContent($xml, 'record.xml', 'application/xml');
       } else {
         $smarty->assign('record', $xml);
-        $smarty->assign('issues', $this->getIssues($id));
-        $smarty->assign('filename', $this->db->fetchValue($this->db->getFilenameByRecordId($id), 'file'));
-        $smarty->assign('filedata', $this->db->getFileDataByRecordId($id)->fetch(PDO::FETCH_ASSOC));
+        $smarty->assign('issues', $this->getIssues($file, $id));
+        $smarty->assign('filename', $file); // $this->db->fetchValue($this->db->getFilenameByRecordId($id), 'file'));
+        $smarty->assign('filedata', $this->db->getFileDataByRecordId($file, $id)->fetch(PDO::FETCH_ASSOC));
       }
     }
     if ($this->action == 'downloadFile') {
       $filename = $this->db->fetchValue($this->db->getFilenameByRecordId($id), 'file');
-      error_log('filename: ' . $filename);
+      // error_log('filename: ' . $filename);
       $this->outputType = 'none';
       $this->downloadFile($filename, 'application/xml');
     }
@@ -51,8 +49,8 @@ class Record extends BaseTab {
     return $db->getRecord($file, $id)->fetchArray(SQLITE3_ASSOC)['xml'];
   }
 
-  private function getIssues($id) {
-    $issues = $this->db->getIssuesByRecordId($id)->fetch(PDO::FETCH_ASSOC);
+  private function getIssues($file, $id) {
+    $issues = $this->db->getIssuesByFileAndRecordId($file, $id)->fetch(PDO::FETCH_ASSOC);
     foreach ($issues as $key => $value) {
       if (preg_match('/^(.*):(.*)$/', $key, $matches)) {
         unset($issues[$key]);

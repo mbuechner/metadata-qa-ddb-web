@@ -9,8 +9,8 @@ class IssuesDB extends SQLite3 {
   }
 
   public function getIssuesCount($field, $value, $schema = '', $provider_id = '', $set_id = '') {
-    error_log($field . ' -- ' . $value);
-    error_log(sprintf('%s %s %s', $schema, $provider_id, $set_id));
+    // error_log($field . ' -- ' . $value);
+    // error_log(sprintf('%s %s %s', $schema, $provider_id, $set_id));
     $where = $this->getWhere($schema, $provider_id, $set_id, FALSE);
     if ($where == '') {
       $sql = 'SELECT COUNT(*) AS count
@@ -23,20 +23,20 @@ class IssuesDB extends SQLite3 {
         LEFT JOIN files AS f ON (fr.file = f.file)
         WHERE `' . $field . '` = :value AND ' . $where;
     }
-    error_log(cleanSql($sql));
+    // error_log(cleanSql($sql));
     $stmt = $this->prepare($sql);
     $stmt->bindValue(':value', $value, preg_match('/:score$/', $field) ? SQLITE3_INTEGER : SQLITE3_TEXT);
     if ($where != '')
       $this->bindValues($schema, $provider_id, $set_id, $stmt);
 
-    error_log(cleanSql($stmt->getSQL(TRUE)));
+    // error_log(cleanSql($stmt->getSQL(TRUE)));
     return $stmt->execute();
   }
 
   public function getIssues($field, $value, $schema = '', $provider_id = '', $set_id = '', $offset = 0, $limit = 10)
   {
-    error_log($field . ' -- ' . $value);
-    error_log(sprintf('%s %s %s', $schema, $provider_id, $set_id));
+    // error_log($field . ' -- ' . $value);
+    // error_log(sprintf('%s %s %s', $schema, $provider_id, $set_id));
     $default_order = 'recordid';
     $where = $this->getWhere($schema, $provider_id, $set_id, FALSE);
     if ($where == '') {
@@ -56,14 +56,14 @@ class IssuesDB extends SQLite3 {
        LIMIT :limit
        OFFSET :offset';
     }
-    error_log(cleanSql($sql));
+    // error_log(cleanSql($sql));
     $stmt = $this->prepare($sql);
     $stmt->bindValue(':value', $value, preg_match('/:score$/', $field) ? SQLITE3_INTEGER : SQLITE3_TEXT);
     if ($where != '')
       $this->bindValues($schema, $provider_id, $set_id, $stmt);
     $stmt->bindValue(':offset', $offset, SQLITE3_INTEGER);
     $stmt->bindValue(':limit', $limit, SQLITE3_INTEGER);
-    error_log(cleanSql($stmt->getSQL(TRUE)));
+    // error_log(cleanSql($stmt->getSQL(TRUE)));
 
     return $stmt->execute();
   }
@@ -98,7 +98,7 @@ class IssuesDB extends SQLite3 {
     $where = $this->getWhere($schema, $provider_id, $set_id);
     $stmt = $this->prepare('SELECT field, value, frequency FROM frequency ' . $where);
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
-    error_log(cleanSql($stmt->getSQL(TRUE)));
+    // error_log(cleanSql($stmt->getSQL(TRUE)));
 
     return $stmt->execute();
   }
@@ -116,7 +116,7 @@ class IssuesDB extends SQLite3 {
     $stmt = $this->prepare('SELECT xml FROM record WHERE file = :file AND id = :id');
     $stmt->bindValue(':file', $file, SQLITE3_TEXT);
     $stmt->bindValue(':id',   $id,   SQLITE3_TEXT);
-    // error_log(cleanSql($stmt->getSQL(TRUE)));
+    // error_log('getRecord: ' . cleanSql($stmt->getSQL(TRUE)));
 
     return $stmt->execute();
   }
@@ -158,7 +158,7 @@ FROM files AS f
 INNER JOIN file_record AS r
 USING (file) ' . $where . ' GROUP BY schema');
     $this->bindValues($schema, $provider_id, $set_id, $stmt);
-    error_log(cleanSql($stmt->getSQL(TRUE)));
+    // error_log(cleanSql($stmt->getSQL(TRUE)));
     return $stmt->execute();
   }
 

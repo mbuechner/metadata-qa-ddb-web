@@ -21,10 +21,10 @@ abstract class BaseTab implements Tab {
 
   public function __construct() {
     $this->configuration = parse_ini_file("configuration.cnf", false, INI_SCANNER_TYPED);
-    error_log('configuration: ' . json_encode($this->configuration));
+    // error_log('configuration: ' . json_encode($this->configuration));
     $this->inputDir = $this->configuration['INPUT_DIR'];
     $this->outputDir = $this->configuration['OUTPUT_DIR'];
-    error_log('outputDir: ' . $this->outputDir);
+    // error_log('outputDir: ' . $this->outputDir);
     $this->subdirs = array_values(array_diff(scandir($this->outputDir), ['.', '..']));
     $this->subdir = getOrDefault('subdir', 'DC-DDB-WuerzburgIMG', $this->subdirs);
     $this->lang = getOrDefault('lang', 'en', ['en', 'de']);
@@ -58,7 +58,6 @@ abstract class BaseTab implements Tab {
     // $smarty->assign('variability', readCsv($this->getFilePath('variability.csv'), 'field', FALSE));
     $smarty->assign('lastUpdate', $this->db->fetchValue($this->db->getLastUpdate(), 'last_update'));
 
-    error_log('start');
     $all_schemas = $this->db->fetchAssoc($this->db->listSchemas(), 'metadata_schema');
     $all_providers = $this->db->fetchAssoc($this->db->listProviders());
     $all_sets = $this->db->fetchAssoc($this->db->listSets());

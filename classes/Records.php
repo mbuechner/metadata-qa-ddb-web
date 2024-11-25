@@ -32,7 +32,8 @@ class Records extends BaseTab {
         $field, $value, $op, $this->unsetNa($this->schema), $this->unsetNa($this->provider_id), $this->unsetNa($this->set_id)
       ), 'count');
     $result = $this->db->getIssues(
-      $field, $value, $op, $this->unsetNa($this->schema), $this->unsetNa($this->provider_id), $this->unsetNa($this->set_id),
+      $field, $value, $op,
+      $this->unsetNa($this->schema), $this->unsetNa($this->provider_id), $this->unsetNa($this->set_id),
       $page * $limit, $limit
     );
     $recordIds = [];
