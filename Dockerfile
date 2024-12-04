@@ -27,7 +27,7 @@ RUN apt-get update \
  && curl -s -L https://github.com/pkiraly/metadata-qa-ddb-web/archive/refs/heads/v2.0.zip --output master.zip \
  && unzip -q master.zip \
  && rm master.zip \
- && mv metadata-qa-ddb-web-main metadata-qa-ddb \
+ && mv metadata-qa-ddb-web-2.0 metadata-qa-ddb \
  && cd metadata-qa-ddb \
  #
  # set configuration
