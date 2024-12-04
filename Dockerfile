@@ -24,7 +24,7 @@ RUN apt-get update \
       php php-mysql php-sqlite3 php-intl \
  && rm -rf /var/lib/apt/lists/* \
  && cd /var/www/html/ \
- && curl -s -L https://github.com/pkiraly/metadata-qa-ddb-web/archive/refs/heads/main.zip --output master.zip \
+ && curl -s -L https://github.com/pkiraly/metadata-qa-ddb-web/archive/refs/heads/v2.0.zip --output master.zip \
  && unzip -q master.zip \
  && rm master.zip \
  && mv metadata-qa-ddb-web-main metadata-qa-ddb \
