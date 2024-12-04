@@ -1,4 +1,5 @@
-FROM ubuntu:20.04
+FROM php:8.1-apache
+# FROM ubuntu:20.04
 
 LABEL maintainer="Péter Király <pkiraly@gwdg.de>"
 LABEL description="A metadata quality assessment tool for Deutsche Digitale Bibliothek."
@@ -19,9 +20,16 @@ RUN apt-get update \
       # openjdk-11-jre-headless \
       sqlite3 \
       less \
-      apache2 \
-      mysql-server \
-      php php-mysql php-sqlite3 php-intl \
+      libyaml-dev \
+    libicu-dev \
+    libzip-dev \
+      # apache2 \
+      # mysql-client \
+      # php php-mysql php-sqlite3 php-intl \
+     && pecl install yaml \
+     && docker-php-ext-configure intl \
+     && docker-php-ext-install gettext zip intl \
+     && docker-php-ext-enable yaml intl \
  && rm -rf /var/lib/apt/lists/* \
  && cd /var/www/html/ \
  && curl -s -L https://github.com/pkiraly/metadata-qa-ddb-web/archive/refs/heads/v2.0.zip --output master.zip \
