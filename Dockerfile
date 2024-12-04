@@ -1,5 +1,4 @@
 FROM php:8.1-apache
-# FROM ubuntu:20.04
 
 LABEL maintainer="Péter Király <pkiraly@gwdg.de>"
 LABEL description="A metadata quality assessment tool for Deutsche Digitale Bibliothek."
@@ -16,15 +15,10 @@ RUN apt-get update \
       jq \
       curl \
       openssl \
-      # install Java
-      # openjdk-11-jre-headless \
       sqlite3 \
       less \
-      libyaml-dev \
-    libicu-dev \
-    libzip-dev \
-      # apache2 \
-      # mysql-client \
+      libyaml-dev libicu-dev libzip-dev \
+      default-mysql-client \
       # php php-mysql php-sqlite3 php-intl \
      && pecl install yaml \
      && docker-php-ext-configure intl \
