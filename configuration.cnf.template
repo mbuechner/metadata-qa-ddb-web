@@ -3,7 +3,7 @@ INPUT_DIR=<path to input directory>
 OUTPUT_DIR=<path to output directory>
 
 # MySQL database settings
-MQAF_DB_HOST=localhost
+MQAF_DB_HOST=<MySQL database host>
 MQAF_DB_PORT=3306
 MQAF_DB_DATABASE=<MySQL database name>
 MQAF_DB_USER=<MySQL user name>
