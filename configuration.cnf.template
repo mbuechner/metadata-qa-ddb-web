@@ -3,12 +3,12 @@ INPUT_DIR=<path to input directory>
 OUTPUT_DIR=<path to output directory>
 
 # MySQL database settings
-MY_HOST=localhost
-MY_PORT=3306
-MY_DB=<MySQL database name>
-MY_USER=<MySQL user name>
-MY_PASSWORD=<MySQL password>
+MQAF_DB_HOST=localhost
+MQAF_DB_PORT=3306
+MQAF_DB_DB=<MySQL database name>
+MQAF_DB_USER=<MySQL user name>
+MQAF_DB_PASSWORD=<MySQL password>
 
 # Apache Solr settings
-SOLR_HOST=localhost
-SOLR_PORT=8983
+MQAF_SOLR_HOST=localhost
+MQAF_SOLR_PORT=8983
