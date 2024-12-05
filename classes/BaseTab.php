@@ -31,9 +31,9 @@ abstract class BaseTab implements Tab {
     $this->parameters['lang'] = $this->lang;
     if (isset($this->configuration['MY_USER'])) {
       $this->db = new IssuesDBMySQL(
-        $this->configuration['MY_USER'], $this->configuration['MY_PASSWORD'],
-        $this->configuration['MY_DB'],
-        $this->configuration['MY_HOST'], $this->configuration['MY_PORT']
+        $this->configuration['MQAF_DB_USER'], $this->configuration['MQAF_DB_PASSWORD'],
+        $this->configuration['MQAF_DB_DATABASE'],
+        $this->configuration['MQAF_DB_HOST'], $this->configuration['MQAF_DB_PORT']
       );
     } else {
       $this->db = new IssuesDB($this->outputDir);
