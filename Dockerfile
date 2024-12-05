@@ -23,6 +23,7 @@ RUN apt-get update \
      && pecl install yaml \
      && docker-php-ext-configure intl \
      && docker-php-ext-install gettext zip intl \
+     && docker-php-ext-install pdo pdo_mysql \
      && docker-php-ext-enable yaml intl \
  && rm -rf /var/lib/apt/lists/* \
  && cd /var/www/html/ \
