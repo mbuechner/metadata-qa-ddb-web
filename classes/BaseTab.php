@@ -29,7 +29,7 @@ abstract class BaseTab implements Tab {
     $this->subdir = getOrDefault('subdir', 'DC-DDB-WuerzburgIMG', $this->subdirs);
     $this->lang = getOrDefault('lang', 'en', ['en', 'de']);
     $this->parameters['lang'] = $this->lang;
-    if (isset($this->configuration['MY_USER'])) {
+    if (isset($this->configuration['MQAF_DB_USER'])) {
       $this->db = new IssuesDBMySQL(
         $this->configuration['MQAF_DB_USER'], $this->configuration['MQAF_DB_PASSWORD'],
         $this->configuration['MQAF_DB_DATABASE'],
