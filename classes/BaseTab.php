@@ -198,7 +198,7 @@ abstract class BaseTab implements Tab {
    * Reads configuration file and override the keys with environmental variables
    * @return object|array
    */
-  private function getConfiguration(): object {
+  private function getConfiguration(): array {
     $configuration = parse_ini_file("configuration.cnf", false, INI_SCANNER_TYPED);
     $variables = ['MQAF_DB_HOST', 'MQAF_DB_PORT', 'MQAF_DB_DATABASE', 'MQAF_DB_USER',
                   'MQAF_DB_PASSWORD', 'MQAF_SOLR_HOST', 'MQAF_SOLR_PORT'];
