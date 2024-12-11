@@ -20,8 +20,9 @@ abstract class BaseTab implements Tab {
   protected $parameters = [];
 
   public function __construct() {
-    $this->configuration = parse_ini_file("configuration.cnf", false, INI_SCANNER_TYPED);
-    // error_log('configuration: ' . json_encode($this->configuration));
+    $this->configuration = $this->getConfiguration();
+
+    error_log('configuration: ' . json_encode($this->configuration));
     $this->inputDir = $this->configuration['INPUT_DIR'];
     $this->outputDir = $this->configuration['OUTPUT_DIR'];
     // error_log('outputDir: ' . $this->outputDir);
@@ -191,5 +192,21 @@ abstract class BaseTab implements Tab {
     $params['provider_id'] = $this->provider_id == 'NA' ? '' : $this->provider_id;
     $params['lang'] = $this->lang;
     return http_build_query($params);
+  }
+
+  /**
+   * Reads configuration file and override the keys with environmental variables
+   * @return object|array
+   */
+  private function getConfiguration(): object {
+    $configuration = parse_ini_file("configuration.cnf", false, INI_SCANNER_TYPED);
+    $variables = ['MQAF_DB_HOST', 'MQAF_DB_PORT', 'MQAF_DB_DATABASE', 'MQAF_DB_USER',
+                  'MQAF_DB_PASSWORD', 'MQAF_SOLR_HOST', 'MQAF_SOLR_PORT'];
+    foreach ($variables as $key) {
+      if (isset($_ENV[$key]) && !empty($_ENV[$key])) {
+        $configuration[$key] = $_ENV[$key];
+      }
+    }
+    return $configuration;
   }
 }

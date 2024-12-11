@@ -38,7 +38,7 @@ RUN apt-get update \
  && mv configuration.cnf.template configuration.cnf \
  && sed -i.bak 's,<path to input directory>,/opt/metadata-qa-ddb/input,' configuration.cnf \
  && sed -i.bak 's,<path to output directory>,/opt/metadata-qa-ddb/output,' configuration.cnf \
- && sed -i.bak 's,<MySQL database host>,ddb-db,' configuration.cnf \
+ && sed -i.bak 's,<MySQL database host>,mqaf-ddb-db,' configuration.cnf \
  && sed -i.bak 's,<MySQL database name>,ddb,' configuration.cnf \
  && sed -i.bak 's,<MySQL user name>,ddb,' configuration.cnf \
  && sed -i.bak 's,<MySQL password>,ddb,' configuration.cnf \
