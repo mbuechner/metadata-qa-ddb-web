@@ -113,8 +113,12 @@ class IssuesDB extends SQLite3 {
   }
 
   public function getRecord($file, $id): SQLite3Result {
-    $stmt = $this->prepare('SELECT xml FROM record WHERE file = :file AND id = :id');
-    $stmt->bindValue(':file', $file, SQLITE3_TEXT);
+    if ($file != '') {
+      $stmt = $this->prepare('SELECT xml FROM record WHERE file = :file AND id = :id');
+      $stmt->bindValue(':file', $file, SQLITE3_TEXT);
+    } else {
+      $stmt = $this->prepare('SELECT file, xml FROM record WHERE id = :id');
+    }
     $stmt->bindValue(':id',   $id,   SQLITE3_TEXT);
     // error_log('getRecord: ' . cleanSql($stmt->getSQL(TRUE)));
 

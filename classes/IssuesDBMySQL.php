@@ -83,8 +83,12 @@ class IssuesDBMySQL {
 
   public function getIssuesByFileAndRecordId($file, $id) {
     $default_order = 'recordid';
-    $stmt = $this->db->prepare('SELECT * FROM issue WHERE filename = :file AND recordId = :value');
-    $stmt->bindValue(':file', $file, SQLITE3_TEXT);
+    if ($file != '') {
+      $stmt = $this->db->prepare('SELECT * FROM issue WHERE filename = :file AND recordId = :value');
+      $stmt->bindValue(':file', $file, SQLITE3_TEXT);
+    } else {
+      $stmt = $this->db->prepare('SELECT * FROM issue WHERE recordId = :value');
+    }
     $stmt->bindValue(':value', $id, SQLITE3_TEXT);
 
     $stmt->execute();
@@ -272,7 +276,7 @@ class IssuesDBMySQL {
   }
 
   public function fetchValue(PDOStatement $result, $key) {
-    error_log('rowCount: ' . $result->rowCount());
+    // error_log('rowCount: ' . $result->rowCount());
     if ($result->rowCount() > 0) {
       $row = $result->fetch(PDO::FETCH_ASSOC);
       if (!is_array($row)) {

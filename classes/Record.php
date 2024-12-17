@@ -17,7 +17,7 @@ class Record extends BaseTab {
     $file = getOrDefault('file', '');
     $smarty->assign('id', $id);
     if ($id != '') {
-      $xml = $this->getXml($file, $id);
+      list($file, $xml) = $this->getXml($file, $id);
       if ($this->action == 'downloadRecord') {
         $this->outputType = 'none';
         $this->downloadContent($xml, 'record.xml', 'application/xml');
@@ -44,9 +44,12 @@ class Record extends BaseTab {
     return null;
   }
 
-  public function getXml($file, $id) {
+  public function getXml($file, $id): array {
     $db = new IssuesDB($this->outputDir, 'ddb-record.sqlite');
-    return $db->getRecord($file, $id)->fetchArray(SQLITE3_ASSOC)['xml'];
+    $res = $db->getRecord($file, $id)->fetchArray(SQLITE3_ASSOC);
+    if ($file == '')
+      $file = $res['file'];
+    return [$file, $res['xml']];
   }
 
   private function getIssues($file, $id) {
