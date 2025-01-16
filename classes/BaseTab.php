@@ -134,7 +134,7 @@ abstract class BaseTab implements Tab {
     foreach ($entries as $key => $value) {
       preg_match('/^(Q-\d)(\.\d+)?.(description|criterium|scoring)$/', $key, $matches);
       if (empty($matches)) {
-        error_log(sprintf('missing key "%s" from file %s', $key, $tranlation_file));
+        // error_log(sprintf('missing key "%s" from file %s', $key, $tranlation_file));
       } else {
         $id = $matches[1] . $matches[2];
         if (!isset($factors[$id]))

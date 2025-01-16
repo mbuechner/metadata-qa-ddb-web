@@ -53,6 +53,7 @@ class Record extends BaseTab {
   }
 
   private function getIssues($file, $id) {
+    error_log("getIssues('$file', '$id')");
     $issues = $this->db->getIssuesByFileAndRecordId($file, $id)->fetch(PDO::FETCH_ASSOC);
     foreach ($issues as $key => $value) {
       if (preg_match('/^(.*):(.*)$/', $key, $matches)) {
@@ -64,6 +65,7 @@ class Record extends BaseTab {
         $issues[$key2][$matches[2]] = $value;
       }
     }
+    error_log(json_encode($issues));
     return $issues;
   }
 }

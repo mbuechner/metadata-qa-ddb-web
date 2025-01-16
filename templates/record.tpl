@@ -8,7 +8,7 @@
 
       {if (!isset($id) || empty($id))}
         <p>No record identifier has been given.</p>
-      {elseif (!isset($record) || empty($record))}
+      {elseif ((!isset($record) || empty($record)) && (!isset($issues) || empty($issues)))}
         <p>This record does not exist. Type in a complete record number!</p>
       {else}
 
