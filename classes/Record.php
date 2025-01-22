@@ -1,9 +1,6 @@
 <?php
 
 include_once 'classes/IssuesDB.php';
-require_once 'libs/dompdf/autoload.inc.php';
-
-use Dompdf\Dompdf;
 
 class Record extends BaseTab {
 
@@ -39,12 +36,8 @@ class Record extends BaseTab {
       $this->downloadFile($filename, 'application/xml');
     } elseif ($this->action == 'pdf') {
       $smarty->assign('displayType', 'pdf');
-      $html = $smarty->fetch("record-content.tpl");
-      $dompdf = new Dompdf();
-      $dompdf->loadHtml($html);
-      $dompdf->setPaper('A4', 'landscape');
-      $dompdf->render();
-      $dompdf->stream();
+      $html = $smarty->fetch("record.tpl");
+      $this->createPdf($html);
     }
   }
 

@@ -3,6 +3,8 @@
 include_once 'classes/IssuesDB.php';
 include_once 'classes/IssuesDBMySQL.php';
 
+# use Dompdf\Dompdf;
+
 abstract class BaseTab implements Tab {
 
   protected $configuration;
@@ -95,6 +97,8 @@ abstract class BaseTab implements Tab {
     $this->provider_id = $provider_id == '' ? 'NA' : $provider_id;
     $this->count = $this->db->fetchValue($this->db->getCount($this->schema, $this->provider_id, $this->set_id), 'count');
     $smarty->assign('count', $this->count);
+    $applRootUrl = sprintf('%s://%s%s', $_SERVER['REQUEST_SCHEME'], $_SERVER['SERVER_NAME'], str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']));
+    $smarty->assign('applRootUrl', $applRootUrl);
   }
 
   protected function getDir() {
@@ -208,5 +212,18 @@ abstract class BaseTab implements Tab {
       }
     }
     return $configuration;
+  }
+
+  protected function createPdf($html) {
+    require_once 'libs/dompdf/autoload.inc.php';
+
+    $applocationDir = dirname($_SERVER['SCRIPT_FILENAME']);
+    $dompdf = new Dompdf\Dompdf();
+    $dompdf->getOptions()->setDefaultFont('helvetica');
+    $dompdf->getOptions()->setChroot($applocationDir);
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    $dompdf->stream();
   }
 }

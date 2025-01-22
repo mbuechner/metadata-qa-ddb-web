@@ -11,6 +11,8 @@ class Records extends BaseTab {
   public function prepareData(Smarty &$smarty) {
     parent::prepareData($smarty);
 
+    $this->action = getOrDefault('action', 'display', ['display', 'pdf']);
+
     $field = getOrDefault('field', 'Q-1.1');
     $value = getOrDefault('value', '');
     // $value = getOrDefault('value', '1', ['0', '1', 'NA']);
@@ -46,6 +48,15 @@ class Records extends BaseTab {
     $smarty->assign('field', $field);
     $smarty->assign('value', $value);
     $smarty->assign('recordIds', $recordIds);
+
+    if ($this->action == 'pdf') {
+      $smarty->assign('displayType', 'pdf');
+      $html = $smarty->fetch("records.tpl");
+      error_log($html);
+      $this->createPdf($html);
+    } else {
+      $smarty->assign('displayType', 'html');
+    }
   }
 
   public function getTemplate() {

@@ -325,11 +325,7 @@ class Fair extends BaseTab {
     if ($this->action == 'pdf') {
       $smarty->assign('displayType', 'pdf');
       $html = $smarty->fetch('fair-content.tpl');
-      $dompdf = new Dompdf();
-      $dompdf->loadHtml($html);
-      $dompdf->setPaper('A4', 'landscape');
-      $dompdf->render();
-      $dompdf->stream();
+      $this->createPdf($html);
     }
   }
 
