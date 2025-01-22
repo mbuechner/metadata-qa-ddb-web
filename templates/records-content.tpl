@@ -15,7 +15,11 @@
   <ol start="{($page * $limit) + 1}">
     {foreach $recordIds as $row}
       <li>
-        <a href="?&tab=record&id={$row['recordId']}&file={$row['file']|urlencode}&{$controller->getCommonUrlParameters()}">{$row['recordId']}</a>
+        {if $displayType == 'html'}
+          <a href="?&tab=record&id={$row['recordId']}&file={$row['file']|urlencode}&{$controller->getCommonUrlParameters()}">{$row['recordId']}</a>
+        {elseif $displayType == 'pdf'}
+          <strong>{$row['recordId']}</strong>
+        {/if}
         ({$row['metadata_schema']}, from {$row['provider_name']}
         <span style="color: #bbbbbb">file: {$row['file']}</span>)</li>
     {/foreach}

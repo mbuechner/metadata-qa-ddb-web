@@ -89,9 +89,9 @@ class IssuesDBMySQL {
       $stmt = $this->db->prepare('SELECT * FROM issue WHERE recordId = :value');
     }
     $stmt->bindValue(':value', $id, PDO::PARAM_STR);
-    error_log('getIssuesByFileAndRecordId');
-    error_log(cleanSql($this->getSQL($stmt)));
-    error_log(json_encode(['$file' => $file, 'id' => $id]));
+    // error_log('getIssuesByFileAndRecordId');
+    // error_log(cleanSql($this->getSQL($stmt)));
+    // error_log(json_encode(['$file' => $file, 'id' => $id]));
 
     $stmt->execute();
     return $stmt;

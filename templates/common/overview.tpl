@@ -1,5 +1,7 @@
 <h3>{$count} records</h3>
-{include 'common/data-source-statistics.tpl'}
+{if $displayType == 'html'}
+  {include 'common/data-source-statistics.tpl'}
+{/if}
 
 <p>average score: <strong>{sprintf("%.2f", $totalScore)}</strong> (not measured: {$notMeasured} records)</p>
 <table class="values">
@@ -50,7 +52,7 @@
           {* id *}
           <td class="id{if !$measured} not-measured{/if}">{$id}</td>
           {* description *}
-          <td style="width: 600px"{if !$measured} class="not-measured"{/if}>
+          <td class="description {if !$measured} not-measured{/if}">
             {$factor->description}
             {if $measured}
               {if isset($factor->criterium)}
@@ -95,7 +97,7 @@
               {if isset($frequency[$scoreId]) && !is_null($frequency[$scoreId][0]['value'])}
                 <table class="values">
                   <tr>
-                    <td class="">
+                    <td class="label">
                       score
                       {if isset($factor->scoring)}
                         <em title='{$factor->scoring}'><i class="fa fa-question"></i></em>
@@ -104,9 +106,13 @@
                     {foreach $frequency[$scoreId] as $record name="records"}
                       {if !is_null($record['value']) && $record['value'] != 'NA'}
                         <td class="value">
-                          <a href="?&tab=records&field={$scoreId}&value={$record['value']}&{$controller->getCommonUrlParameters()}">
+                          {if $displayType == 'html'}
+                            <a href="?&tab=records&field={$scoreId}&value={$record['value']}&{$controller->getCommonUrlParameters()}">
+                              {$record['value']}
+                            </a>
+                          {else}
                             {$record['value']}
-                          </a>
+                          {/if}
                         </td>
                       {/if}
                     {/foreach}

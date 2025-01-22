@@ -652,8 +652,20 @@ ul.list-856 {
   padding-left: 20px;
 }
 
-table#criteria-table td.id {
+table#criteria-table,
+table#criteria {
+  width: 100%;
+  /* font-family: sans-serif; */
+}
+
+table#criteria-table td.id,
+table#criteria td.id {
   padding-right: 10px;
+  min-width: 45px;
+}
+
+table#criteria-table td.description {
+  min-width: 200px;
 }
 
 table#criteria-table tr.criterium td.not-measured {color: #cccccc;}
@@ -679,12 +691,12 @@ table.values {
 }
 
 table.values td.value {
-  width: 50px;
+  width: 40px;
   text-align: center;
 }
 
 table.values td.frequency {
-  width: 50px;
+  width: 40px;
   text-align: center;
 }
 
@@ -744,8 +756,14 @@ table.values td.width50 {
 .bg-NA {background-color: #ededed;}
 
 .status {
-  width: 100px;
+  /* width: 100px; */
   text-align: center;
+}
+
+table#criteria-table td.status {
+  width: 50px !important;
+  max-width: 50px;
+  min-width: 50px;
 }
 
 table {

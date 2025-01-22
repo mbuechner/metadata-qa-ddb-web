@@ -22,6 +22,13 @@
     </p>
 
     <table id="criteria">
+      <thead>
+        <th>id</th>
+        <th>description</th>
+        <th>status</th>
+        <th>score</th>
+      </thead>
+      <tbody>
       {foreach $issues as $id => $value}
         {if $id != 'recordId' && $id != 'providerid'}
           <tr>
@@ -52,6 +59,7 @@
           </tr>
         {/if}
       {/foreach}
+      </tbody>
     </table>
 
     <xmp id="content">{$record}</xmp>

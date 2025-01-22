@@ -1,7 +1,9 @@
 {include 'common/html-head.tpl'}
 <div class="container">
-  {include 'common/header.tpl'}
-  {include 'common/nav-tabs.tpl'}
+  {if $displayType == 'html'}
+    {include 'common/header.tpl'}
+    {include 'common/nav-tabs.tpl'}
+  {/if}
   <div class="tab-content" id="myTabContent">
     {include 'fair-content.tpl'}
   </div>

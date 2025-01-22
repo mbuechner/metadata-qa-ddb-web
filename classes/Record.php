@@ -16,7 +16,6 @@ class Record extends BaseTab {
     $id = getOrDefault('id', '');
     $file = getOrDefault('file', '');
     $smarty->assign('id', $id);
-    $smarty->assign('displayType', 'html');
     if ($id != '') {
       list($file, $xml) = $this->getXml($file, $id);
       if ($this->action == 'downloadRecord') {
@@ -29,6 +28,8 @@ class Record extends BaseTab {
         $smarty->assign('filedata', $this->db->getFileDataByRecordId($file, $id)->fetch(PDO::FETCH_ASSOC));
       }
     }
+    $smarty->assign('file', $file);
+
     if ($this->action == 'downloadFile') {
       $filename = $this->db->fetchValue($this->db->getFilenameByRecordId($id), 'file');
       // error_log('filename: ' . $filename);
@@ -38,6 +39,8 @@ class Record extends BaseTab {
       $smarty->assign('displayType', 'pdf');
       $html = $smarty->fetch("record.tpl");
       $this->createPdf($html);
+    } else {
+      $smarty->assign('displayType', 'html');
     }
   }
 
@@ -58,8 +61,11 @@ class Record extends BaseTab {
   }
 
   private function getIssues($file, $id) {
-    error_log("getIssues('$file', '$id')");
     $issues = $this->db->getIssuesByFileAndRecordId($file, $id)->fetch(PDO::FETCH_ASSOC);
+    unset($issues['metadata_schema']);
+    unset($issues['filename']);
+    unset($issues['recordId']);
+    unset($issues['providerid']);
     foreach ($issues as $key => $value) {
       if (preg_match('/^(.*):(.*)$/', $key, $matches)) {
         unset($issues[$key]);
@@ -70,7 +76,6 @@ class Record extends BaseTab {
         $issues[$key2][$matches[2]] = $value;
       }
     }
-    error_log(json_encode($issues));
     return $issues;
   }
 }

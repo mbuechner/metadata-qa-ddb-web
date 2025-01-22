@@ -32,12 +32,13 @@ class Overview extends BaseTab {
     $smarty->assign('totalScore', ($total == 0 ? 0 : $total / $count));
     $smarty->assign('notMeasured', $not_measured);
     $smarty->assign('blockers', $this->blockers);
-    $smarty->assign('displayType', 'html');
 
     if ($this->action == 'pdf') {
       $smarty->assign('displayType', 'pdf');
-      $html = $smarty->fetch('overview-content.tpl');
+      $html = $smarty->fetch('overview.tpl');
       $this->createPdf($html);
+    } else {
+      $smarty->assign('displayType', 'html');
     }
   }
 

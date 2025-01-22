@@ -321,11 +321,12 @@ class Fair extends BaseTab {
     $smarty->assign('totalScore', $total / $categoryCount);
     $smarty->assign('notMeasured', $not_measured);
 
-    $smarty->assign('displayType', 'html');
     if ($this->action == 'pdf') {
       $smarty->assign('displayType', 'pdf');
-      $html = $smarty->fetch('fair-content.tpl');
+      $html = $smarty->fetch('fair.tpl');
       $this->createPdf($html);
+    } else {
+      $smarty->assign('displayType', 'html');
     }
   }
 
