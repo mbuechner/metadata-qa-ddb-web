@@ -4,6 +4,7 @@ LABEL maintainer="Péter Király <pkiraly@gwdg.de>"
 LABEL description="A metadata quality assessment tool for Deutsche Digitale Bibliothek."
 
 ARG SMARTY_VERSION=3.1.33
+ARG DOMPDF_VERSION=3.1.0
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends software-properties-common \
@@ -54,8 +55,10 @@ RUN apt-get update \
  #
  # set dompdf (from https://github.com/dompdf/dompdf)
  #
- && wget https://github.com/dompdf/dompdf/releases/download/v3.1.0/dompdf-3.1.0.zip \
- && unzip dompdf-3.1.0.zip \
+ && curl -s -L https://github.com/dompdf/dompdf/releases/download/v${DOMPDF_VERSION}/dompdf-${DOMPDF_VERSION}.zip \
+    --output dompdf-${DOMPDF_VERSION}.zip \
+ && unzip dompdf-${DOMPDF_VERSION}.zip \
+ && rm dompdf-${DOMPDF_VERSION}.zip \
  #
  # set apache
  #
