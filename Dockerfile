@@ -52,6 +52,11 @@ RUN apt-get update \
  && mkdir -p _smarty/templates_c \
  && chmod a+w -R _smarty/templates_c/ \
  #
+ # set dompdf (from https://github.com/dompdf/dompdf)
+ #
+ && wget https://github.com/dompdf/dompdf/releases/download/v3.1.0/dompdf-3.1.0.zip \
+ && unzip dompdf-3.1.0.zip \
+ #
  # set apache
  #
  && sed -i.bak 's,</VirtualHost>,        RedirectMatch ^/$ /metadata-qa-ddb/\n        <Directory /var/www/html/metadata-qa-ddb>\n                Options Indexes FollowSymLinks MultiViews\n                AllowOverride All\n                Order allow\,deny\n                allow from all\n                DirectoryIndex index.php index.html\n        </Directory>\n</VirtualHost>,' /etc/apache2/sites-available/000-default.conf \

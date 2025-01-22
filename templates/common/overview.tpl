@@ -134,3 +134,8 @@
   are <span style="color: #cccccc;">greyed out</span>
 </p>
 
+{if $displayType == 'html'}
+  <p>
+    <a href="?tab=overview&action=pdf&schema={$schema}&set_id={$set_id}&provider_id={$provider_id}&lang={$lang}" target="_blank">PDF</a>
+  </p>
+{/if}
