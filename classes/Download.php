@@ -10,11 +10,11 @@ class Download extends BaseTab {
     ],
     'schemas' => [
       'all-issues.csv' => 'All',
-      'mets-mods.csv' => 'METS-MODS',
+      # 'mets-mods.csv' => 'METS-MODS',
       'lido.csv' => 'LIDO',
       'dc.csv' => 'DDB DC',
-      'marc.csv' => 'MARC21',
-      'edm-ddb.csv' => 'DDB EDM'
+      # 'marc.csv' => 'MARC21',
+      # 'edm-ddb.csv' => 'DDB EDM'
     ]
   ];
 

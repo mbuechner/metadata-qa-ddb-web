@@ -143,5 +143,9 @@
 {if $displayType == 'html'}
   <p>
     <a href="?tab=overview&action=pdf&schema={$schema}&set_id={$set_id}&provider_id={$provider_id}&lang={$lang}" target="_blank">PDF</a>
+    -
+    download CSV:
+    <a href="?tab=overview&action=downloadStatus&schema={$schema}&set_id={$set_id}&provider_id={$provider_id}&lang={$lang}">status</a>
+    <a href="?tab=overview&action=downloadScores&schema={$schema}&set_id={$set_id}&provider_id={$provider_id}&lang={$lang}">score</a>
   </p>
 {/if}

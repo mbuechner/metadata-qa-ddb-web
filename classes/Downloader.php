@@ -12,12 +12,13 @@ class Downloader extends BaseTab {
       include_once('Record.php');
       $record = new Record();
       $this->downloadContent($record->getXml($id), 'record.xml', 'application/xml');
+
     } else if ($this->action == 'downloadFile') {
       $filename = $this->db->fetchValue($this->db->getFilenameByRecordId($id), 'file');
       error_log('filename: ' . $filename);
-
       $this->outputType = 'none';
       $this->downloadFile($filename, 'application/xml');
+
     } else if ($this->action == 'csvFile') {
       include_once('Download.php');
       $filename = getOrDefault('file', '', Download::getAllowableFiles());
@@ -35,5 +36,4 @@ class Downloader extends BaseTab {
   public function getAjaxTemplate() {
     return null;
   }
-
 }
