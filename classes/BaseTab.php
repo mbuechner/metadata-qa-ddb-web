@@ -18,6 +18,7 @@ abstract class BaseTab implements Tab {
   protected $schema;
   protected $set_id;
   protected $provider_id;
+  protected $file;
   protected $count;
   protected $parameters = [];
 
@@ -71,15 +72,29 @@ abstract class BaseTab implements Tab {
     $set_id = getOrDefault('set_id', '', array_keys($all_sets));
     $this->parameters['set_id'] = $set_id;
     $record_id = getOrDefault('record_id', '');
-    if ($record_id != '') {
+    if ($record_id != '' && $tab != 'record') {
       header('Location: ?tab=record&id=' . $record_id . '&lang=' . $this->parameters['lang']);
       return;
+    }
+    $file = getOrDefault('file', '');
+    $this->parameters['file'] = $file;
+    if ($file != '') {
+      if (!in_array($tab, ['record', 'records'])) {
+        header('Location: ?tab=records&file=' . $file . '&lang=' . $this->parameters['lang']);
+        exit;
+      } else {
+        if ($tab == 'record' && getOrDefault('id', '') == '') {
+          header('Location: ?tab=records&file=' . $file . '&lang=' . $this->parameters['lang']);
+          return;
+        }
+      }
     }
 
     $smarty->assign('filtered', ($schema != '' || $provider_id != '' || $set_id != ''));
     $smarty->assign('schema', $schema);
     $smarty->assign('provider_id', $provider_id);
     $smarty->assign('set_id', $set_id);
+    $smarty->assign('file', $file);
 
     $smarty->assign('schemas', $all_schemas);
     // $smarty->assign('schemasStatistic', $this->db->fetchAssoc($this->db->listSchemas($schema, $provider_id, $set_id), 'metadata_schema'));
@@ -95,7 +110,8 @@ abstract class BaseTab implements Tab {
     $this->schema = $schema == '' ? 'NA' : $schema;
     $this->set_id = $set_id == '' ? 'NA' : $set_id;
     $this->provider_id = $provider_id == '' ? 'NA' : $provider_id;
-    $this->count = $this->db->fetchValue($this->db->getCount($this->schema, $this->provider_id, $this->set_id), 'count');
+    $this->file = $file; // == '' ? '' : '%' . $file . '%';
+    $this->count = $this->db->fetchValue($this->db->getCount($this->schema, $this->provider_id, $this->set_id, $this->file), 'count');
     $smarty->assign('count', $this->count);
     $applRootUrl = sprintf('%s://%s%s', $_SERVER['REQUEST_SCHEME'], $_SERVER['SERVER_NAME'], str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']));
     $smarty->assign('applRootUrl', $applRootUrl);
@@ -194,6 +210,7 @@ abstract class BaseTab implements Tab {
     $params['schema'] = $this->schema == 'NA' ? '' : $this->schema;
     $params['set_id'] = $this->set_id == 'NA' ? '' : $this->set_id;
     $params['provider_id'] = $this->provider_id == 'NA' ? '' : $this->provider_id;
+    // $params['file'] = $this->file == '' ? '' : $this->file;
     $params['lang'] = $this->lang;
     return http_build_query($params);
   }

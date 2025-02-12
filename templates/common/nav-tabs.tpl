@@ -70,7 +70,13 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+      <p style="margin-top: 0.5rem">
+        <label class="label label-info col-form-label" for="file">{t}file{/t}</label><br/>
+        <input type="text" name="file" id="file" value="{$file}"><br>
+        <span style="color: #999999">{t}type in a file name{/t}</span>
+      </p>
+    </div>
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
       <p style="margin-top: 0.5rem">
         <label class="label label-info col-form-label" for="record_id">{t}record ID{/t}</label><br/>
