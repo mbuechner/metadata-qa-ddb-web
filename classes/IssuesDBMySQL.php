@@ -237,13 +237,19 @@ class IssuesDBMySQL {
 
   public function countRecordsBySchema($schema = '', $provider_id = '', $set_id = '', $file = '') {
     $where = $this->getWhere($schema, $provider_id, $set_id, $file, TRUE, 'i.');
+    /*
     $stmt = $this->db->prepare('SELECT i.metadata_schema as id, COUNT(*) AS count
       FROM issue AS i
       LEFT JOIN file_record AS r ON (i.recordId = r.recordId AND i.filename = r.file)
       INNER JOIN file AS f USING (file) '
       . $where . ' GROUP BY i.metadata_schema');
+    */
+    $stmt = $this->db->prepare('SELECT i.metadata_schema as id, COUNT(*) AS count
+      FROM issue AS i
+      LEFT JOIN file AS f ON (i.filename = f.file) '
+      . $where . ' GROUP BY i.metadata_schema');
     $this->bindValues($schema, $provider_id, $set_id, $file, $stmt);
-    // error_log(cleanSql($this->getSQL($stmt)));
+    error_log(cleanSql($this->getSQL($stmt)));
 
     $stmt->execute();
     return $stmt;
@@ -251,13 +257,19 @@ class IssuesDBMySQL {
 
   public function countRecordsByProvider($schema = '', $provider_id = '', $set_id = '', $file = '') {
     $where = $this->getWhere($schema, $provider_id, $set_id, $file, TRUE, 'i.');
+    /*
     $stmt = $this->db->prepare('SELECT provider_name AS name, provider_id AS id, COUNT(*) AS count
       FROM issue AS i
       LEFT JOIN file_record AS r ON (i.recordId = r.recordId AND i.filename = r.file)
       INNER JOIN file AS f USING (file) '
       . $where . ' GROUP BY provider_name, provider_id');
+    */
+    $stmt = $this->db->prepare('SELECT provider_name AS name, provider_id AS id, COUNT(*) AS count
+      FROM issue AS i
+      LEFT JOIN file AS f ON (i.filename = f.file) '
+      . $where . ' GROUP BY provider_name, provider_id');
     $this->bindValues($schema, $provider_id, $set_id, $file, $stmt);
-    // error_log(cleanSql($this->getSQL($stmt)));
+    error_log('countRecordsByProvider: ' . cleanSql($this->getSQL($stmt)));
 
     $stmt->execute();
     return $stmt;
