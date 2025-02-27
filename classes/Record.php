@@ -14,6 +14,9 @@ class Record extends BaseTab {
     $this->action = getOrDefault('action', 'display', ['display', 'downloadRecord', 'downloadFile', 'pdf']);
 
     $id = getOrDefault('id', '');
+    if ($id == '')
+      $id = getOrDefault('record_id', '');
+
     $file = getOrDefault('file', '');
     $smarty->assign('id', $id);
     if ($id != '') {
@@ -53,7 +56,6 @@ class Record extends BaseTab {
   }
 
   public function getXml($file, $id): array {
-    error_log("getXml('$file', '$id')");
     $db = new IssuesDB($this->outputDir, 'ddb-record.sqlite');
     $res = $db->getRecord($file, $id)->fetchArray(SQLITE3_ASSOC);
     if ($file == '')
