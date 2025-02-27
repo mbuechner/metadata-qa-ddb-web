@@ -62,7 +62,19 @@ RUN apt-get update \
  #
  # set apache
  #
- && sed -i.bak 's,</VirtualHost>,        RedirectMatch ^/$ /metadata-qa-ddb/\n        <Directory /var/www/html/metadata-qa-ddb>\n                Options Indexes FollowSymLinks MultiViews\n                AllowOverride All\n                Order allow\,deny\n                allow from all\n                DirectoryIndex index.php index.html\n        </Directory>\n</VirtualHost>,' /etc/apache2/sites-available/000-default.conf \
+ && sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf \
+ && echo "<VirtualHost *:8080>" > /etc/apache2/sites-available/000-default.conf \
+ && echo "    ServerAdmin webmaster@localhost" >> /etc/apache2/sites-available/000-default.conf \
+ && echo "    DocumentRoot /var/www/html" >> /etc/apache2/sites-available/000-default.conf \
+ && echo "    ErrorLog /dev/stderr" >> /etc/apache2/sites-available/000-default.conf \
+ && echo "    CustomLog /dev/stdout combined" >> /etc/apache2/sites-available/000-default.conf \
+ && echo "    <Directory /var/www/html>" >> /etc/apache2/sites-available/000-default.conf \
+ && echo "        Options Indexes FollowSymLinks MultiViews" >> /etc/apache2/sites-available/000-default.conf \
+ && echo "        AllowOverride All" >> /etc/apache2/sites-available/000-default.conf \
+ && echo "        Require all granted" >> /etc/apache2/sites-available/000-default.conf \
+ && echo "        DirectoryIndex index.php index.html" >> /etc/apache2/sites-available/000-default.conf \
+ && echo "    </Directory>" >> /etc/apache2/sites-available/000-default.conf \
+ && echo "</VirtualHost>" >> /etc/apache2/sites-available/000-default.conf \
  #
  # set directories
  #
