@@ -152,7 +152,7 @@ abstract class BaseTab implements Tab {
     $entries = parse_ini_file($tranlation_file, false, INI_SCANNER_RAW);
     $factors = [];
     foreach ($entries as $key => $value) {
-      preg_match('/^(Q-\d)(\.\d+)?.(description|criterium|scoring)$/', $key, $matches);
+      preg_match('/^(Q-\d)(\.\d+(?:[a-h])?)?.(description|criterium|scoring)$/', $key, $matches);
       if (empty($matches)) {
         // error_log(sprintf('missing key "%s" from file %s', $key, $tranlation_file));
       } else {
