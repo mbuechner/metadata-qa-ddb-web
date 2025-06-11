@@ -31,4 +31,3 @@ if ($ajax == 1) {
     $smarty->display($controller->getAjaxTemplate());
 } elseif ($controller->getOutputType() == 'html')
   $smarty->display($controller->getTemplate());
-

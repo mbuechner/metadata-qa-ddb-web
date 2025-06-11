@@ -57,27 +57,48 @@ class Record extends BaseTab {
 
   public function getXml($file, $id): array {
     $db = new IssuesDB($this->outputDir, 'ddb-record.sqlite');
-    $res = $db->getRecord($file, $id)->fetchArray(SQLITE3_ASSOC);
+    error_log('id: ' . $id);
+    error_log('file: ' . $file);
+    if (preg_match('/\\\\x/', $file))
+      error_log('file has X');
+    if (preg_match('/für/', $file))
+      error_log('file has Y');
+    if (preg_match('/[^a-zA-Z0-9\\/_]/', $file, $matches)) {
+      error_log('file has matches: "' . var_export($matches, true) . '"');
+      $res = $db->getRecord('', $id)->fetchArray(SQLITE3_ASSOC);
+    } else {
+      $res = $db->getRecord($file, $id)->fetchArray(SQLITE3_ASSOC);
+    }
     if ($file == '')
       $file = $res['file'];
     return [$file, $res['xml']];
   }
 
   private function getIssues($file, $id) {
-    $issues = $this->db->getIssuesByFileAndRecordId($file, $id)->fetch(PDO::FETCH_ASSOC);
-    unset($issues['metadata_schema']);
-    unset($issues['filename']);
-    unset($issues['recordId']);
-    unset($issues['providerid']);
-    foreach ($issues as $key => $value) {
-      if (preg_match('/^(.*):(.*)$/', $key, $matches)) {
-        unset($issues[$key]);
-        $key2 = $matches[1] == 'ruleCatalog' ? 'total' : $matches[1];
-        if (!isset($issues[$key2])) {
-          $issues[$key2] = [];
+    if (preg_match('/([^a-zA-Z0-9\\/_])/', $file, $matches)) {
+      error_log('file matches: ' . json_encode($matches));
+      $issues = $this->db->getIssuesByFileAndRecordId('', $id)->fetch(PDO::FETCH_ASSOC);
+    } else {
+      error_log('file does not matches');
+      $issues = $this->db->getIssuesByFileAndRecordId($file, $id)->fetch(PDO::FETCH_ASSOC);
+    }
+    if (is_array($issues)) {
+      unset($issues['metadata_schema']);
+      unset($issues['filename']);
+      unset($issues['recordId']);
+      unset($issues['providerid']);
+      foreach ($issues as $key => $value) {
+        if (preg_match('/^(.*):(.*)$/', $key, $matches)) {
+          unset($issues[$key]);
+          $key2 = $matches[1] == 'ruleCatalog' ? 'total' : $matches[1];
+          if (!isset($issues[$key2])) {
+            $issues[$key2] = [];
+          }
+          $issues[$key2][$matches[2]] = $value;
         }
-        $issues[$key2][$matches[2]] = $value;
       }
+    } else {
+      $issues = [];
     }
     return $issues;
   }

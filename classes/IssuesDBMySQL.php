@@ -10,8 +10,9 @@ class IssuesDBMySQL {
   }
 
   public function getIssuesCount($field, $value, $op = 'eq', $schema = '', $provider_id = '', $set_id = '', $file = '') {
+    $this->values = [];
     $where = $this->getWhere($schema, $provider_id, $set_id, $file, FALSE, 'i.');
-    error_log('where: ' . $where);
+    error_log('getIssuesCount() -- WHERE: ' . $where . ' values: ' . json_encode(['field' => $field, 'value' => $value, 'op' => $op, 'schema' => $schema, 'provider_id' => $provider_id, 'set_id' => $set_id, 'file' => $file]));
     $_op = $op == 'eq' ? '=' : ($op == 'lt' ? '<' : '>');
     if ($where == '') {
       $sql = 'SELECT COUNT(*) AS count
@@ -26,15 +27,15 @@ class IssuesDBMySQL {
       else
         $sql .= ' WHERE ' . $where;
     }
-    error_log(cleanSql($sql));
+    error_log('getIssuesCount: ' . cleanSql($sql));
     $stmt = $this->db->prepare($sql);
     if ($field != '')
-      $stmt->bindValue(':value', $value, preg_match('/:score$/', $field) ? PDO::PARAM_INT : PDO::PARAM_STR);
+      $this->bindValue($stmt, ':value', $value, preg_match('/:score$/', $field) ? PDO::PARAM_INT : PDO::PARAM_STR);
     if ($where != '')
       $this->bindValues($schema, $provider_id, $set_id, $file, $stmt);
 
-    error_log(var_export($this->db->errorInfo(), TRUE));
-    error_log(cleanSql($this->getSQL($stmt)));
+    error_log('getIssuesCount: ' . var_export($this->db->errorInfo(), TRUE));
+    error_log('getIssuesCount: ' . cleanSql($this->getSQL($stmt)));
     $stmt->execute();
     return $stmt;
   }
@@ -42,6 +43,7 @@ class IssuesDBMySQL {
   public function getIssues($field, $value, $op = 'eq',
                             $schema = '', $provider_id = '', $set_id = '', $file = '',
                             $offset = 0, $limit = 10): PDOStatement {
+    $this->values = [];
     $default_order = 'recordid';
     $where = $this->getWhere($schema, $provider_id, $set_id, $file, FALSE, 'i.');
     $_op = $op == 'eq' ? '=' : ($op == 'lt' ? '<' : '>');
@@ -69,39 +71,41 @@ class IssuesDBMySQL {
     $stmt = $this->db->prepare($sql);
     if ($field != '') {
       $value_type = preg_match('/:score$/', $field) ? PDO::PARAM_INT : PDO::PARAM_STR;
-      $stmt->bindValue(':value', $value, $value_type);
+      $this->bindValue($stmt, ':value', $value, $value_type);
     }
     if ($where != '')
       $this->bindValues($schema, $provider_id, $set_id, $file, $stmt);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-    error_log(cleanSql($this->getSQL($stmt)));
-    error_log(json_encode(['field' => $field, 'value' => $value]));
+    $this->bindValue($stmt, ':offset', $offset, PDO::PARAM_INT);
+    $this->bindValue($stmt, ':limit', $limit, PDO::PARAM_INT);
+    error_log('getIssues: ' . cleanSql($this->getSQL($stmt)));
+    error_log('getIssues: ' . json_encode(['field' => $field, 'value' => $value]));
 
     $stmt->execute();
     return $stmt;
   }
 
   public function getIssuesByRecordId($id) {
+    $this->values = [];
     $default_order = 'recordid';
     $stmt = $this->db->prepare('SELECT * FROM issue WHERE recordId = :value');
-    $stmt->bindValue(':value', $id, PDO::PARAM_STR);
+    $this->bindValue($stmt, ':value', $id, PDO::PARAM_STR);
 
     $stmt->execute();
     return $stmt;
   }
 
   public function getIssuesByFileAndRecordId($file, $id) {
+    $this->values = [];
     $default_order = 'recordid';
     if ($file != '') {
       $stmt = $this->db->prepare('SELECT * FROM issue WHERE filename = :file AND recordId = :value');
-      $stmt->bindValue(':file', $file, PDO::PARAM_STR);
+      $this->bindValue($stmt, ':file', $file, PDO::PARAM_STR);
     } else {
       $stmt = $this->db->prepare('SELECT * FROM issue WHERE recordId = :value');
     }
-    $stmt->bindValue(':value', $id, PDO::PARAM_STR);
-    // error_log('getIssuesByFileAndRecordId');
-    // error_log(cleanSql($this->getSQL($stmt)));
+    $this->bindValue($stmt, ':value', $id, PDO::PARAM_STR);
+    error_log('getIssuesByFileAndRecordId');
+    error_log(cleanSql($this->getSQL($stmt)));
     // error_log(json_encode(['$file' => $file, 'id' => $id]));
 
     $stmt->execute();
@@ -109,18 +113,20 @@ class IssuesDBMySQL {
   }
 
   public function countIssues($field, $value) {
+    $this->values = [];
     $default_order = 'recordid';
     $stmt = $this->db->prepare('SELECT count(*) AS count
        FROM issue
        WHERE `' . $field . '` = :value
     ');
-    $stmt->bindValue(':value', $value, PDO::PARAM_STR);
+    $this->bindValue($stmt, ':value', $value, PDO::PARAM_STR);
 
     $stmt->execute();
     return $stmt;
   }
 
   public function getCount($schema = 'NA', $provider_id = 'NA', $set_id = 'NA', $file = '') {
+    $this->values = [];
     $where = $this->getWhere($schema, $provider_id, $set_id, '');
     $stmt = $this->db->prepare('SELECT count FROM count ' . $where);
     $this->bindValues($schema, $provider_id, $set_id, '', $stmt);
@@ -130,6 +136,7 @@ class IssuesDBMySQL {
   }
 
   public function getFrequency($schema = '', $provider_id = '', $set_id = '', $file = '') {
+    $this->values = [];
     $where = $this->getWhere($schema, $provider_id, $set_id, '');
     $stmt = $this->db->prepare('SELECT field, value, frequency FROM frequency ' . $where . ' ORDER BY field');
     $this->bindValues($schema, $provider_id, $set_id, '', $stmt);
@@ -139,6 +146,7 @@ class IssuesDBMySQL {
   }
 
   public function getVariablitily($schema = '', $provider_id = '', $set_id = '', $file = '') {
+    $this->values = [];
     $where = $this->getWhere($schema, $provider_id, $set_id, $file);
     $stmt = $this->db->prepare('SELECT field, number_of_values FROM variability ' . $where);
     $this->bindValues($schema, $provider_id, $set_id, $file, $stmt);
@@ -148,14 +156,16 @@ class IssuesDBMySQL {
   }
 
   public function getRecord($id) {
+    $this->values = [];
     $stmt = $this->db->prepare('SELECT xml FROM record WHERE id = :value');
-    $stmt->bindValue(':value', $id, PDO::PARAM_STR);
+    $this->bindValue($stmt, ':value', $id, PDO::PARAM_STR);
 
     $stmt->execute();
     return $stmt;
   }
 
   public function listSchemas($schema = '', $provider_id = '', $set_id = '', $file = '') {
+    $this->values = [];
     $where = $this->getWhere($schema, $provider_id, $set_id, $file);
     if ($where == '') {
       $stmt = $this->db->prepare(
@@ -176,6 +186,7 @@ class IssuesDBMySQL {
   }
 
   public function listProviders($schema = '', $provider_id = '', $set_id = '', $file = '') {
+    $this->values = [];
     $where = $this->getWhere($schema, $provider_id, $set_id, $file);
     if ($where == '') {
       $stmt = $this->db->prepare(
@@ -197,6 +208,7 @@ class IssuesDBMySQL {
   }
 
   public function listSets($schema = '', $provider_id = '', $set_id = '', $file = '') {
+    $this->values = [];
     $where = $this->getWhere($schema, $provider_id, $set_id, $file);
     if ($where == '') {
       $stmt = $this->db->prepare(
@@ -216,26 +228,29 @@ class IssuesDBMySQL {
   }
 
   public function getFilenameByRecordId($record_id = '') {
+    $this->values = [];
     $stmt = $this->db->prepare('SELECT file FROM file_record WHERE recordId = :record_id');
-    $stmt->bindValue(':record_id', $record_id, PDO::PARAM_STR);
+    $this->bindValue($stmt, ':record_id', $record_id, PDO::PARAM_STR);
 
     $stmt->execute();
     return $stmt;
   }
 
   public function getFileDataByRecordId($file, $record_id = '') {
+    $this->values = [];
     $stmt = $this->db->prepare('SELECT f.* 
       FROM issue AS i 
       JOIN file AS f ON (f.file = i.filename) 
       WHERE i.filename = :file AND i.recordId = :record_id');
-    $stmt->bindValue(':file', $file, PDO::PARAM_STR);
-    $stmt->bindValue(':record_id', $record_id, PDO::PARAM_STR);
+    $this->bindValue($stmt, ':file', $file, PDO::PARAM_STR);
+    $this->bindValue($stmt, ':record_id', $record_id, PDO::PARAM_STR);
 
     $stmt->execute();
     return $stmt;
   }
 
   public function countRecordsBySchema($schema = '', $provider_id = '', $set_id = '', $file = '') {
+    $this->values = [];
     $where = $this->getWhere($schema, $provider_id, $set_id, $file, TRUE, 'i.');
     /*
     $stmt = $this->db->prepare('SELECT i.metadata_schema as id, COUNT(*) AS count
@@ -249,13 +264,14 @@ class IssuesDBMySQL {
       LEFT JOIN file AS f ON (i.filename = f.file) '
       . $where . ' GROUP BY i.metadata_schema');
     $this->bindValues($schema, $provider_id, $set_id, $file, $stmt);
-    error_log(cleanSql($this->getSQL($stmt)));
+    error_log('countRecordsBySchema: ' . cleanSql($this->getSQL($stmt)));
 
     $stmt->execute();
     return $stmt;
   }
 
   public function countRecordsByProvider($schema = '', $provider_id = '', $set_id = '', $file = '') {
+    $this->values = [];
     $where = $this->getWhere($schema, $provider_id, $set_id, $file, TRUE, 'i.');
     /*
     $stmt = $this->db->prepare('SELECT provider_name AS name, provider_id AS id, COUNT(*) AS count
@@ -276,6 +292,7 @@ class IssuesDBMySQL {
   }
 
   public function countRecordsBySet($schema = '', $provider_id = '', $set_id = '', $file = '') {
+    $this->values = [];
     $where = $this->getWhere($schema, $provider_id, $set_id, $file, TRUE, 'i.');
     $stmt = $this->db->prepare('SELECT set_name AS name, set_id AS id, COUNT(*) AS count
       FROM issue AS i
@@ -289,6 +306,7 @@ class IssuesDBMySQL {
   }
 
   public function getLastUpdate($schema = '', $provider_id = '', $set_id = '', $file = '') {
+    $this->values = [];
     $where = $this->getWhere($schema, $provider_id, $set_id, $file);
     if (!empty($where))
       $where = ' ' . $where;
@@ -395,21 +413,26 @@ class IssuesDBMySQL {
     if ($schema != '' || $provider_id != '' || $set_id != '' || $file != '') {
       if ($schema != '') {
         // error_log(':metadata_schema = ' . $schema);
-        $stmt->bindValue(':metadata_schema', $schema, PDO::PARAM_STR);
+        $this->bindValue($stmt, ':metadata_schema', $schema, PDO::PARAM_STR);
       }
       if ($provider_id != '') {
         // error_log(':provider_id = ' . $provider_id);
-        $stmt->bindValue(':provider_id', $provider_id, PDO::PARAM_STR);
+        $this->bindValue($stmt, ':provider_id', $provider_id, PDO::PARAM_STR);
       }
       if ($set_id != '') {
         // error_log(':set_id = ' . $set_id);
-        $stmt->bindValue(':set_id', $set_id, PDO::PARAM_STR);
+        $this->bindValue($stmt, ':set_id', $set_id, PDO::PARAM_STR);
       }
       if ($file != '') {
         // error_log(':set_id = ' . $set_id);
-        $stmt->bindValue(':file', $file, PDO::PARAM_STR);
+        $this->bindValue($stmt, ':file', $file, PDO::PARAM_STR);
       }
     }
+  }
+
+  private function bindValue($stmt, $placeholder, $value, $type) {
+    $stmt->bindValue($placeholder, $value, $type);
+    $this->values[$placeholder] = $type === PDO::PARAM_STR ? sprintf("'%s'", $value) : $value;
   }
 
   private function getSQL($stmt) {
@@ -417,6 +440,12 @@ class IssuesDBMySQL {
     $stmt->debugDumpParams();
     $r = ob_get_contents();
     ob_end_clean();
+    $r = preg_replace('/\n/', ' ', $r);
+    $r = preg_replace('/ Params:.*$/', '', $r);
+    if (isset($this->values) && is_array($this->values))
+      $r = str_replace(array_keys($this->values), array_values($this->values), $r);
+    $r = preg_replace('/\s+/', ' ', $r);
+    error_log($r);
     return $r;
   }
 }
