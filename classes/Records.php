@@ -50,6 +50,12 @@ class Records extends BaseTab {
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
       $recordIds[] = $row;
     }
+    if (count($recordIds) == 1 && $this->action != 'pdf') {
+      $row = $recordIds[0];
+      $url = sprintf('?&tab=record&id=%s&file=%s&%s',
+                     $row['recordId'], urlencode($row['file']), $this->getCommonUrlParameters());
+      header("Location: $url");
+    }
     $smarty->assign('recordCount', $recordCount);
     $smarty->assign('page', $page);
     $smarty->assign('limit', $limit);
@@ -60,7 +66,6 @@ class Records extends BaseTab {
     if ($this->action == 'pdf') {
       $smarty->assign('displayType', 'pdf');
       $html = $smarty->fetch("records.tpl");
-      error_log($html);
       $this->createPdf($html);
     } else {
       $smarty->assign('displayType', 'html');
