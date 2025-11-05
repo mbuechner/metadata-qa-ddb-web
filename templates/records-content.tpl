@@ -12,6 +12,7 @@
     {/if}
     {$recordCount} records
   </p>
+
   <ol start="{($page * $limit) + 1}">
     {foreach $recordIds as $row}
       <li>
