@@ -7,7 +7,6 @@ ARG SMARTY_VERSION=3.1.33
 ARG DOMPDF_VERSION=3.1.0
 
 RUN apt-get update \
-# && apt-get install -y --no-install-recommends software-properties-common \
  && apt-get install -y --no-install-recommends \
       # install basic OS tools
       apt-utils \
