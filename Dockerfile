@@ -68,6 +68,9 @@ RUN apt-get update \
  && mkdir -p /opt/metadata-qa-ddb/input \
  && mkdir -p /opt/metadata-qa-ddb/output
 
+#
+# set php.ini
+#
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
  && rm "$PHP_INI_DIR/php.ini-development" \
  && sed -i.bak 's,;error_log = php_errors.log,error_log = /proc/self/fd/2,' "$PHP_INI_DIR/php.ini"
