@@ -66,6 +66,9 @@ RUN mv configuration.cnf.docker configuration.cnf \
 	echo "<VirtualHost *:8080>"; \
 	echo "	ServerAdmin webmaster@localhost"; \
 	echo "	DocumentRoot /var/www/html"; \
+    echo "\tphp_admin_flag log_errors On"; \
+    echo "\tphp_admin_value error_log /proc/self/fd/2"; \
+    echo "\tphp_admin_flag display_errors Off"; \
     echo "	ErrorLog /proc/self/fd/2"; \
     echo "	CustomLog /proc/self/fd/1 combined"; \
         echo "	<Directory /var/www/html>"; \
