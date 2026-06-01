@@ -1,6 +1,26 @@
 # metadata-qa-ddb-web
 Web interface for DDB metadata quality assessment
 
+## Container logging and OpenShift
+
+The Docker image is configured for container-native logging:
+
+- Apache access log: stdout (`/proc/self/fd/1`)
+- Apache error log: stderr (`/proc/self/fd/2`)
+- PHP error log: stderr (`/proc/self/fd/2`)
+- Additional Apache vhost log files are disabled (`other-vhosts-access-log`) so logs are only emitted to stdout/stderr.
+
+Additional container hardening in Apache:
+
+- `ServerTokens Prod`
+- `ServerSignature Off`
+- `TraceEnable Off`
+
+This allows OpenShift to collect all logs through the platform logging stack.
+
+The image is also prepared for OpenShift-style arbitrary UIDs by making relevant
+runtime paths group-writable for GID `0`.
+
 ```
 sudo apt-get install php-intl php-sqlite3 php-mysql
 ```
