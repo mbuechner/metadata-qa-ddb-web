@@ -61,12 +61,19 @@ RUN apt-get update \
  #
  # set apache
  #
+ && sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf \
+ && a2disconf other-vhosts-access-log \
  && sed -i.bak 's,</VirtualHost>,        RedirectMatch ^/$ /metadata-qa-ddb/\n        <Directory /var/www/html/metadata-qa-ddb>\n                Options Indexes FollowSymLinks MultiViews\n                AllowOverride All\n                Order allow\,deny\n                allow from all\n                DirectoryIndex index.php index.html\n        </Directory>\n</VirtualHost>,' /etc/apache2/sites-available/000-default.conf \
+ && sed -i 's|^\s*ErrorLog .*|\tErrorLog /proc/self/fd/2|' /etc/apache2/sites-available/000-default.conf \
+ && sed -i 's|^\s*CustomLog .*|\tCustomLog /proc/self/fd/1 combined|' /etc/apache2/sites-available/000-default.conf \
+ && sed -i 's|^\s*TransferLog .*|\tCustomLog /proc/self/fd/1 combined|' /etc/apache2/sites-available/000-default.conf \
  #
  # set directories
  #
  && mkdir -p /opt/metadata-qa-ddb/input \
- && mkdir -p /opt/metadata-qa-ddb/output
+ && mkdir -p /opt/metadata-qa-ddb/output \
+ && chgrp -R 0 /var/www/html /tmp /opt/metadata-qa-ddb \
+ && chmod -R g=u /var/www/html /tmp /opt/metadata-qa-ddb
 
 #
 # set php.ini
@@ -76,3 +83,6 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
  && sed -i.bak 's,;error_log = php_errors.log,error_log = /proc/self/fd/2,' "$PHP_INI_DIR/php.ini"
 
 WORKDIR /opt/metadata-qa-ddb
+
+CMD ["apache2-foreground"]
+EXPOSE 8080
