@@ -25,17 +25,16 @@ RUN apt-get update \
      && docker-php-ext-install gettext zip intl \
      && docker-php-ext-install pdo pdo_mysql \
      && docker-php-ext-enable yaml intl \
- && rm -rf /var/lib/apt/lists/* \
- && cd /var/www/html/ \
- && curl -s -L https://github.com/pkiraly/metadata-qa-ddb-web/archive/refs/heads/v2.0.zip --output master.zip \
- && unzip -q master.zip \
- && rm master.zip \
- && mv metadata-qa-ddb-web-2.0 metadata-qa-ddb \
- && cd metadata-qa-ddb \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY . /var/www/html/
+WORKDIR /var/www/html
+
+RUN \
  #
  # set configuration
  #
- && mv configuration.cnf.template configuration.cnf \
+ mv configuration.cnf.template configuration.cnf \
  && sed -i.bak 's,<path to input directory>,/opt/metadata-qa-ddb/input,' configuration.cnf \
  && sed -i.bak 's,<path to output directory>,/opt/metadata-qa-ddb/output,' configuration.cnf \
  && sed -i.bak 's,<MySQL database host>,mqaf-ddb-db,' configuration.cnf \
@@ -63,7 +62,7 @@ RUN apt-get update \
  #
  && sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf \
  && a2disconf other-vhosts-access-log \
- && sed -i.bak 's,</VirtualHost>,        RedirectMatch ^/$ /metadata-qa-ddb/\n        <Directory /var/www/html/metadata-qa-ddb>\n                Options Indexes FollowSymLinks MultiViews\n                AllowOverride All\n                Order allow\,deny\n                allow from all\n                DirectoryIndex index.php index.html\n        </Directory>\n</VirtualHost>,' /etc/apache2/sites-available/000-default.conf \
+ && sed -i.bak 's,</VirtualHost>,        <Directory /var/www/html>\n                Options Indexes FollowSymLinks MultiViews\n                AllowOverride All\n                Order allow\,deny\n                allow from all\n                DirectoryIndex index.php index.html\n        </Directory>\n</VirtualHost>,' /etc/apache2/sites-available/000-default.conf \
  && sed -i 's|^\s*ErrorLog .*|\tErrorLog /proc/self/fd/2|' /etc/apache2/sites-available/000-default.conf \
  && sed -i 's|^\s*CustomLog .*|\tCustomLog /proc/self/fd/1 combined|' /etc/apache2/sites-available/000-default.conf \
  && sed -i 's|^\s*TransferLog .*|\tCustomLog /proc/self/fd/1 combined|' /etc/apache2/sites-available/000-default.conf \
